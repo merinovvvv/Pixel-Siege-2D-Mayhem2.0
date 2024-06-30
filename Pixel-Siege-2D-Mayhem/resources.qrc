@@ -1,0 +1,17 @@
+<RCC>
+    <qresource prefix="/backgrounds">
+        <file>background gameplay/grass.jpg</file>
+        <file>background gameplay/road.jpg</file>
+        <file>background gameplay/sand.jpeg</file>
+        <file>background gameplay/snow.jpg</file>
+        <file>background menu/back1.gif</file>
+        <file>background menu/back2.gif</file>
+        <file>background menu/back5.gif</file>
+        <file>background menu/back6.gif</file>
+        <file>background menu/back7.gif</file>
+        <file>background menu/back8.gif</file>
+    </qresource>
+    <qresource prefix="/icon">
+        <file>helmetIcon.jpg</file>
+    </qresource>
+</RCC>
