@@ -88,16 +88,26 @@ void MainMenu::exitSlot() {
 void MainMenu::showMapChooseWindow() {
     mapChooseWindow* w = new mapChooseWindow();
 
-    // animation for smooth opening new window
-    QPropertyAnimation* animation = new QPropertyAnimation(w, "windowOpacity");
-    animation->setDuration(100); // Длительность анимации в миллисекундах
-    animation->setStartValue(0.0);
-    animation->setEndValue(1.0);
-    animation->start();
+    QPropertyAnimation* animationShow = new QPropertyAnimation(w, "windowOpacity");
+    animationShow->setDuration(200);
+    animationShow->setStartValue(0.0);
+    animationShow->setEndValue(1.0);
 
+    //animation for smooth closing current window
+    QPropertyAnimation* animationHide = new QPropertyAnimation(this, "windowOpacity");
+    animationHide->setDuration(200);
+    animationHide->setStartValue(1.0);
+    animationHide->setEndValue(0.0);
+
+    // show new window and start it's animation before closing current one
     w->showFullScreen();
+    animationShow->start();
 
-    // closing current window with delay
-    QTimer::singleShot(150, this, SLOT(close()));
+    // connect the signal of finishing an animation of opening new window before animation of closing current one
+    connect(animationShow, &QPropertyAnimation::finished, this, [this, animationHide]() {
+        animationHide->start();
+    });
+
+    connect(animationHide, &QPropertyAnimation::finished, this, &QWidget::close);
 }
 
