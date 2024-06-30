@@ -1,15 +1,15 @@
 <RCC>
     <qresource prefix="/backgrounds">
-        <file>background gameplay/grass.jpg</file>
-        <file>background gameplay/road.jpg</file>
-        <file>background gameplay/sand.jpeg</file>
-        <file>background gameplay/snow.jpg</file>
-        <file>background menu/back1.gif</file>
-        <file>background menu/back2.gif</file>
-        <file>background menu/back5.gif</file>
-        <file>background menu/back6.gif</file>
-        <file>background menu/back7.gif</file>
-        <file>background menu/back8.gif</file>
+        <file>background_menu/back1.gif</file>
+        <file>background_menu/back2.gif</file>
+        <file>background_menu/back5.gif</file>
+        <file>background_menu/back6.gif</file>
+        <file>background_menu/back7.gif</file>
+        <file>background_menu/back8.gif</file>
+        <file>background_gameplay/grass.png</file>
+        <file>background_gameplay/grassForChoose.png</file>
+        <file>background_gameplay/sand.jpg</file>
+        <file>background_gameplay/sandForChoose.jpg</file>
     </qresource>
     <qresource prefix="/icon">
         <file>helmetIcon.jpg</file>

@@ -1,7 +1,11 @@
 #include <QMovie>
 #include <QPainter>
+#include <QPropertyAnimation>
+#include <QTimer>
+
 #include "main_menu.h"
 #include "ui_main_menu.h"
+#include "mapchoosewindow.h"
 
 MainMenu::MainMenu(QWidget *parent) : QMainWindow(parent), ui(new Ui::Game) {
     ui->setupUi(this);
@@ -24,6 +28,8 @@ MainMenu::MainMenu(QWidget *parent) : QMainWindow(parent), ui(new Ui::Game) {
 
     startButton = new QPushButton("PLAY");
     startButton->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
+
+    connect (startButton, SIGNAL(clicked()), this, SLOT(showMapChooseWindow()));
 
     statsButton = new QPushButton("STATS");
     statsButton->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
@@ -57,6 +63,7 @@ MainMenu::MainMenu(QWidget *parent) : QMainWindow(parent), ui(new Ui::Game) {
     verticalLayout->addWidget(exitButton, 0, Qt::AlignCenter);
 
     gridLayout->addItem(verticalLayout, 1, 2, 1, 1, Qt::AlignLeft | Qt::AlignCenter);
+    setLayout(gridLayout);
 }
 
 MainMenu::~MainMenu()
@@ -76,5 +83,21 @@ void MainMenu::paintEvent(QPaintEvent *event) {
 
 void MainMenu::exitSlot() {
     QApplication::quit();
+}
+
+void MainMenu::showMapChooseWindow() {
+    mapChooseWindow* w = new mapChooseWindow();
+
+    // animation for smooth opening new window
+    QPropertyAnimation* animation = new QPropertyAnimation(w, "windowOpacity");
+    animation->setDuration(100); // Длительность анимации в миллисекундах
+    animation->setStartValue(0.0);
+    animation->setEndValue(1.0);
+    animation->start();
+
+    w->showFullScreen();
+
+    // closing current window with delay
+    QTimer::singleShot(150, this, SLOT(close()));
 }
 

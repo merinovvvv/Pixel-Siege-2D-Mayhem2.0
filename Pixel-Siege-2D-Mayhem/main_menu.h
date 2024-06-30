@@ -8,6 +8,8 @@
 #include <QSpacerItem>
 #include <QLayout>
 
+#include "mapchoosewindow.h"
+
 QT_BEGIN_NAMESPACE
 namespace Ui {
 class Game;
@@ -27,10 +29,11 @@ protected:
 
 private slots:
     void exitSlot();
+    void showMapChooseWindow();
 
 private:
     Ui::Game *ui;
-    QMovie *background = new QMovie(":/backgrounds/background menu/back6.gif");
+    QMovie *background = new QMovie(":/backgrounds/background_menu/back6.gif");
     QWidget* centralWidget;
     QSpacerItem* leftSpacer;
     QSpacerItem* rightSpacer;

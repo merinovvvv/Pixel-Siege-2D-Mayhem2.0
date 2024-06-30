@@ -1,4 +1,5 @@
 #include "main_menu.h"
+#include "mapchoosewindow.h"
 
 #include <QApplication>
 

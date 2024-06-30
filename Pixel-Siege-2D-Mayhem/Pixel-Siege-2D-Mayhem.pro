@@ -10,10 +10,12 @@ CONFIG += c++17
 
 SOURCES += \
     main.cpp \
-    main_menu.cpp
+    main_menu.cpp \
+    mapchoosewindow.cpp
 
 HEADERS += \
-    main_menu.h
+    main_menu.h \
+    mapchoosewindow.h
 
 FORMS += \
     main_menu.ui
