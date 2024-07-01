@@ -1,3 +1,4 @@
+#include <QGraphicsDropShadowEffect>
 #include <QMovie>
 #include <QPainter>
 #include <QPropertyAnimation>
@@ -53,9 +54,33 @@ MainMenu::MainMenu(Game* game, QWidget *parent) : QMainWindow(parent), ui(new Ui
                          "}";
 
     startButton->setStyleSheet(styleSheet);
+    // Добавление эффекта тени для имитации обводки
+    QGraphicsDropShadowEffect *effect1 = new QGraphicsDropShadowEffect;
+    effect1->setBlurRadius(10);  // Увеличение радиуса размытия для большей толщины
+    effect1->setColor(Qt::black);
+    effect1->setOffset(4, 4);  // Увеличение смещения для большей толщины
+    startButton->setGraphicsEffect(effect1);
+
     statsButton->setStyleSheet(styleSheet);
+    QGraphicsDropShadowEffect *effect2 = new QGraphicsDropShadowEffect;
+    effect2->setBlurRadius(10);  // Увеличение радиуса размытия для большей толщины
+    effect2->setColor(Qt::black);
+    effect2->setOffset(4, 4);  // Увеличение смещения для большей толщины
+    statsButton->setGraphicsEffect(effect2);
+
     achievementsButton->setStyleSheet(styleSheet);
+    QGraphicsDropShadowEffect *effect3 = new QGraphicsDropShadowEffect;
+    effect3->setBlurRadius(10);  // Увеличение радиуса размытия для большей толщины
+    effect3->setColor(Qt::black);
+    effect3->setOffset(4, 4);  // Увеличение смещения для большей толщины
+    achievementsButton->setGraphicsEffect(effect3);
+
     exitButton->setStyleSheet(styleSheet);
+    QGraphicsDropShadowEffect *effect4 = new QGraphicsDropShadowEffect;
+    effect4->setBlurRadius(10);  // Увеличение радиуса размытия для большей толщины
+    effect4->setColor(Qt::black);
+    effect4->setOffset(4, 4);  // Увеличение смещения для большей толщины
+    exitButton->setGraphicsEffect(effect4);
 
     verticalLayout->addWidget(startButton, 0, Qt::AlignCenter);
     verticalLayout->addWidget(statsButton, 0, Qt::AlignCenter);
