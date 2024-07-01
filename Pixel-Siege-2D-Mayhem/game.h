@@ -16,13 +16,6 @@ public:
     void showMainMenu();
     void showMapChooseWindow();
     void backToMainMenu();
-
-private:
-    QTimer* delayTimer;
-
-private slots:
-    void delayedCloseMainMenu();
-    void delayedShowMainMenu();
 };
 
 #endif // GAME_H

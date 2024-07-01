@@ -23,4 +23,3 @@ Game::~Game() {
     delete main_menu;
     delete map_choose_window;
 }
-

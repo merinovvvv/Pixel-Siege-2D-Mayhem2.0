@@ -166,7 +166,7 @@ void mapChooseWindow::changeMap() {
 
 void mapChooseWindow::backToMainMenu() {
     if(game_) {
-        game_->showMainMenu();
+        game_->backToMainMenu();
     }
     this->close();
 }
