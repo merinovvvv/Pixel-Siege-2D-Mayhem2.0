@@ -1,12 +1,10 @@
-#include "main_menu.h"
-#include "mapchoosewindow.h"
-
 #include <QApplication>
+#include "game.h"
 
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
-    MainMenu w;
-    w.show();
+    Game new_game;
+    new_game.showMainMenu();
     return a.exec();
 }

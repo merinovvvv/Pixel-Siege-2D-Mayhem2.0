@@ -8,7 +8,7 @@
 #include <QSpacerItem>
 #include <QLayout>
 
-#include "mapchoosewindow.h"
+class Game;
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -21,7 +21,7 @@ class MainMenu : public QMainWindow
     Q_OBJECT
 
 public:
-    MainMenu(QWidget *parent = nullptr);
+    MainMenu(Game* game, QWidget *parent = nullptr);
     ~MainMenu();
 
 protected:
@@ -43,5 +43,7 @@ private:
     QPushButton* exitButton;
     QVBoxLayout* verticalLayout;
     QGridLayout* gridLayout;
+
+    Game* game_;
 };
 #endif // MAIN_MENU_H

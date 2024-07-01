@@ -7,9 +7,11 @@
 #include <QTimer>
 
 #include "mapchoosewindow.h"
+#include "main_menu.h"
+#include "game.h"
 
-mapChooseWindow::mapChooseWindow(QWidget *parent)
-    : QMainWindow{parent}
+mapChooseWindow::mapChooseWindow(Game* game, QWidget *parent)
+    : QMainWindow{parent}, game_(game)
 {
 
     mapChooseBackground = new QMovie(":/backgrounds/background_menu/back5.gif");
@@ -163,29 +165,10 @@ void mapChooseWindow::changeMap() {
 }
 
 void mapChooseWindow::backToMainMenu() {
-    MainMenu* w = new MainMenu();
-
-    QPropertyAnimation* animationShow = new QPropertyAnimation(w, "windowOpacity");
-    animationShow->setDuration(200);
-    animationShow->setStartValue(0.0);
-    animationShow->setEndValue(1.0);
-
-    //animation for smooth closing current window
-    QPropertyAnimation* animationHide = new QPropertyAnimation(this, "windowOpacity");
-    animationHide->setDuration(200);
-    animationHide->setStartValue(1.0);
-    animationHide->setEndValue(0.0);
-
-    // show new window and start it's animation before closing current one
-    w->showFullScreen();
-    animationShow->start();
-
-    // connect the signal of finishing an animation of opening new window before animation of closing current one
-    connect(animationShow, &QPropertyAnimation::finished, this, [this, animationHide]() {
-        animationHide->start();
-    });
-
-    connect(animationHide, &QPropertyAnimation::finished, this, &QWidget::close);
+    if(game_) {
+        game_->showMainMenu();
+    }
+    this->close();
 }
 
 mapChooseWindow::~mapChooseWindow() {

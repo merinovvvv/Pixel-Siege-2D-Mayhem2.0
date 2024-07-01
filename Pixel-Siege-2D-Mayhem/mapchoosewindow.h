@@ -9,13 +9,14 @@
 #include <QGraphicsScene>
 #include <QGraphicsView>
 
-#include "main_menu.h"
+class Game;
+
 
 class mapChooseWindow : public QMainWindow
 {
     Q_OBJECT
 public:
-    explicit mapChooseWindow(QWidget *parent = nullptr);
+    explicit mapChooseWindow(Game* game, QWidget *parent = nullptr);
     ~mapChooseWindow();
     //static void showMapChooseWindow(mapChooseWindow* window);
 
@@ -35,7 +36,9 @@ private:
     QPushButton* startButton;
     QPushButton *leftButton;
     QPushButton *rightButton;
-     int currentIndex = 0;
+    int currentIndex = 0;
+
+    Game* game_;
 
 protected:
     void paintEvent(QPaintEvent *event) override;

@@ -5,9 +5,9 @@
 
 #include "main_menu.h"
 #include "ui_main_menu.h"
-#include "mapchoosewindow.h"
+#include "game.h"
 
-MainMenu::MainMenu(QWidget *parent) : QMainWindow(parent), ui(new Ui::Game) {
+MainMenu::MainMenu(Game* game, QWidget *parent) : QMainWindow(parent), ui(new Ui::Game), game_(game) {
     ui->setupUi(this);
     setWindowIcon(QIcon(":/icon/helmetIcon.jpg"));
     showFullScreen();
@@ -86,28 +86,9 @@ void MainMenu::exitSlot() {
 }
 
 void MainMenu::showMapChooseWindow() {
-    mapChooseWindow* w = new mapChooseWindow();
-
-    QPropertyAnimation* animationShow = new QPropertyAnimation(w, "windowOpacity");
-    animationShow->setDuration(200);
-    animationShow->setStartValue(0.0);
-    animationShow->setEndValue(1.0);
-
-    //animation for smooth closing current window
-    QPropertyAnimation* animationHide = new QPropertyAnimation(this, "windowOpacity");
-    animationHide->setDuration(200);
-    animationHide->setStartValue(1.0);
-    animationHide->setEndValue(0.0);
-
-    // show new window and start it's animation before closing current one
-    w->showFullScreen();
-    animationShow->start();
-
-    // connect the signal of finishing an animation of opening new window before animation of closing current one
-    connect(animationShow, &QPropertyAnimation::finished, this, [this, animationHide]() {
-        animationHide->start();
-    });
-
-    connect(animationHide, &QPropertyAnimation::finished, this, &QWidget::close);
+    if(game_) {
+        game_->showMapChooseWindow();
+    }
+    this->close();
 }
 
