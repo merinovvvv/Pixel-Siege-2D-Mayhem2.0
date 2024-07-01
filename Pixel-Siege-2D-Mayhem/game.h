@@ -3,6 +3,8 @@
 
 #include "main_menu.h"
 #include "mapchoosewindow.h"
+#include "gameplaywindow.h"
+#include "gameplaywindow.h"
 
 class Game
 {
@@ -12,10 +14,12 @@ public:
 
     MainMenu* main_menu;
     mapChooseWindow* map_choose_window;
+    gameplayWindow* gameplay_window;
 
     void showMainMenu();
     void showMapChooseWindow();
     void backToMainMenu();
+    void startGameplay();
 };
 
 #endif // GAME_H

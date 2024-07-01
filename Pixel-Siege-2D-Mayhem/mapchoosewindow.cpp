@@ -86,7 +86,7 @@ mapChooseWindow::mapChooseWindow(Game* game, QWidget *parent)
     mapChooseScene = new QGraphicsScene(this);
     mapChooseView = new QGraphicsView(mapChooseScene, this);
 
-    mapsForChoose.append(QPixmap(":/backgrounds/background_gameplay/grassForChoose.png"));
+    mapsForChoose.append(QPixmap(":/backgrounds/background_gameplay/grassForChoose2.jpg"));
     mapsForChoose.append(QPixmap(":/backgrounds/background_gameplay/sandForChoose.jpg"));
 
     mapBack = mapsForChoose[0];
@@ -127,7 +127,7 @@ mapChooseWindow::mapChooseWindow(Game* game, QWidget *parent)
     connect(rightButton, SIGNAL(clicked()), this, SLOT(changeMap()));
 
     connect(backButton, SIGNAL(clicked()), this, SLOT(backToMainMenu()));
-    // connect(startButton, SIGNAL(clicked()), this, SLOT(startGame()));
+    connect(startButton, SIGNAL(clicked()), this, SLOT(startGame()));
 }
 
 void mapChooseWindow::paintEvent(QPaintEvent *event) {
@@ -169,6 +169,21 @@ void mapChooseWindow::backToMainMenu() {
         game_->backToMainMenu();
     }
     this->close();
+}
+
+void mapChooseWindow::startGame() {
+    if(game_) {
+        game_->startGameplay();
+    }
+    this->close();
+}
+
+QPixmap mapChooseWindow::getMapBack() {
+    return mapBack;
+}
+
+QVector <QPixmap> mapChooseWindow::getMapsForChoose() {
+    return mapsForChoose;
 }
 
 mapChooseWindow::~mapChooseWindow() {

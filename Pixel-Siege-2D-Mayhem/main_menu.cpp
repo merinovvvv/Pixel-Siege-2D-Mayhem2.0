@@ -66,12 +66,6 @@ MainMenu::MainMenu(Game* game, QWidget *parent) : QMainWindow(parent), ui(new Ui
     setLayout(gridLayout);
 }
 
-MainMenu::~MainMenu()
-{
-    delete ui;
-    delete background;
-}
-
 void MainMenu::paintEvent(QPaintEvent *event) {
     Q_UNUSED(event);
     QPainter painter(this);
@@ -92,3 +86,8 @@ void MainMenu::showMapChooseWindow() {
     this->close();
 }
 
+MainMenu::~MainMenu()
+{
+    delete ui;
+    delete background;
+}

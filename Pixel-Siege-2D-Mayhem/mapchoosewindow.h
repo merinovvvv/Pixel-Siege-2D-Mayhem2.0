@@ -20,9 +20,13 @@ public:
     ~mapChooseWindow();
     //static void showMapChooseWindow(mapChooseWindow* window);
 
+    QPixmap getMapBack();
+    QVector <QPixmap> getMapsForChoose();
+
 private slots:
     void backToMainMenu();
     void changeMap();
+    void startGame();
 
 private:
     QPushButton *backButton;

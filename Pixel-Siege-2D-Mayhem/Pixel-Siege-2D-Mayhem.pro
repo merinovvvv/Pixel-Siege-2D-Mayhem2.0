@@ -10,12 +10,14 @@ CONFIG += c++17
 
 SOURCES += \
     game.cpp \
+    gameplaywindow.cpp \
     main.cpp \
     main_menu.cpp \
     mapchoosewindow.cpp
 
 HEADERS += \
     game.h \
+    gameplaywindow.h \
     main_menu.h \
     mapchoosewindow.h
 
