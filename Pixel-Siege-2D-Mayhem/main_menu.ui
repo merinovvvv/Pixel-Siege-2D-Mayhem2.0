@@ -14,7 +14,7 @@
    <string>Game</string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <layout class="QGridLayout" name="gridLayout"/>
+   <layout class="QFormLayout" name="formLayout"/>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">

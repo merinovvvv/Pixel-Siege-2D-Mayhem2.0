@@ -12,12 +12,14 @@ SOURCES += \
     game.cpp \
     main.cpp \
     main_menu.cpp \
-    mapchoosewindow.cpp
+    mapchoosewindow.cpp \
+    pause.cpp
 
 HEADERS += \
     game.h \
     main_menu.h \
-    mapchoosewindow.h
+    mapchoosewindow.h \
+    pause.h
 
 FORMS += \
     main_menu.ui
