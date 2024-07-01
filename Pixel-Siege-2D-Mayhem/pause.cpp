@@ -24,12 +24,12 @@ PauseMenu::PauseMenu(Game* game, QWidget *parent) : QMainWindow(parent), game_(g
     continue_button = new QPushButton("CONTINUE");
     continue_button->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
 
-    exit_button = new QPushButton("BACK");
+    exit_button = new QPushButton("EXIT");
     exit_button->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
 
     QString styleSheet = "QPushButton {"
                          "background: transparent;"
-                         "color: #DADADA;"
+                         "color: white;"
                          "font-size: 110px;"
                          "text-align: center;"
                          "}"
@@ -69,12 +69,31 @@ PauseMenu::PauseMenu(Game* game, QWidget *parent) : QMainWindow(parent), game_(g
 //    layout->addLayout(buttonsLayout, 1, 1, 1, 1, Qt::AlignLeft);
 
     connect(exit_button, SIGNAL(clicked()), this, SLOT(exit()));
+    connect(continue_button, SIGNAL(clicked()), this, SLOT(back()));
+}
+
+PauseMenu::~PauseMenu() {
+    delete background;
+    delete continue_button;
+    delete exit_button;
+    delete buttonsLayout;
+    delete topSpacer;
+    delete bottomSpacer;
+    delete centralWidget;
+    delete game_;
 }
 
 
 void PauseMenu::exit() {
     if(game_) {
         game_->showMainMenu();
+    }
+    this->close();
+}
+
+void PauseMenu::back() {
+    if (game_) {
+        game_->startGameplay();
     }
     this->close();
 }

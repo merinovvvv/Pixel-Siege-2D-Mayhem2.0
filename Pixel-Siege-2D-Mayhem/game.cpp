@@ -3,27 +3,28 @@
 Game::Game() {
     main_menu = new MainMenu(this);
     map_choose_window = new mapChooseWindow(this);
-<<<<<<< HEAD
     gameplay_window = new gameplayWindow(this);
-=======
     pause_menu = new PauseMenu(this);
->>>>>>> pause_menu
 }
 
 void Game::showMainMenu() {
     main_menu->show();
     map_choose_window->close();
     pause_menu->close();
+    gameplay_window->close();
 }
 
 void Game::showMapChooseWindow() {
     map_choose_window->showFullScreen();
     main_menu->close();
     pause_menu->close();
+    gameplay_window->close();
 }
 
 void Game::showPauseMenu() {
     pause_menu->showFullScreen();
+    main_menu->close();
+    map_choose_window->close();
 }
 
 void Game::backToMainMenu() {
@@ -45,4 +46,5 @@ Game::~Game() {
     delete main_menu;
     delete map_choose_window;
     delete gameplay_window;
+    delete pause_menu;
 }

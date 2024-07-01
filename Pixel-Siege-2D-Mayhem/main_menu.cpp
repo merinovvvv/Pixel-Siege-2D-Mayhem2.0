@@ -115,4 +115,14 @@ MainMenu::~MainMenu()
 {
     delete ui;
     delete background;
+    delete centralWidget;
+    delete leftSpacer;
+    delete rightSpacer;
+    delete startButton;
+    delete statsButton;
+    delete achievementsButton;
+    delete exitButton;
+    delete verticalLayout;
+    delete gridLayout;
+    delete game_;
 }

@@ -15,10 +15,11 @@ class PauseMenu : public QMainWindow
     Q_OBJECT
 public:
     PauseMenu(Game* game, QWidget *parent = nullptr);
+    ~PauseMenu();
 
 private slots:
     void exit();
-    //void back(); // this is continue but continue is a command
+    void back(); // this is continue but continue is a command
 
 protected:
     void paintEvent(QPaintEvent *event) override;
@@ -28,10 +29,8 @@ private:
     QPushButton* continue_button;
     QPushButton* exit_button;
     QVBoxLayout* buttonsLayout;
-    QGridLayout* layout;
     QSpacerItem* topSpacer;
     QSpacerItem* bottomSpacer;
-    QSpacerItem* rightSpacer;
     QWidget* centralWidget;
 
     Game* game_;

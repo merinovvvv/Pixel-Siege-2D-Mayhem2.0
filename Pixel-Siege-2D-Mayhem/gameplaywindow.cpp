@@ -2,6 +2,7 @@
 
 #include "gameplaywindow.h"
 #include "mapchoosewindow.h"
+#include "game.h"
 
 gameplayWindow::gameplayWindow(Game* game, QWidget *parent)
     : QMainWindow{parent}, game_(game), view_(new QGraphicsView(this)), scene_(new QGraphicsScene(this)), character_(nullptr)
@@ -12,6 +13,13 @@ gameplayWindow::gameplayWindow(Game* game, QWidget *parent)
     view_->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     view_->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     setCentralWidget(view_);
+}
+
+gameplayWindow::~gameplayWindow() {
+    delete game_;
+    delete scene_;
+    delete view_;
+    delete character_;
 }
 
 void gameplayWindow::setMap(QString& map) {
@@ -35,16 +43,16 @@ void gameplayWindow::keyPressEvent(QKeyEvent* event) {
     switch (event->key()) {
     case Qt::Key_A:
         character_->moveBy(-10, 0);
-        if (facingLeft) {
+        if (!facingLeft) {
             character_->setTransform(QTransform(1, 0, 0, 1, 0, 0));
-            facingLeft = false;
+            facingLeft = true;
         }
         break;
     case Qt::Key_D:
         character_->moveBy(10, 0);
-        if (!facingLeft) {
+        if (facingLeft) {
             character_->setTransform(QTransform(-1, 0, 0, 1, character_->boundingRect().width(), 0));
-            facingLeft = true;
+            facingLeft = false;
         }
         break;
     case Qt::Key_W:
@@ -52,6 +60,9 @@ void gameplayWindow::keyPressEvent(QKeyEvent* event) {
         break;
     case Qt::Key_S:
         character_->moveBy(0, 10);
+        break;
+    case Qt::Key_Escape:
+        game_->showPauseMenu();
         break;
     default:
         QMainWindow::keyPressEvent(event);

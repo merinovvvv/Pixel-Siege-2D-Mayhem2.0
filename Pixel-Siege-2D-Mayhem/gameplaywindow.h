@@ -14,6 +14,7 @@ class gameplayWindow : public QMainWindow
     Q_OBJECT
 public:
     explicit gameplayWindow(Game* game, QWidget *parent = nullptr);
+    ~gameplayWindow();
 
     void setMap(QString& map);
     QVector <QString> getMaps();

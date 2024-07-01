@@ -5,6 +5,7 @@
 #include <QSpacerItem>
 #include <QPropertyAnimation>
 #include <QTimer>
+#include <QGraphicsDropShadowEffect>
 
 #include "mapchoosewindow.h"
 #include "main_menu.h"
@@ -23,6 +24,12 @@ mapChooseWindow::mapChooseWindow(Game* game, QWidget *parent)
     this->setWindowIcon(QIcon(":/icon/helmetIcon.jpg"));
 
     backButton = new QPushButton();
+    QGraphicsDropShadowEffect *effect1 = new QGraphicsDropShadowEffect;
+    effect1->setBlurRadius(10);  // Увеличение радиуса размытия для большей толщины
+    effect1->setColor(Qt::black);
+    effect1->setOffset(3, 3);  // Увеличение смещения для большей толщины
+    backButton->setGraphicsEffect(effect1);
+
     backButton->setText("BACK");
     backButton->setStyleSheet("QPushButton {"
                               "    background-color: transparent;"
@@ -58,6 +65,11 @@ mapChooseWindow::mapChooseWindow(Game* game, QWidget *parent)
     centralWidget->setLayout(MapsAndArrows);
 
     leftButton = new QPushButton("<", this);
+    QGraphicsDropShadowEffect *effect2 = new QGraphicsDropShadowEffect;
+    effect2->setBlurRadius(10);  // Увеличение радиуса размытия для большей толщины
+    effect2->setColor(Qt::black);
+    effect2->setOffset(3, 3);  // Увеличение смещения для большей толщины
+    leftButton->setGraphicsEffect(effect2);
 
     leftButton->setStyleSheet("QPushButton {"
                               "    background-color: transparent;"
@@ -72,6 +84,11 @@ mapChooseWindow::mapChooseWindow(Game* game, QWidget *parent)
     MapsAndArrows->addWidget(leftButton);
 
     rightButton = new QPushButton(">", this);
+    QGraphicsDropShadowEffect *effect3 = new QGraphicsDropShadowEffect;
+    effect3->setBlurRadius(10);  // Увеличение радиуса размытия для большей толщины
+    effect3->setColor(Qt::black);
+    effect3->setOffset(3, 3);  // Увеличение смещения для большей толщины
+    rightButton->setGraphicsEffect(effect3);
 
     rightButton->setStyleSheet("QPushButton {"
                               "    background-color: transparent;"
@@ -107,6 +124,12 @@ mapChooseWindow::mapChooseWindow(Game* game, QWidget *parent)
     chooseMapLayout->addItem(middleSpacer_2);
 
     startButton = new QPushButton();
+    QGraphicsDropShadowEffect *effect4 = new QGraphicsDropShadowEffect;
+    effect4->setBlurRadius(10);  // Увеличение радиуса размытия для большей толщины
+    effect4->setColor(Qt::black);
+    effect4->setOffset(3, 3);  // Увеличение смещения для большей толщины
+    startButton->setGraphicsEffect(effect4);
+
     startButton->setText("START");
     startButton->setStyleSheet("QPushButton {"
                               "    background-color: transparent;"
@@ -187,5 +210,13 @@ QVector <QPixmap> mapChooseWindow::getMapsForChoose() {
 }
 
 mapChooseWindow::~mapChooseWindow() {
+    delete backButton;
+    delete chooseMap;
     delete mapChooseBackground;
+    delete mapChooseView;
+    delete mapItem;
+    delete startButton;
+    delete leftButton;
+    delete rightButton;
+    delete game_;
 }
