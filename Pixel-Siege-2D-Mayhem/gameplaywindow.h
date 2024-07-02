@@ -7,6 +7,7 @@
 #include <QGraphicsScene>
 #include <QGraphicsPixmapItem>
 #include <QSet>
+#include <QRectF>
 
 class Game;
 
@@ -28,8 +29,10 @@ private:
     QGraphicsView *view_;
     QGraphicsScene *scene_;
     QGraphicsPixmapItem *character_;
+    QRectF mapBorder_;
 
     bool facingLeft = true;
+    void updateMovement();
 
 protected:
     void keyPressEvent(QKeyEvent* event) override;

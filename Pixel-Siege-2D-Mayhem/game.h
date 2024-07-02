@@ -7,22 +7,22 @@
 #include "gameplaywindow.h"
 #include "pause.h"
 
-class Game
-{
+class Game {
 public:
     Game();
     ~Game();
-
-    MainMenu* main_menu;
-    mapChooseWindow* map_choose_window;
-    gameplayWindow* gameplay_window;
-    PauseMenu* pause_menu;
 
     void showMainMenu();
     void showMapChooseWindow();
     void showPauseMenu();
     void backToMainMenu();
     void startGameplay();
+private:
+    MainMenu* main_menu;
+    mapChooseWindow* map_choose_window;
+    gameplayWindow* gameplay_window;
+    PauseMenu* pause_menu;
+
 };
 
 #endif // GAME_H

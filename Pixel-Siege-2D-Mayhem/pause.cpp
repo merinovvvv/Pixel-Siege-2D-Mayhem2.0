@@ -5,6 +5,8 @@
 #include <QPainter>
 
 PauseMenu::PauseMenu(Game* game, QWidget *parent) : QMainWindow(parent), game_(game) {
+    setWindowIcon(QIcon(":/icon/helmetIcon.jpg"));
+
     connect(background, &QMovie::frameChanged, this, QOverload<>::of(&QMainWindow::update));
     background->start();
 
