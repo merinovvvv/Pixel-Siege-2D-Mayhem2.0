@@ -11,9 +11,28 @@
 #include "main_menu.h"
 #include "game.h"
 
+//TODO not cycled button choose with keyboard
+
 mapChooseWindow::mapChooseWindow(Game* game, QWidget *parent)
     : QMainWindow{parent}, game_(game)
 {
+
+    //setMouseTracking(true);
+
+    QString styleSheet = ("QPushButton {"
+                          "background: transparent;"
+                          "color: white;"
+                          "font-size: 40pt;"
+                          "}"
+                          "QPushButton:hover {"
+                          "background: transparent;"
+                          "color: rgb(255, 173, 30);"
+                          "font-size: 40pt;"
+                          "}"
+                          "QPushButton:focus{"
+                          "color: rgb(255, 173, 30);"
+                          "outline: none;"
+                          "}");
 
     mapChooseBackground = new QMovie(":/backgrounds/background_menu/back5.gif");
     connect(mapChooseBackground, &QMovie::frameChanged, this, [this]() {
@@ -31,15 +50,7 @@ mapChooseWindow::mapChooseWindow(Game* game, QWidget *parent)
     backButton->setGraphicsEffect(effect1);
 
     backButton->setText("BACK");
-    backButton->setStyleSheet("QPushButton {"
-                              "    background-color: transparent;"
-                              "    border: none;"
-                              "    color: white;"
-                              "    font-size: 40pt;"
-                              "}"
-                              "QPushButton:hover {"
-                              "    color: rgb(255, 173, 30);"
-                              "}");
+    backButton->setStyleSheet(styleSheet);
 
 
     QWidget *centralWidget = new QWidget(this);
@@ -71,15 +82,7 @@ mapChooseWindow::mapChooseWindow(Game* game, QWidget *parent)
     effect2->setOffset(3, 3);  // Увеличение смещения для большей толщины
     leftButton->setGraphicsEffect(effect2);
 
-    leftButton->setStyleSheet("QPushButton {"
-                              "    background-color: transparent;"
-                              "    border: none;"
-                              "    color: white;"
-                              "    font-size: 40pt;"
-                              "}"
-                              "QPushButton:hover {"
-                              "    color: rgb(255, 173, 30);"
-                              "}");
+    leftButton->setStyleSheet(styleSheet);
 
     MapsAndArrows->addWidget(leftButton);
 
@@ -90,15 +93,7 @@ mapChooseWindow::mapChooseWindow(Game* game, QWidget *parent)
     effect3->setOffset(3, 3);  // Увеличение смещения для большей толщины
     rightButton->setGraphicsEffect(effect3);
 
-    rightButton->setStyleSheet("QPushButton {"
-                              "    background-color: transparent;"
-                              "    border: none;"
-                              "    color: white;"
-                              "    font-size: 40pt;"
-                              "}"
-                              "QPushButton:hover {"
-                              "    color: rgb(255, 173, 30);"
-                              "}");
+    rightButton->setStyleSheet(styleSheet);
 
     mapChooseScene = new QGraphicsScene(this);
     mapChooseView = new QGraphicsView(mapChooseScene, this);
@@ -131,26 +126,26 @@ mapChooseWindow::mapChooseWindow(Game* game, QWidget *parent)
     startButton->setGraphicsEffect(effect4);
 
     startButton->setText("START");
-    startButton->setStyleSheet("QPushButton {"
-                              "    background-color: transparent;"
-                              "    border: none;"
-                              "    color: white;"
-                              "    font-size: 40pt;"
-                              "}"
-                              "QPushButton:hover {"
-                              "    color: rgb(255, 173, 30);"
-                              "}");
+    startButton->setStyleSheet(styleSheet);
 
     chooseMapLayout->addWidget(startButton);
 
     QSpacerItem* lowerSpacer = new QSpacerItem(20, 100, QSizePolicy::Minimum, QSizePolicy::Fixed);
     chooseMapLayout->addItem(lowerSpacer);
 
+    startButton->installEventFilter(this);
+    leftButton->installEventFilter(this);
+    rightButton->installEventFilter(this);
+    backButton->installEventFilter(this);
+
+    //startButton->setFocus();
+
     connect(leftButton, SIGNAL(clicked()), this, SLOT(changeMap()));
     connect(rightButton, SIGNAL(clicked()), this, SLOT(changeMap()));
 
     connect(backButton, SIGNAL(clicked()), this, SLOT(backToMainMenu()));
     connect(startButton, SIGNAL(clicked()), this, SLOT(startGame()));
+
 }
 
 void mapChooseWindow::paintEvent(QPaintEvent *event) {
@@ -209,14 +204,59 @@ QVector <QPixmap> mapChooseWindow::getMapsForChoose() {
     return mapsForChoose;
 }
 
+bool mapChooseWindow::eventFilter(QObject *obj, QEvent *event) {
+    if (event->type() == QEvent::Enter) {
+
+        startButton->clearFocus();
+        leftButton->clearFocus();
+        rightButton->clearFocus();
+        backButton->clearFocus();
+
+
+        QPushButton *currentButton = qobject_cast<QPushButton*>(obj);
+        if (currentButton) {
+            currentButton->setFocus();
+        }
+    }
+
+    return false;
+}
+
+void mapChooseWindow::keyPressEvent(QKeyEvent *event) {
+
+    if (event->key() == Qt::Key_Enter || event->key() == Qt::Key_Return) {
+        QWidget *focusedWidget = focusWidget();
+        QPushButton *focusedButton = qobject_cast<QPushButton *>(focusedWidget);
+        if (focusedButton) {
+            if (focusedButton == startButton) {
+                startGame();
+            } else if (focusedButton == backButton) {
+                backToMainMenu();
+            } else if (focusedButton == rightButton) {
+                rightButton->click();
+            } else if (focusedButton == leftButton) {
+                leftButton->click();
+            }
+        }
+    } else {
+        QMainWindow::keyPressEvent(event);
+    }
+}
+
+void mapChooseWindow::showEvent(QShowEvent *event) {
+    QMainWindow::showEvent(event);
+
+    startButton->setFocus();
+}
+
 mapChooseWindow::~mapChooseWindow() {
-    delete backButton;
-    delete chooseMap;
-    delete mapChooseBackground;
-    delete mapChooseView;
-    delete mapItem;
-    delete startButton;
-    delete leftButton;
-    delete rightButton;
-    delete game_;
+    // delete backButton;
+    // delete chooseMap;
+    // delete mapChooseBackground;
+    // delete mapChooseView;
+    // delete mapItem;
+    // delete startButton;
+    // delete leftButton;
+    // delete rightButton;
+    // delete game_;
 }

@@ -10,6 +10,9 @@
 
 MainMenu::MainMenu(Game* game, QWidget *parent) : QMainWindow(parent), ui(new Ui::Game), game_(game) {
     ui->setupUi(this);
+
+    //setMouseTracking( true );
+
     setWindowIcon(QIcon(":/icon/helmetIcon.jpg"));
     showFullScreen();
     connect(background, &QMovie::frameChanged, this, QOverload<>::of(&QMainWindow::update));
@@ -42,7 +45,10 @@ MainMenu::MainMenu(Game* game, QWidget *parent) : QMainWindow(parent), ui(new Ui
     exitButton->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
     connect(exitButton, SIGNAL(clicked()), this, SLOT(exitSlot()));
 
-    QString styleSheet = "QPushButton {"
+    // startButton->clearFocus();
+    // exitButton->clearFocus();
+
+    QString styleSheet = ("QPushButton {"
                          "background: transparent;"
                          "color: white;"
                          "font-size: 110px;"
@@ -51,7 +57,11 @@ MainMenu::MainMenu(Game* game, QWidget *parent) : QMainWindow(parent), ui(new Ui
                          "background: transparent;"
                          "color: rgb(255, 173, 30);"
                          "font-size: 110px;"
-                         "}";
+                         "}"
+                         "QPushButton:focus{"
+                         "color: rgb(255, 173, 30);"
+                         "outline: none;"
+                          "}");
 
     startButton->setStyleSheet(styleSheet);
     // Добавление эффекта тени для имитации обводки
@@ -89,6 +99,11 @@ MainMenu::MainMenu(Game* game, QWidget *parent) : QMainWindow(parent), ui(new Ui
 
     gridLayout->addItem(verticalLayout, 1, 2, 1, 1, Qt::AlignLeft | Qt::AlignCenter);
     setLayout(gridLayout);
+
+    startButton->installEventFilter(this);
+    statsButton->installEventFilter(this);
+    achievementsButton->installEventFilter(this);
+    exitButton->installEventFilter(this);
 }
 
 void MainMenu::paintEvent(QPaintEvent *event) {
@@ -97,6 +112,25 @@ void MainMenu::paintEvent(QPaintEvent *event) {
     // Draw the current frame of the gif
     if (!background->currentPixmap().isNull()) {
         painter.drawPixmap(0, 0, width(), height(), background->currentPixmap());
+    }
+}
+
+void MainMenu::keyPressEvent(QKeyEvent *event) { //TODO Transparent Cursor while using keyboard arrows
+    if (event->key() == Qt::Key_Enter || event->key() == Qt::Key_Return) {
+        QWidget *focusedWidget = focusWidget();
+        QPushButton *focusedButton = qobject_cast<QPushButton *>(focusedWidget);
+        if (focusedButton) {
+            if (focusedButton == startButton) {
+                showMapChooseWindow();
+            } else if (focusedButton == exitButton) {
+                exitSlot();
+            }
+        }
+    } else if (event->key() == Qt::Key_Up || event->key() == Qt::Key_Down ||
+               event->key() == Qt::Key_Left || event->key() == Qt::Key_Right) {
+        QApplication::setOverrideCursor(Qt::BlankCursor);
+    } else {
+        QMainWindow::keyPressEvent(event);
     }
 }
 
@@ -111,18 +145,71 @@ void MainMenu::showMapChooseWindow() {
     this->close();
 }
 
+// void MainMenu::enterEvent(QEvent *event) {
+
+//     QMouseEvent *mouseEvent = static_cast<QMouseEvent *>(event);
+//     QWidget *widgetUnderMouse = childAt(mouseEvent->pos());
+
+
+//     if (widgetUnderMouse == startButton) {
+//         startButton->setFocus();
+//         statsButton->clearFocus();
+//         achievementsButton->clearFocus();
+//         exitButton->clearFocus();
+//     } else if (widgetUnderMouse == statsButton) {
+//         startButton->clearFocus();
+//         statsButton->setFocus();
+//         achievementsButton->clearFocus();
+//         exitButton->clearFocus();
+//     } else if (widgetUnderMouse == achievementsButton) {
+//         startButton->clearFocus();
+//         statsButton->clearFocus();
+//         achievementsButton->setFocus();
+//         exitButton->clearFocus();
+//     } else if (widgetUnderMouse == exitButton) {
+//         startButton->clearFocus();
+//         statsButton->clearFocus();
+//         achievementsButton->clearFocus();
+//         exitButton->setFocus();
+//     }
+//     QMainWindow::enterEvent(event);
+// }
+
+bool MainMenu::eventFilter(QObject *obj, QEvent *event) {
+    if (event->type() == QEvent::Enter) {
+
+        startButton->clearFocus();
+        statsButton->clearFocus();
+        achievementsButton->clearFocus();
+        exitButton->clearFocus();
+
+
+        QPushButton *currentButton = qobject_cast<QPushButton*>(obj);
+        if (currentButton) {
+            currentButton->setFocus();
+        }
+    }
+
+    return false;
+}
+
+void MainMenu::mouseMoveEvent(QMouseEvent* event) { //TODO Transparent Cursor while using keyboard arrows
+    Q_UNUSED(event);
+    QApplication::restoreOverrideCursor();
+}
+
 MainMenu::~MainMenu()
 {
     delete ui;
-    delete background;
-    delete centralWidget;
-    delete leftSpacer;
-    delete rightSpacer;
-    delete startButton;
-    delete statsButton;
-    delete achievementsButton;
-    delete exitButton;
-    delete verticalLayout;
-    delete gridLayout;
-    delete game_;
+    // delete background;
+    // delete centralWidget;
+    // delete leftSpacer;
+    // delete rightSpacer;
+    // delete startButton;
+    // delete statsButton;
+    // delete achievementsButton;
+    // delete exitButton;
+    // delete verticalLayout;
+    // delete gridLayout;
+    // delete game_;
 }

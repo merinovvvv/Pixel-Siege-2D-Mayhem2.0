@@ -16,10 +16,10 @@ gameplayWindow::gameplayWindow(Game* game, QWidget *parent)
 }
 
 gameplayWindow::~gameplayWindow() {
-    delete game_;
-    delete scene_;
-    delete view_;
-    delete character_;
+    // delete game_;
+    // delete scene_;
+    // delete view_;
+    // delete character_;
 }
 
 void gameplayWindow::setMap(QString& map) {

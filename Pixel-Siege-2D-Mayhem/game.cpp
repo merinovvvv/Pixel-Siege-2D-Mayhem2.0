@@ -9,22 +9,23 @@ Game::Game() {
 
 void Game::showMainMenu() {
     main_menu->show();
-    map_choose_window->close();
-    pause_menu->close();
-    gameplay_window->close();
+    // map_choose_window->close();
+    // pause_menu->close();
+    // gameplay_window->close();
 }
 
 void Game::showMapChooseWindow() {
     map_choose_window->showFullScreen();
     main_menu->close();
-    pause_menu->close();
-    gameplay_window->close();
+    // pause_menu->close();
+    // gameplay_window->close();
 }
 
 void Game::showPauseMenu() {
     pause_menu->showFullScreen();
-    main_menu->close();
-    map_choose_window->close();
+    gameplay_window->hide();
+    // main_menu->close();
+    // map_choose_window->close();
 }
 
 void Game::backToMainMenu() {
