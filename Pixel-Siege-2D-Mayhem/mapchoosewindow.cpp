@@ -164,12 +164,6 @@ void mapChooseWindow::paintEvent(QPaintEvent *event) {
     QMainWindow::paintEvent(event);
 }
 
-// void mapChooseWindow::showMapChooseWindow(mapChooseWindow* window) {
-//     if (window) {
-//         window->showFullScreen();
-//     }
-// }
-
 void mapChooseWindow::changeMap() {
 
     QPushButton *buttonClicked = qobject_cast<QPushButton *>(sender());

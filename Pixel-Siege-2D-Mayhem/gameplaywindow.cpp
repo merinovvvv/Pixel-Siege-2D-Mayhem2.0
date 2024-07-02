@@ -1,4 +1,5 @@
 #include <QKeyEvent>
+#include <QTimer>
 
 #include "gameplaywindow.h"
 #include "mapchoosewindow.h"
@@ -40,26 +41,84 @@ QVector <QString> gameplayWindow::getMaps() {
 void gameplayWindow::keyPressEvent(QKeyEvent* event) {
     if (!character_) return;
 
+    pressedKeys_.insert(event->key());
+
     switch (event->key()) {
     case Qt::Key_A:
-        character_->moveBy(-10, 0);
-        if (!facingLeft) {
-            character_->setTransform(QTransform(1, 0, 0, 1, 0, 0));
-            facingLeft = true;
+        if (pressedKeys_.find(Qt::Key_S) != pressedKeys_.end()) {
+            character_->moveBy(-10, 10);
+            if (!facingLeft) {
+                character_->setTransform(QTransform(1, 0, 0, 1, 0, 0));
+                facingLeft = true;
+            }
+        } else if (pressedKeys_.find(Qt::Key_W) != pressedKeys_.end()) {
+            character_->moveBy(-10, -10);
+            if (!facingLeft) {
+                character_->setTransform(QTransform(1, 0, 0, 1, 0, 0));
+                facingLeft = true;
+            }
+        } else {
+            character_->moveBy(-10, 0);
+            if (!facingLeft) {
+                character_->setTransform(QTransform(1, 0, 0, 1, 0, 0));
+                facingLeft = true;
+            }
         }
         break;
     case Qt::Key_D:
-        character_->moveBy(10, 0);
-        if (facingLeft) {
-            character_->setTransform(QTransform(-1, 0, 0, 1, character_->boundingRect().width(), 0));
-            facingLeft = false;
+        if (pressedKeys_.find(Qt::Key_S) != pressedKeys_.end()) {
+            character_->moveBy(10, 10);
+            if (facingLeft) {
+                character_->setTransform(QTransform(-1, 0, 0, 1, character_->boundingRect().width(), 0));
+                facingLeft = false;
+            }
+        } else if (pressedKeys_.find(Qt::Key_W) != pressedKeys_.end()) {
+            character_->moveBy(10, -10);
+            if (facingLeft) {
+                character_->setTransform(QTransform(-1, 0, 0, 1, character_->boundingRect().width(), 0));
+                facingLeft = false;
+            }
+        } else {
+            character_->moveBy(10, 0);
+            if (facingLeft) {
+                character_->setTransform(QTransform(-1, 0, 0, 1, character_->boundingRect().width(), 0));
+                facingLeft = false;
+            }
         }
         break;
     case Qt::Key_W:
-        character_->moveBy(0, -10);
+        if (pressedKeys_.find(Qt::Key_A) != pressedKeys_.end()) {
+            character_->moveBy(-10, -10);
+            if (!facingLeft) {
+                character_->setTransform(QTransform(1, 0, 0, 1, 0, 0));
+                facingLeft = true;
+            }
+        } else if (pressedKeys_.find(Qt::Key_D) != pressedKeys_.end()) {
+            character_->moveBy(10, -10);
+            if (facingLeft) {
+                character_->setTransform(QTransform(-1, 0, 0, 1, character_->boundingRect().width(), 0));
+                facingLeft = false;
+            }
+        } else {
+            character_->moveBy(0, -10);
+        }
         break;
     case Qt::Key_S:
-        character_->moveBy(0, 10);
+        if (pressedKeys_.find(Qt::Key_A) != pressedKeys_.end()) {
+            character_->moveBy(-10, 10);
+            if (!facingLeft) {
+                character_->setTransform(QTransform(1, 0, 0, 1, 0, 0));
+                facingLeft = true;
+            }
+        } else if (pressedKeys_.find(Qt::Key_D) != pressedKeys_.end()) {
+            character_->moveBy(10, 10);
+            if (facingLeft) {
+                character_->setTransform(QTransform(-1, 0, 0, 1, character_->boundingRect().width(), 0));
+                facingLeft = false;
+            }
+        } else {
+            character_->moveBy(0, 10);
+        }
         break;
     case Qt::Key_Escape:
         game_->showPauseMenu();
@@ -67,4 +126,10 @@ void gameplayWindow::keyPressEvent(QKeyEvent* event) {
     default:
         QMainWindow::keyPressEvent(event);
     }
+}
+
+void gameplayWindow::keyReleaseEvent(QKeyEvent *event) {
+    if (!character_) return;
+
+    pressedKeys_.remove(event->key());
 }

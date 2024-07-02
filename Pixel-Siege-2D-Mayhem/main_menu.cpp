@@ -1,3 +1,4 @@
+#include <QApplication>
 #include <QGraphicsDropShadowEffect>
 #include <QMovie>
 #include <QPainter>
@@ -5,11 +6,9 @@
 #include <QTimer>
 
 #include "main_menu.h"
-#include "ui_main_menu.h"
 #include "game.h"
 
-MainMenu::MainMenu(Game* game, QWidget *parent) : QMainWindow(parent), ui(new Ui::Game), game_(game) {
-    ui->setupUi(this);
+MainMenu::MainMenu(Game* game, QWidget *parent) : QMainWindow(parent), game_(game) {
     setWindowIcon(QIcon(":/icon/helmetIcon.jpg"));
     showFullScreen();
     connect(background, &QMovie::frameChanged, this, QOverload<>::of(&QMainWindow::update));
@@ -20,9 +19,7 @@ MainMenu::MainMenu(Game* game, QWidget *parent) : QMainWindow(parent), ui(new Ui
     setCentralWidget(centralWidget);
 
     leftSpacer = new QSpacerItem(20, 40, QSizePolicy::Preferred, QSizePolicy::Expanding);
-    //rightSpacer = new QSpacerItem(20, 40, QSizePolicy::Expanding, QSizePolicy::Expanding);
     gridLayout->addItem(leftSpacer, 1, 1, 1, 1, Qt::AlignLeft);
-    //gridLayout->addItem(rightSpacer, 1, 3, 1, 1, Qt::AlignRight);
 
     verticalLayout = new QVBoxLayout(centralWidget);
     verticalLayout->addSpacing(15);
@@ -35,7 +32,7 @@ MainMenu::MainMenu(Game* game, QWidget *parent) : QMainWindow(parent), ui(new Ui
     statsButton = new QPushButton("STATS");
     statsButton->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
 
-    achievementsButton = new QPushButton("ACHIEVEMNTS");
+    achievementsButton = new QPushButton("ACHIEVEMENTS");
     achievementsButton->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
 
     exitButton = new QPushButton("EXIT");
@@ -113,7 +110,6 @@ void MainMenu::showMapChooseWindow() {
 
 MainMenu::~MainMenu()
 {
-    delete ui;
     delete background;
     delete centralWidget;
     delete leftSpacer;

@@ -6,11 +6,11 @@
 #include <QGraphicsView>
 #include <QGraphicsScene>
 #include <QGraphicsPixmapItem>
+#include <QSet>
 
 class Game;
 
-class gameplayWindow : public QMainWindow
-{
+class gameplayWindow : public QMainWindow {
     Q_OBJECT
 public:
     explicit gameplayWindow(Game* game, QWidget *parent = nullptr);
@@ -21,6 +21,7 @@ public:
 private:
     QString map_;
     QVector <QString> maps_ = {":/backgrounds/background_gameplay/grass2.0.jpg", ":/backgrounds/background_gameplay/sand.jpg"};
+    QSet<int> pressedKeys_;
 
     Game* game_;
 
@@ -29,10 +30,10 @@ private:
     QGraphicsPixmapItem *character_;
 
     bool facingLeft = true;
+
 protected:
     void keyPressEvent(QKeyEvent* event) override;
-
-signals:
+    void keyReleaseEvent(QKeyEvent *event) override;
 };
 
 #endif // GAMEPLAYWINDOW_H

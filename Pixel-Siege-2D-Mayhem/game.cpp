@@ -25,6 +25,7 @@ void Game::showPauseMenu() {
     pause_menu->showFullScreen();
     main_menu->close();
     map_choose_window->close();
+    gameplay_window->hide();
 }
 
 void Game::backToMainMenu() {
