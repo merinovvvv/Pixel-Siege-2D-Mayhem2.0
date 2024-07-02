@@ -103,7 +103,8 @@ mapChooseWindow::mapChooseWindow(Game* game, QWidget *parent)
     mapChooseScene = new QGraphicsScene(this);
     mapChooseView = new QGraphicsView(mapChooseScene, this);
 
-    mapsForChoose.append(QPixmap(":/backgrounds/background_gameplay/grassForChoose2.jpg"));
+    //mapsForChoose.append(QPixmap(":/backgrounds/background_gameplay/grassForChoose2.jpg"));
+    mapsForChoose.append(QPixmap(":/backgrounds/background_gameplay/another_grass_forChoose.png"));
     mapsForChoose.append(QPixmap(":/backgrounds/background_gameplay/sandForChoose.jpg"));
 
     mapBack = mapsForChoose[0];

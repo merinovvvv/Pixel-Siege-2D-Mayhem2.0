@@ -21,7 +21,7 @@ public:
     QVector <QString> getMaps();
 private:
     QString map_;
-    QVector <QString> maps_ = {":/backgrounds/background_gameplay/grass2.0.jpg", ":/backgrounds/background_gameplay/sand.jpg"};
+    QVector <QString> maps_ = {":/backgrounds/background_gameplay/another_grass.png", ":/backgrounds/background_gameplay/sand.jpg"};
     QSet<int> pressedKeys_;
 
     Game* game_;
@@ -29,6 +29,7 @@ private:
     QGraphicsView *view_;
     QGraphicsScene *scene_;
     QGraphicsPixmapItem *character_;
+    QGraphicsPixmapItem *background_;
     QRectF mapBorder_;
 
     bool facingLeft = true;

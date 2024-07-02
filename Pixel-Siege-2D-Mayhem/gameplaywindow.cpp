@@ -1,6 +1,7 @@
 #include <QApplication>
 #include <QKeyEvent>
 #include <QTimer>
+#include <QKeyEvent>
 
 #include "gameplaywindow.h"
 #include "mapchoosewindow.h"
@@ -26,11 +27,17 @@ gameplayWindow::~gameplayWindow() {
 
 void gameplayWindow::setMap(QString& map) {
     map_ = map;
-    scene_->addPixmap(QPixmap(map_));
+    QPixmap scaledMap = QPixmap(map_).scaled(1920, 1080, Qt::IgnoreAspectRatio);
+    background_ = new QGraphicsPixmapItem(scaledMap);
+    background_->setZValue(0);
+    scene_->addItem(background_);
 
     if (!character_) {
         character_ = new QGraphicsPixmapItem(QPixmap(":/character/mobs/knight1.png"));
-        character_->setPos(100, 100);
+        character_->setZValue(1);
+        qreal x = character_->boundingRect().width() / 2;
+        qreal y = character_->boundingRect().height() / 2;
+        character_->setPos(scene_->sceneRect().center() + QPointF(-x, -y));
         scene_->addItem(character_);
     }
 }
@@ -42,7 +49,7 @@ QVector <QString> gameplayWindow::getMaps() {
 void gameplayWindow::keyPressEvent(QKeyEvent* event) {
     if (!character_) return;
 
-    pressedKeys_.insert(event->key());
+    pressedKeys_.insert(event->nativeScanCode());
     QRectF characterRect = character_->boundingRect();
     qreal characterLeft = characterRect.left() + character_->x();
     qreal characterRight = characterRect.right() + character_->x();
@@ -55,9 +62,9 @@ void gameplayWindow::keyPressEvent(QKeyEvent* event) {
     qreal mapTop = mapBorder_.top();
     qreal mapBottom = mapBorder_.bottom();
 
-    switch (event->key()) {
-    case Qt::Key_A:
-        if (pressedKeys_.find(Qt::Key_S) != pressedKeys_.end()) {
+    switch (event->nativeScanCode()) {
+    case 30:
+        if (pressedKeys_.find(31) != pressedKeys_.end()) {
 
             // Когда мы упёрлись в левую границу и упёрлись в нижнюю
             if (characterLeft <= mapLeft && characterBottom >= mapBottom) {
@@ -78,7 +85,7 @@ void gameplayWindow::keyPressEvent(QKeyEvent* event) {
                 facingLeft = true;
             }
 
-        } else if (pressedKeys_.find(Qt::Key_W) != pressedKeys_.end()) {
+        } else if (pressedKeys_.find(17) != pressedKeys_.end()) {
 
             // Когда мы упёрлись в левую границу и упёрлись в верхнюю
             if (characterLeft <= mapLeft && characterTop <= mapTop) {
@@ -113,8 +120,8 @@ void gameplayWindow::keyPressEvent(QKeyEvent* event) {
 
         }
         break;
-    case Qt::Key_D:
-        if (pressedKeys_.find(Qt::Key_S) != pressedKeys_.end()) {
+    case 32:
+        if (pressedKeys_.find(31) != pressedKeys_.end()) {
 
             // Когда упёрлись в правую и нижнюю границы
             if (characterRight >= mapRight && characterBottom >= mapBottom) {
@@ -135,7 +142,7 @@ void gameplayWindow::keyPressEvent(QKeyEvent* event) {
                 facingLeft = false;
             }
 
-        } else if (pressedKeys_.find(Qt::Key_W) != pressedKeys_.end()) {
+        } else if (pressedKeys_.find(17) != pressedKeys_.end()) {
 
             // Когда упёрлись в правую и верхнюю границы
             if (characterRight >= mapRight && characterTop <= mapTop) {
@@ -169,8 +176,8 @@ void gameplayWindow::keyPressEvent(QKeyEvent* event) {
             }
         }
         break;
-    case Qt::Key_W:
-        if (pressedKeys_.find(Qt::Key_A) != pressedKeys_.end()) {
+    case 17:
+        if (pressedKeys_.find(30) != pressedKeys_.end()) {
             // Когда мы упёрлись в левую границу и упёрлись в верхнюю
             if (characterLeft <= mapLeft && characterTop <= mapTop) {
                 character_->moveBy(0, 0);
@@ -189,7 +196,7 @@ void gameplayWindow::keyPressEvent(QKeyEvent* event) {
                 character_->setTransform(QTransform(1, 0, 0, 1, 0, 0));
                 facingLeft = true;
             }
-        } else if (pressedKeys_.find(Qt::Key_D) != pressedKeys_.end()) {
+        } else if (pressedKeys_.find(32) != pressedKeys_.end()) {
 
             // Когда упёрлись в правую и верхнюю границы
             if (characterRight >= mapRight && characterTop <= mapTop) {
@@ -218,8 +225,8 @@ void gameplayWindow::keyPressEvent(QKeyEvent* event) {
             }
         }
         break;
-    case Qt::Key_S:
-        if (pressedKeys_.find(Qt::Key_A) != pressedKeys_.end()) {
+    case 31:
+        if (pressedKeys_.find(30) != pressedKeys_.end()) {
 
             // Когда мы упёрлись в левую границу и упёрлись в нижнюю
             if (characterLeft <= mapLeft && characterBottom >= mapBottom) {
@@ -240,7 +247,7 @@ void gameplayWindow::keyPressEvent(QKeyEvent* event) {
                 facingLeft = true;
             }
 
-        } else if (pressedKeys_.find(Qt::Key_D) != pressedKeys_.end()) {
+        } else if (pressedKeys_.find(32) != pressedKeys_.end()) {
 
             // Когда упёрлись в правую и нижнюю границы
             if (characterRight >= mapRight && characterBottom >= mapBottom) {
@@ -269,7 +276,7 @@ void gameplayWindow::keyPressEvent(QKeyEvent* event) {
             }
         }
         break;
-    case Qt::Key_Escape:
+    case 1:
         game_->showPauseMenu();
         break;
     default:
@@ -281,5 +288,5 @@ void gameplayWindow::keyPressEvent(QKeyEvent* event) {
 void gameplayWindow::keyReleaseEvent(QKeyEvent *event) {
     if (!character_) return;
 
-    pressedKeys_.remove(event->key());
+    pressedKeys_.remove(event->nativeScanCode());
 }
