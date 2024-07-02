@@ -11,8 +11,6 @@
 #include "main_menu.h"
 #include "game.h"
 
-//TODO not cycled button choose with keyboard
-
 mapChooseWindow::mapChooseWindow(Game* game, QWidget *parent)
     : QMainWindow{parent}, game_(game)
 {
@@ -139,6 +137,7 @@ mapChooseWindow::mapChooseWindow(Game* game, QWidget *parent)
     backButton->installEventFilter(this);
 
     //startButton->setFocus();
+    //QWidget::grabKeyboard();
 
     connect(leftButton, SIGNAL(clicked()), this, SLOT(changeMap()));
     connect(rightButton, SIGNAL(clicked()), this, SLOT(changeMap()));
@@ -206,21 +205,47 @@ QVector <QPixmap> mapChooseWindow::getMapsForChoose() {
 
 bool mapChooseWindow::eventFilter(QObject *obj, QEvent *event) {
     if (event->type() == QEvent::Enter) {
-
         startButton->clearFocus();
         leftButton->clearFocus();
         rightButton->clearFocus();
         backButton->clearFocus();
 
-
         QPushButton *currentButton = qobject_cast<QPushButton*>(obj);
         if (currentButton) {
             currentButton->setFocus();
         }
+    } else if (event->type() == QEvent::KeyPress) {
+        QKeyEvent *keyEvent = static_cast<QKeyEvent *>(event);
+        if (keyEvent->key() == Qt::Key_Left || keyEvent->key() == Qt::Key_Right ||
+            keyEvent->key() == Qt::Key_Up || keyEvent->key() == Qt::Key_Down) {
+
+
+            QPushButton *currentButton = qobject_cast<QPushButton *>(obj);
+            if (currentButton == startButton && (keyEvent->key() == Qt::Key_Left || keyEvent->key() == Qt::Key_Up)) {
+                rightButton->setFocus();
+            } else if (currentButton == rightButton && (keyEvent->key() == Qt::Key_Left || keyEvent->key() == Qt::Key_Up)) {
+                leftButton->setFocus();
+            } else if (currentButton == leftButton && (keyEvent->key() == Qt::Key_Left || keyEvent->key() == Qt::Key_Up)) {
+                backButton->setFocus();
+            } else if (currentButton == backButton && (keyEvent->key() == Qt::Key_Left || keyEvent->key() == Qt::Key_Up)) {
+                startButton->setFocus();
+            } else if (currentButton == startButton && (keyEvent->key() == Qt::Key_Right || keyEvent->key() == Qt::Key_Down)) {
+                backButton->setFocus();
+            } else if (currentButton == backButton && (keyEvent->key() == Qt::Key_Right || keyEvent->key() == Qt::Key_Down)) {
+                leftButton->setFocus();
+            } else if (currentButton == leftButton && (keyEvent->key() == Qt::Key_Right || keyEvent->key() == Qt::Key_Down)) {
+                rightButton->setFocus();
+            } else if (currentButton == rightButton && (keyEvent->key() == Qt::Key_Right || keyEvent->key() == Qt::Key_Down)) {
+                startButton->setFocus();
+            }
+
+            return true;
+        }
     }
 
-    return false;
+    return QObject::eventFilter(obj, event);
 }
+
 
 void mapChooseWindow::keyPressEvent(QKeyEvent *event) {
 

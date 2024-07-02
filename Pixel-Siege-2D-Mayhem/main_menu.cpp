@@ -11,7 +11,7 @@
 MainMenu::MainMenu(Game* game, QWidget *parent) : QMainWindow(parent), ui(new Ui::Game), game_(game) {
     ui->setupUi(this);
 
-    //setMouseTracking( true );
+    setMouseTracking( true );
 
     setWindowIcon(QIcon(":/icon/helmetIcon.jpg"));
     showFullScreen();
@@ -126,10 +126,10 @@ void MainMenu::keyPressEvent(QKeyEvent *event) { //TODO Transparent Cursor while
                 exitSlot();
             }
         }
-    } else if (event->key() == Qt::Key_Up || event->key() == Qt::Key_Down ||
+    } /*else if (event->key() == Qt::Key_Up || event->key() == Qt::Key_Down ||
                event->key() == Qt::Key_Left || event->key() == Qt::Key_Right) {
         QApplication::setOverrideCursor(Qt::BlankCursor);
-    } else {
+    }*/ else {
         QMainWindow::keyPressEvent(event);
     }
 }
@@ -188,15 +188,21 @@ bool MainMenu::eventFilter(QObject *obj, QEvent *event) {
         if (currentButton) {
             currentButton->setFocus();
         }
-    }
-
-    return false;
+    } /*else if (event->type() == QEvent::KeyPress) {
+        QKeyEvent *keyEvent = static_cast<QKeyEvent *>(event);
+        if (keyEvent->key() == Qt::Key_Left || keyEvent->key() == Qt::Key_Right ||
+            keyEvent->key() == Qt::Key_Up || keyEvent->key() == Qt::Key_Down) {
+            QApplication::setOverrideCursor(Qt::BlankCursor);
+            return true;
+        }
+    }*/
+    return QObject::eventFilter(obj, event);
 }
 
-void MainMenu::mouseMoveEvent(QMouseEvent* event) { //TODO Transparent Cursor while using keyboard arrows
-    Q_UNUSED(event);
-    QApplication::restoreOverrideCursor();
-}
+// void MainMenu::mouseMoveEvent(QMouseEvent* event) { //TODO transparent cursor while using arrows
+//     QApplication::restoreOverrideCursor();
+//     QMainWindow::mouseMoveEvent(event);
+// }
 
 MainMenu::~MainMenu()
 {

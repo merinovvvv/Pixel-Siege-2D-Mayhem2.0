@@ -29,7 +29,7 @@ protected:
     void keyPressEvent(QKeyEvent *event) override;
     //void enterEvent(QEvent * event) override;
     bool eventFilter(QObject *obj, QEvent *event) override;
-    void mouseMoveEvent(QMouseEvent* event) override;
+    //void mouseMoveEvent(QMouseEvent* event) override;
 
 private slots:
     void exitSlot();
