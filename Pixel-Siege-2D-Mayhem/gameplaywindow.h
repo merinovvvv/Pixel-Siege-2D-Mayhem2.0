@@ -6,6 +6,8 @@
 #include <QGraphicsView>
 #include <QGraphicsScene>
 #include <QGraphicsPixmapItem>
+#include <QProgressBar>
+#include <QLabel>
 
 class Game;
 
@@ -20,17 +22,25 @@ public:
     QVector <QString> getMaps();
 private:
     QString map_;
-    QVector <QString> maps_ = {":/backgrounds/background_gameplay/grass2.0.jpg", ":/backgrounds/background_gameplay/sand.jpg"};
+    QVector <QString> maps_ = {":/backgrounds/background_gameplay/grass2.png", ":/backgrounds/background_gameplay/sand.jpg"};
 
     Game* game_;
 
     QGraphicsView *view_;
     QGraphicsScene *scene_;
     QGraphicsPixmapItem *character_;
+    QProgressBar* healthBar_;
+    QLabel* hpLabel_;
+
+    QPixmap hit = QPixmap(":/tools/items/hit.png");
+
+    void Hit();
+    void updateHealth(int health);
 
     bool facingLeft = true;
 protected:
     void keyPressEvent(QKeyEvent* event) override;
+    void mousePressEvent(QMouseEvent* event) override;
 
 signals:
 };

@@ -1,4 +1,6 @@
 #include <QKeyEvent>
+#include <QTimer>
+#include <QGraphicsProxyWidget>
 
 #include "gameplaywindow.h"
 #include "mapchoosewindow.h"
@@ -9,10 +11,38 @@ gameplayWindow::gameplayWindow(Game* game, QWidget *parent)
 {
     this->setWindowIcon(QIcon(":/icon/helmetIcon.jpg"));
 
+    hpLabel_ = new QLabel();
+    hpLabel_->setText("HP");
+
+    healthBar_ = new QProgressBar();
+    healthBar_->setRange(0, 100);
+    healthBar_->setValue(100);
+    //healthBar_->setFixedSize(200, 20);
+    //healthBar_->show();
+
+    QHBoxLayout* hpLayout = new QHBoxLayout();
+    hpLayout->addWidget(hpLabel_);
+    hpLayout->addWidget(healthBar_);
+
+    QWidget* hpWidget = new QWidget();
+    hpWidget->setLayout(hpLayout);
+
+    QWidget* containerWidget = new QWidget(this);
+    QVBoxLayout* containerLayout = new QVBoxLayout(containerWidget);
+    containerLayout->addWidget(hpWidget);
+    containerLayout->addWidget(view_);
+    containerLayout->setContentsMargins(10, 10, 10, 10); // Задает отступы от краев контейнера
+
+    setCentralWidget(containerWidget);
+
+
+    // QGraphicsProxyWidget* proxy = scene_->addWidget(healthBar_);
+    // proxy->setPos(10, 10); // Устанавливаем позицию на сцене
+
     view_->setScene(scene_);
     view_->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     view_->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
-    setCentralWidget(view_);
+    //setCentralWidget(view_);
 }
 
 gameplayWindow::~gameplayWindow() {
@@ -25,6 +55,7 @@ gameplayWindow::~gameplayWindow() {
 void gameplayWindow::setMap(QString& map) {
     map_ = map;
     scene_->setBackgroundBrush(QPixmap(map_));
+    //scene_->addPixmap(QPixmap(map_));
 
     if (!character_) {
         character_ = new QGraphicsPixmapItem(QPixmap(":/character/mobs/knight1.png"));
@@ -64,7 +95,43 @@ void gameplayWindow::keyPressEvent(QKeyEvent* event) {
     case Qt::Key_Escape:
         game_->showPauseMenu();
         break;
+    case Qt::Key_Space: {
+        Hit();
+        break;
+    }
     default:
         QMainWindow::keyPressEvent(event);
     }
+}
+
+void gameplayWindow::mousePressEvent(QMouseEvent* event) {
+    if (event->button() == Qt::LeftButton) {
+        Hit();
+    }
+}
+
+void gameplayWindow::Hit() {
+    QGraphicsPixmapItem* hitImage = new QGraphicsPixmapItem(hit);
+    if (!facingLeft) {
+        QTransform transform2;
+        transform2.scale(0.1, 0.1);
+        hitImage->setTransform(transform2);
+        hitImage->setPos(character_->pos().x() + 82, character_->pos().y() + 28);
+    } else {
+        QTransform transform;
+        transform.scale(-0.1, 0.1);
+        hitImage->setTransform(transform);
+        hitImage->setPos(character_->pos().x() + 88, character_->pos().y() + 28);
+    }
+
+    scene_->addItem(hitImage);
+
+    QTimer::singleShot(100, [hitImage, this]() {
+        scene_->removeItem(hitImage);
+        delete hitImage;
+    });
+}
+
+void gameplayWindow::updateHealth(int health) {
+    healthBar_->setValue(health);
 }

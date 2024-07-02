@@ -10,11 +10,17 @@
         <file>background_gameplay/sandForChoose.jpg</file>
         <file>background_gameplay/grass2.0.jpg</file>
         <file>background_gameplay/grassForChoose2.jpg</file>
+        <file>background_gameplay/sand2.jpg</file>
+        <file>background_gameplay/grass2.png</file>
+        <file>background_gameplay/grass2ForChoose.png</file>
     </qresource>
     <qresource prefix="/icon">
         <file>helmetIcon.jpg</file>
     </qresource>
     <qresource prefix="/character">
         <file>mobs/knight1.png</file>
+    </qresource>
+    <qresource prefix="/tools">
+        <file>items/hit.png</file>
     </qresource>
 </RCC>
