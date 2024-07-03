@@ -263,6 +263,8 @@ void mapChooseWindow::keyPressEvent(QKeyEvent *event) {
                 leftButton->click();
             }
         }
+    } else if (event->key() == Qt::Key_Escape) {
+        backToMainMenu();
     } else {
         QMainWindow::keyPressEvent(event);
     }
