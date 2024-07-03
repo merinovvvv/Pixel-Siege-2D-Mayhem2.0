@@ -66,18 +66,6 @@ PauseMenu::PauseMenu(Game* game, QWidget *parent) : QMainWindow(parent), game_(g
     connect(continue_button, SIGNAL(clicked()), this, SLOT(back()));
 }
 
-PauseMenu::~PauseMenu() {
-    delete background;
-    delete continue_button;
-    delete exit_button;
-    delete buttonsLayout;
-    delete topSpacer;
-    delete bottomSpacer;
-    delete centralWidget;
-    delete game_;
-}
-
-
 void PauseMenu::exit() {
     if(game_) {
         game_->showMainMenu();

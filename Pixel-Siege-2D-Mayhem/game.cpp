@@ -43,9 +43,3 @@ void Game::startGameplay() {
     map_choose_window->close();
 }
 
-Game::~Game() {
-    delete main_menu;
-    delete map_choose_window;
-    delete gameplay_window;
-    delete pause_menu;
-}

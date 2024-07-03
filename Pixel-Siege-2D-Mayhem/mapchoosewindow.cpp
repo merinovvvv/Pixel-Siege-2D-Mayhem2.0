@@ -204,14 +204,3 @@ QVector <QPixmap> mapChooseWindow::getMapsForChoose() {
     return mapsForChoose;
 }
 
-mapChooseWindow::~mapChooseWindow() {
-    delete backButton;
-    delete chooseMap;
-    delete mapChooseBackground;
-    delete mapChooseView;
-    delete mapItem;
-    delete startButton;
-    delete leftButton;
-    delete rightButton;
-    delete game_;
-}

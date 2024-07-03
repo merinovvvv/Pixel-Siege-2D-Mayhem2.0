@@ -85,7 +85,6 @@ MainMenu::MainMenu(Game* game, QWidget *parent) : QMainWindow(parent), game_(gam
     verticalLayout->addWidget(exitButton, 0, Qt::AlignCenter);
 
     gridLayout->addItem(verticalLayout, 1, 2, 1, 1, Qt::AlignLeft | Qt::AlignCenter);
-    setLayout(gridLayout);
 }
 
 void MainMenu::paintEvent(QPaintEvent *event) {
@@ -106,19 +105,4 @@ void MainMenu::showMapChooseWindow() {
         game_->showMapChooseWindow();
     }
     this->close();
-}
-
-MainMenu::~MainMenu()
-{
-    delete background;
-    delete centralWidget;
-    delete leftSpacer;
-    delete rightSpacer;
-    delete startButton;
-    delete statsButton;
-    delete achievementsButton;
-    delete exitButton;
-    delete verticalLayout;
-    delete gridLayout;
-    delete game_;
 }

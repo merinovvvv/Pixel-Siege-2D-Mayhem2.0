@@ -2,6 +2,7 @@
 #include <QKeyEvent>
 #include <QTimer>
 #include <QKeyEvent>
+#include <QtMath>
 
 #include "gameplaywindow.h"
 #include "mapchoosewindow.h"
@@ -18,12 +19,7 @@ gameplayWindow::gameplayWindow(Game* game, QWidget *parent)
     setCentralWidget(view_);
 }
 
-gameplayWindow::~gameplayWindow() {
-    delete game_;
-    delete scene_;
-    delete view_;
-    delete character_;
-}
+
 
 void gameplayWindow::setMap(QString& map) {
     map_ = map;
@@ -33,7 +29,7 @@ void gameplayWindow::setMap(QString& map) {
     scene_->addItem(background_);
 
     if (!character_) {
-        character_ = new QGraphicsPixmapItem(QPixmap(":/character/mobs/knight1.png"));
+        character_ = new QGraphicsPixmapItem(QPixmap(":/character/mobs/knight1_sword2.png"));
         character_->setZValue(1);
         qreal x = character_->boundingRect().width() / 2;
         qreal y = character_->boundingRect().height() / 2;
@@ -77,7 +73,7 @@ void gameplayWindow::keyPressEvent(QKeyEvent* event) {
                 character_->moveBy(-10, 0);
                 // Когда не упёрлись в обе границы
             } else if (characterLeft > mapLeft && characterBottom < mapBottom) {
-                character_->moveBy(-10, 10);
+                character_->moveBy(-5 * qSqrt(2), 5 * qSqrt(2));
             }
 
             if (!facingLeft) {
@@ -98,7 +94,7 @@ void gameplayWindow::keyPressEvent(QKeyEvent* event) {
                 character_->moveBy(-10, 0);
                 // Когда не упёрлись в обе границы
             } else if (characterLeft > mapLeft && characterTop > mapTop) {
-                character_->moveBy(-10, -10);
+                character_->moveBy(-5 * qSqrt(2), -5 * qSqrt(2));
             }
 
             if (!facingLeft) {
@@ -134,7 +130,7 @@ void gameplayWindow::keyPressEvent(QKeyEvent* event) {
                 character_->moveBy(10, 0);
                 // Когда не упёрлись в обе границы
             } else if (characterRight < mapRight && characterBottom < mapBottom) {
-                character_->moveBy(10, 10);
+                character_->moveBy(5 * qSqrt(2), 5 * qSqrt(2));
             }
 
             if (facingLeft) {
@@ -155,7 +151,7 @@ void gameplayWindow::keyPressEvent(QKeyEvent* event) {
                 character_->moveBy(10, 0);
                 // Когда не упёрлись в обе границы
             } else if (characterRight < mapRight && characterTop > mapTop) {
-                character_->moveBy(10, -10);
+                character_->moveBy(5 * qSqrt(2), -5 * qSqrt(2));
             }
 
             if (facingLeft) {
@@ -189,7 +185,7 @@ void gameplayWindow::keyPressEvent(QKeyEvent* event) {
                 character_->moveBy(-10, 0);
                 // Когда не упёрлись в обе границы
             } else if (characterLeft > mapLeft && characterTop > mapTop) {
-                character_->moveBy(-10, -10);
+                character_->moveBy(-5 * qSqrt(2), -5 * qSqrt(2));
             }
 
             if (!facingLeft) {
@@ -209,7 +205,7 @@ void gameplayWindow::keyPressEvent(QKeyEvent* event) {
                 character_->moveBy(10, 0);
                 // Когда не упёрлись в обе границы
             } else if (characterRight < mapRight && characterTop > mapTop) {
-                character_->moveBy(10, -10);
+                character_->moveBy(5 * qSqrt(2), -5 * qSqrt(2));
             }
 
             if (facingLeft) {
@@ -239,7 +235,7 @@ void gameplayWindow::keyPressEvent(QKeyEvent* event) {
                 character_->moveBy(-10, 0);
                 // Когда не упёрлись в обе границы
             } else if (characterLeft > mapLeft && characterBottom < mapBottom) {
-                character_->moveBy(-10, 10);
+                character_->moveBy(-5 * qSqrt(2), 5 * qSqrt(2));
             }
 
             if (!facingLeft) {
@@ -260,7 +256,7 @@ void gameplayWindow::keyPressEvent(QKeyEvent* event) {
                 character_->moveBy(10, 0);
                 // Когда не упёрлись в обе границы
             } else if (characterRight < mapRight && characterBottom < mapBottom) {
-                character_->moveBy(10, 10);
+                character_->moveBy(5 * qSqrt(2), 5 * qSqrt(2));
             }
 
             if (facingLeft) {

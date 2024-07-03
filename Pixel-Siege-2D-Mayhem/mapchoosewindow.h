@@ -16,7 +16,7 @@ class mapChooseWindow : public QMainWindow {
     Q_OBJECT
 public:
     explicit mapChooseWindow(Game* game, QWidget *parent = nullptr);
-    ~mapChooseWindow();
+    ~mapChooseWindow() = default;
 
     QPixmap getMapBack();
     QVector <QPixmap> getMapsForChoose();

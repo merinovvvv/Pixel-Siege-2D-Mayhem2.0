@@ -14,7 +14,7 @@ class PauseMenu : public QMainWindow {
     Q_OBJECT
 public:
     PauseMenu(Game* game, QWidget *parent = nullptr);
-    ~PauseMenu();
+    ~PauseMenu() = default;
 
 private slots:
     void exit();

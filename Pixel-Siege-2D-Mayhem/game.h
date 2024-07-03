@@ -10,7 +10,7 @@
 class Game {
 public:
     Game();
-    ~Game();
+    ~Game() = default;
 
     void showMainMenu();
     void showMapChooseWindow();

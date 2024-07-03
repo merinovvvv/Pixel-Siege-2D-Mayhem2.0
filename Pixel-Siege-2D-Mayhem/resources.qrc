@@ -18,5 +18,12 @@
     </qresource>
     <qresource prefix="/character">
         <file>mobs/knight1.png</file>
+        <file>mobs/knight1_smaller.png</file>
+        <file>mobs/knight1_sword1.png</file>
+        <file>mobs/knight1_sword2.png</file>
+        <file>mobs/knight1_sword3.png</file>
+        <file>mobs/knight1_sword4.png</file>
+        <file>mobs/knight1_sword5.png</file>
+        <file>mobs/knight1_sword6.png</file>
     </qresource>
 </RCC>

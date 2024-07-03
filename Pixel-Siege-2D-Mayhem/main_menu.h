@@ -15,7 +15,7 @@ class MainMenu : public QMainWindow {
 
 public:
     MainMenu(Game* game, QWidget *parent = nullptr);
-    ~MainMenu();
+    ~MainMenu() = default;
 
 protected:
     void paintEvent(QPaintEvent *event) override;
