@@ -34,6 +34,10 @@ PauseMenu::PauseMenu(Game* game, QWidget *parent) : QMainWindow(parent), game_(g
                          "color: #FF6439;"
                          "font-size: 110px;"
                          "text-align: center;"
+                         "}"
+                         "QPushButton:focus{"
+                         "color: #FF6439;"
+                         "outline: none;"
                          "}";
 
     continue_button->setStyleSheet(styleSheet);
@@ -68,6 +72,7 @@ PauseMenu::PauseMenu(Game* game, QWidget *parent) : QMainWindow(parent), game_(g
 
 void PauseMenu::exit() {
     if(game_) {
+        //resetTheTime();
         game_->showMainMenu();
     }
     this->close();
@@ -88,3 +93,51 @@ void PauseMenu::paintEvent(QPaintEvent *event) {
         painter.drawPixmap(0, 0, width(), height(), background->currentPixmap());
     }
 }
+
+bool PauseMenu::eventFilter(QObject *obj, QEvent *event) {
+    if (event->type() == QEvent::Enter) {
+
+        continue_button->clearFocus();
+        exit_button->clearFocus();
+
+
+        QPushButton *currentButton = qobject_cast<QPushButton*>(obj);
+        if (currentButton) {
+            currentButton->setFocus();
+        }
+    } /*else if (event->type() == QEvent::KeyPress) {
+        QKeyEvent *keyEvent = static_cast<QKeyEvent *>(event);
+        if (keyEvent->key() == Qt::Key_Left || keyEvent->key() == Qt::Key_Right ||
+            keyEvent->key() == Qt::Key_Up || keyEvent->key() == Qt::Key_Down) {
+            QApplication::setOverrideCursor(Qt::BlankCursor);
+            return true;
+        }
+    }*/
+    return QObject::eventFilter(obj, event);
+}
+
+void PauseMenu::keyPressEvent(QKeyEvent *event) {
+    if (event->key() == Qt::Key_Enter || event->key() == Qt::Key_Return) {
+        QWidget *focusedWidget = focusWidget();
+        QPushButton *focusedButton = qobject_cast<QPushButton *>(focusedWidget);
+        if (focusedButton) {
+            if (focusedButton == continue_button) {
+                back();
+            } else if (focusedButton == exit_button) {
+                exit();
+            }
+        }
+    } /*else if (event->key() == Qt::Key_Up || event->key() == Qt::Key_Down ||
+               event->key() == Qt::Key_Left || event->key() == Qt::Key_Right) {
+        QApplication::setOverrideCursor(Qt::BlankCursor);
+    }*/ else {
+        QMainWindow::keyPressEvent(event);
+    }
+}
+
+// void PauseMenu::resetTheTime() {
+//     game_.
+//     QTime time = gameplayWindow::getPlayerTime();
+//     time.setHMS(0, 0, 0);
+//     gameplayWindow::setPlayerTime(time);
+// }

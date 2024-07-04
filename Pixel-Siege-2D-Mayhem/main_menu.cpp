@@ -111,7 +111,7 @@ void MainMenu::paintEvent(QPaintEvent *event) {
     }
 }
 
-void MainMenu::keyPressEvent(QKeyEvent *event) { //TODO Transparent Cursor while using keyboard arrows
+void MainMenu::keyPressEvent(QKeyEvent *event) {
     if (event->key() == Qt::Key_Enter || event->key() == Qt::Key_Return) {
         QWidget *focusedWidget = focusWidget();
         QPushButton *focusedButton = qobject_cast<QPushButton *>(focusedWidget);

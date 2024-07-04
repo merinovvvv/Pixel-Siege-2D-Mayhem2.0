@@ -22,6 +22,8 @@ private slots:
 
 protected:
     void paintEvent(QPaintEvent *event) override;
+    bool eventFilter(QObject *obj, QEvent *event) override;
+    void keyPressEvent(QKeyEvent *event) override;
 
 private:
     QMovie* background = new QMovie(":/backgrounds/background_menu/back8.gif");
@@ -31,6 +33,8 @@ private:
     QSpacerItem* topSpacer;
     QSpacerItem* bottomSpacer;
     QWidget* centralWidget;
+
+    //void resetTheTime();
 
     Game* game_;
 };

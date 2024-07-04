@@ -16,11 +16,18 @@ public:
     void showPauseMenu();
     void backToMainMenu();
     void startGameplay();
+
+    // void getPlayerTime();
+    // void setPlayerTime();
 private:
     MainMenu* main_menu;
     mapChooseWindow* map_choose_window;
     gameplayWindow* gameplay_window;
     PauseMenu* pause_menu;
+
+    //void resetPlayerTime();
+
+    //QTime current_player_time;
 
 };
 

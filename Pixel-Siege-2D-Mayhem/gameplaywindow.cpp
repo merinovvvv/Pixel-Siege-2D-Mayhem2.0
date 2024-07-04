@@ -13,39 +13,60 @@ gameplayWindow::gameplayWindow(Game* game, QWidget *parent)
     : QMainWindow{parent}, game_(game), view_(new QGraphicsView(this)), scene_(new QGraphicsScene(this)), character_(nullptr)
 {
     this->setWindowIcon(QIcon(":/icon/helmetIcon.jpg"));
+    setCursor(Qt::BlankCursor);
+
+    showTime_ = new QLabel();
+    //showTime_->setFixedSize(200, 10);
+    showTime_->setStyleSheet("font-size: 35px;");
+    startTime_ = QTime::currentTime();
+    gameTime_ = new QTimer();
+    connect(gameTime_, SIGNAL(timeout()), this, SLOT(updateTimer()));
+    gameTime_->start(1000);
 
     hpLabel_ = new QLabel();
     hpLabel_->setText("HP");
+    hpLabel_->setStyleSheet("font-size: 35px;");
 
     healthBar_ = new QProgressBar();
     healthBar_->setRange(0, 100);
     healthBar_->setValue(100);
-    //healthBar_->setFixedSize(200, 20);
-    //healthBar_->show();
+    healthBar_->setStyleSheet("QProgressBar::chunk {background-color: red;}");
 
-    QHBoxLayout* hpLayout = new QHBoxLayout();
-    hpLayout->addWidget(hpLabel_);
-    hpLayout->addWidget(healthBar_);
+    healthBar_->setStyleSheet(
+        "QProgressBar {"
+        "    border: 2px solid grey;"
+        "    border-radius: 5px;"
+        "    text-align: center;"
+        "    color: white;"
+        "}"
+        "QProgressBar::chunk {"
+        "    background-color: red;"
+        "}");
 
-    QWidget* hpWidget = new QWidget();
-    hpWidget->setLayout(hpLayout);
+    QSpacerItem* space = new QSpacerItem(1400, 0, QSizePolicy::Preferred, QSizePolicy::Fixed);
 
-    QWidget* containerWidget = new QWidget(this);
-    QVBoxLayout* containerLayout = new QVBoxLayout(containerWidget);
-    containerLayout->addWidget(hpWidget);
-    containerLayout->addWidget(view_);
-    containerLayout->setContentsMargins(10, 10, 10, 10); // Задает отступы от краев контейнера
+    QHBoxLayout* menuLayout = new QHBoxLayout();
+    menuLayout->addWidget(showTime_);
+    menuLayout->addItem(space);
+    menuLayout->addWidget(hpLabel_);
+    menuLayout->addWidget(healthBar_);
 
-    setCentralWidget(containerWidget);
+    QWidget* containerWidget = new QWidget();
+    containerWidget->setFixedWidth(1900);
+    containerWidget->setStyleSheet("background-color: transparent;");
+    containerWidget->setLayout(menuLayout);
+    containerWidget->setCursor(Qt::BlankCursor);
 
+    QGraphicsProxyWidget *toShow = scene_->addWidget(containerWidget);
+    toShow->setPos(10, 10);
+    //toShow->setWindowFlags(Qt::FramelessWindowHint);
+    toShow->setZValue(2);
 
-    // QGraphicsProxyWidget* proxy = scene_->addWidget(healthBar_);
-    // proxy->setPos(10, 10); // Устанавливаем позицию на сцене
 
     view_->setScene(scene_);
     view_->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     view_->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
-    //setCentralWidget(view_);
+    setCentralWidget(view_);
 }
 
 void gameplayWindow::setMap(QString& map) {
@@ -302,10 +323,10 @@ void gameplayWindow::keyPressEvent(QKeyEvent* event) {
     case 1:
         game_->showPauseMenu();
         break;
-    case 57: {
-        Hit();
-        break;
-    }
+    // case 57: {
+    //     Hit();
+    //     break;
+    // }
     default:
         QMainWindow::keyPressEvent(event);
         break;
@@ -322,16 +343,17 @@ void gameplayWindow::Hit() {
     QGraphicsPixmapItem* hitImage = new QGraphicsPixmapItem(hit);
     if (!facingLeft) {
         QTransform transform2;
-        transform2.scale(0.1, 0.1);
+        transform2.scale(0.06, 0.06);
         hitImage->setTransform(transform2);
-        hitImage->setPos(character_->pos().x() + 82, character_->pos().y() + 28);
+        hitImage->setPos(character_->pos().x() + 50, character_->pos().y() + 17);
     } else {
         QTransform transform;
-        transform.scale(-0.1, 0.1);
+        transform.scale(-0.06, 0.06);
         hitImage->setTransform(transform);
-        hitImage->setPos(character_->pos().x() + 88, character_->pos().y() + 28);
+        hitImage->setPos(character_->pos().x() + 56, character_->pos().y() + 17);
     }
 
+    hitImage->setZValue(2);
     scene_->addItem(hitImage);
 
     QTimer::singleShot(100, [hitImage, this]() {
@@ -349,3 +371,18 @@ void gameplayWindow::keyReleaseEvent(QKeyEvent *event) {
 
     pressedKeys_.remove(event->nativeScanCode());
 }
+
+void gameplayWindow::updateTimer() {
+    QTime currentTime = QTime::currentTime();
+    int elapsed = startTime_.secsTo(currentTime);
+
+    showTime_->setText(QTime(0, 0).addSecs(elapsed).toString("hh:mm:ss"));
+}
+
+// QTime gameplayWindow::getPlayerTime() {
+//     return playerTime_;
+// }
+
+// void gameplayWindow::setPlayerTime(QTime playerTime) {
+//     playerTime_ = playerTime;
+// }

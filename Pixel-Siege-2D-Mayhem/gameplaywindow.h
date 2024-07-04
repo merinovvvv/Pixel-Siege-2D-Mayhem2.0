@@ -10,6 +10,7 @@
 #include <QLabel>
 #include <QSet>
 #include <QRectF>
+#include <QTime>
 
 class Game;
 
@@ -21,6 +22,10 @@ public:
 
     void setMap(QString& map);
     QVector <QString> getMaps();
+
+
+    // QTime getPlayerTime();
+    // void setPlayerTime(QTime playerTime_);
 private:
     QString map_;
     QVector <QString> maps_ = {":/backgrounds/background_gameplay/another_grass.png", ":/backgrounds/background_gameplay/sand.jpg"};
@@ -43,6 +48,15 @@ private:
 
     bool facingLeft = true;
     void updateMovement();
+
+    QTimer* gameTime_;
+    QTime startTime_;
+    QLabel* showTime_;
+
+    QTime playerTime_;
+
+private slots:
+    void updateTimer();
 
 protected:
     void keyPressEvent(QKeyEvent* event) override;
