@@ -3,8 +3,9 @@
 Game::Game() {
     main_menu = new MainMenu(this);
     map_choose_window = new mapChooseWindow(this);
-    gameplay_window = new gameplayWindow(this);
+    //gameplay_window = new gameplayWindow(this);
     pause_menu = new PauseMenu(this);
+    gameplay_window = nullptr;
 }
 
 void Game::showMainMenu() {
@@ -37,6 +38,11 @@ void Game::backToMainMenu() {
 }
 
 void Game::startGameplay() {
+
+    if (gameplay_window == nullptr) {
+        gameplay_window = new gameplayWindow(this);
+    }
+
     if (map_choose_window->getMapBack() == map_choose_window->getMapsForChoose()[0]) {
         gameplay_window->setMap(gameplay_window->getMaps()[0]);
     } else if (map_choose_window->getMapBack() == map_choose_window->getMapsForChoose()[1]) {

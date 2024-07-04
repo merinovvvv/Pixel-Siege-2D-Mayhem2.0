@@ -20,6 +20,7 @@ private slots:
     void exit();
     void back(); // this is continue but continue is a command so it's called back
 
+
 protected:
     void paintEvent(QPaintEvent *event) override;
     bool eventFilter(QObject *obj, QEvent *event) override;
@@ -33,8 +34,6 @@ private:
     QSpacerItem* topSpacer;
     QSpacerItem* bottomSpacer;
     QWidget* centralWidget;
-
-    //void resetTheTime();
 
     Game* game_;
 };

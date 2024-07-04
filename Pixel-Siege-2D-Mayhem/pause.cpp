@@ -3,6 +3,7 @@
 
 #include <QGraphicsDropShadowEffect>
 #include <QPainter>
+#include <QTimer>
 
 PauseMenu::PauseMenu(Game* game, QWidget *parent) : QMainWindow(parent), game_(game) {
     setWindowIcon(QIcon(":/icon/helmetIcon.jpg"));
@@ -72,7 +73,8 @@ PauseMenu::PauseMenu(Game* game, QWidget *parent) : QMainWindow(parent), game_(g
 
 void PauseMenu::exit() {
     if(game_) {
-        //resetTheTime();
+        delete game_->gameplay_window;
+        game_->gameplay_window = nullptr;
         game_->showMainMenu();
     }
     this->close();
@@ -80,6 +82,8 @@ void PauseMenu::exit() {
 
 void PauseMenu::back() {
     if (game_) {
+        //game_->gameplay_window->gameTime_->start();
+        game_->gameplay_window->resumeTimer();
         game_->startGameplay();
     }
     this->close();
@@ -105,14 +109,7 @@ bool PauseMenu::eventFilter(QObject *obj, QEvent *event) {
         if (currentButton) {
             currentButton->setFocus();
         }
-    } /*else if (event->type() == QEvent::KeyPress) {
-        QKeyEvent *keyEvent = static_cast<QKeyEvent *>(event);
-        if (keyEvent->key() == Qt::Key_Left || keyEvent->key() == Qt::Key_Right ||
-            keyEvent->key() == Qt::Key_Up || keyEvent->key() == Qt::Key_Down) {
-            QApplication::setOverrideCursor(Qt::BlankCursor);
-            return true;
-        }
-    }*/
+    }
     return QObject::eventFilter(obj, event);
 }
 
@@ -127,17 +124,7 @@ void PauseMenu::keyPressEvent(QKeyEvent *event) {
                 exit();
             }
         }
-    } /*else if (event->key() == Qt::Key_Up || event->key() == Qt::Key_Down ||
-               event->key() == Qt::Key_Left || event->key() == Qt::Key_Right) {
-        QApplication::setOverrideCursor(Qt::BlankCursor);
-    }*/ else {
+    } else {
         QMainWindow::keyPressEvent(event);
     }
 }
-
-// void PauseMenu::resetTheTime() {
-//     game_.
-//     QTime time = gameplayWindow::getPlayerTime();
-//     time.setHMS(0, 0, 0);
-//     gameplayWindow::setPlayerTime(time);
-// }

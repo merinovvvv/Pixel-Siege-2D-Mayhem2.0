@@ -23,9 +23,6 @@ public:
     void setMap(QString& map);
     QVector <QString> getMaps();
 
-
-    // QTime getPlayerTime();
-    // void setPlayerTime(QTime playerTime_);
 private:
     QString map_;
     QVector <QString> maps_ = {":/backgrounds/background_gameplay/another_grass.png", ":/backgrounds/background_gameplay/sand.jpg"};
@@ -52,8 +49,13 @@ private:
     QTimer* gameTime_;
     QTime startTime_;
     QLabel* showTime_;
+    //QTime playerTime_;
+    QTime pausedTime_;
 
-    QTime playerTime_;
+    void pauseTimer();
+    void resumeTimer();
+
+    friend class PauseMenu;
 
 private slots:
     void updateTimer();

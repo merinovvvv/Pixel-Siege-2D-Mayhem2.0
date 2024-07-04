@@ -141,36 +141,6 @@ void MainMenu::showMapChooseWindow() {
     this->close();
 }
 
-// void MainMenu::enterEvent(QEvent *event) {
-
-//     QMouseEvent *mouseEvent = static_cast<QMouseEvent *>(event);
-//     QWidget *widgetUnderMouse = childAt(mouseEvent->pos());
-
-
-//     if (widgetUnderMouse == startButton) {
-//         startButton->setFocus();
-//         statsButton->clearFocus();
-//         achievementsButton->clearFocus();
-//         exitButton->clearFocus();
-//     } else if (widgetUnderMouse == statsButton) {
-//         startButton->clearFocus();
-//         statsButton->setFocus();
-//         achievementsButton->clearFocus();
-//         exitButton->clearFocus();
-//     } else if (widgetUnderMouse == achievementsButton) {
-//         startButton->clearFocus();
-//         statsButton->clearFocus();
-//         achievementsButton->setFocus();
-//         exitButton->clearFocus();
-//     } else if (widgetUnderMouse == exitButton) {
-//         startButton->clearFocus();
-//         statsButton->clearFocus();
-//         achievementsButton->clearFocus();
-//         exitButton->setFocus();
-//     }
-//     QMainWindow::enterEvent(event);
-// }
-
 bool MainMenu::eventFilter(QObject *obj, QEvent *event) {
     if (event->type() == QEvent::Enter) {
 
@@ -194,8 +164,3 @@ bool MainMenu::eventFilter(QObject *obj, QEvent *event) {
     }*/
     return QObject::eventFilter(obj, event);
 }
-
-// void MainMenu::mouseMoveEvent(QMouseEvent* event) { //TODO transparent cursor while using arrows
-//     QApplication::restoreOverrideCursor();
-//     QMainWindow::mouseMoveEvent(event);
-// }

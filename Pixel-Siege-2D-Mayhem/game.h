@@ -1,10 +1,11 @@
 #ifndef GAME_H
 #define GAME_H
 
+#include "pause.h"
+
 #include "main_menu.h"
 #include "mapchoosewindow.h"
 #include "gameplaywindow.h"
-#include "pause.h"
 
 class Game {
 public:
@@ -17,23 +18,13 @@ public:
     void backToMainMenu();
     void startGameplay();
 
-    // void getPlayerTime();
-    // void setPlayerTime();
 private:
     MainMenu* main_menu;
     mapChooseWindow* map_choose_window;
     gameplayWindow* gameplay_window;
     PauseMenu* pause_menu;
 
-    // QTimer* gameTime_;
-    // QTime startTime_;
-    // QLabel* showTime_;
-
-    // QTime playerTime_;
-
-    //void resetPlayerTime();
-
-    //QTime current_player_time;
+    friend class PauseMenu;
 
 };
 

@@ -18,10 +18,12 @@ gameplayWindow::gameplayWindow(Game* game, QWidget *parent)
     showTime_ = new QLabel();
     //showTime_->setFixedSize(200, 10);
     showTime_->setStyleSheet("font-size: 35px;");
+    showTime_->setText("00:00:00");
     startTime_ = QTime::currentTime();
     gameTime_ = new QTimer();
     connect(gameTime_, SIGNAL(timeout()), this, SLOT(updateTimer()));
     gameTime_->start(1000);
+    //updateTimer();
 
     hpLabel_ = new QLabel();
     hpLabel_->setText("HP");
@@ -321,7 +323,8 @@ void gameplayWindow::keyPressEvent(QKeyEvent* event) {
         }
         break;
     case 1:
-        gameTime_->stop();
+        pauseTimer();
+        //gameTime_->stop();
         game_->showPauseMenu();
         break;
     // case 57: {
@@ -380,10 +383,16 @@ void gameplayWindow::updateTimer() {
     showTime_->setText(QTime(0, 0).addSecs(elapsed).toString("hh:mm:ss"));
 }
 
-// QTime gameplayWindow::getPlayerTime() {
-//     return playerTime_;
-// }
+void gameplayWindow::pauseTimer() {
+    pausedTime_ = QTime::currentTime();
+    gameTime_->stop();
+}
 
-// void gameplayWindow::setPlayerTime(QTime playerTime) {
-//     playerTime_ = playerTime;
-// }
+void gameplayWindow::resumeTimer() {
+    QTime currentTime = QTime::currentTime();
+    int elapsed = pausedTime_.secsTo(currentTime);
+
+    int remainingTime = 1000 - elapsed * 1000;
+    gameTime_->setInterval(remainingTime);
+    gameTime_->start();
+}

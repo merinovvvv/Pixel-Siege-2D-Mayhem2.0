@@ -136,9 +136,6 @@ mapChooseWindow::mapChooseWindow(Game* game, QWidget *parent)
     rightButton->installEventFilter(this);
     backButton->installEventFilter(this);
 
-    //startButton->setFocus();
-    //QWidget::grabKeyboard();
-
     connect(leftButton, SIGNAL(clicked()), this, SLOT(changeMap()));
     connect(rightButton, SIGNAL(clicked()), this, SLOT(changeMap()));
 
