@@ -25,6 +25,12 @@ private:
     gameplayWindow* gameplay_window;
     PauseMenu* pause_menu;
 
+    // QTimer* gameTime_;
+    // QTime startTime_;
+    // QLabel* showTime_;
+
+    // QTime playerTime_;
+
     //void resetPlayerTime();
 
     //QTime current_player_time;
