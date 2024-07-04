@@ -379,8 +379,9 @@ void gameplayWindow::keyReleaseEvent(QKeyEvent *event) {
 void gameplayWindow::updateTimer() {
     QTime currentTime = QTime::currentTime();
     int elapsed = startTime_.secsTo(currentTime);
-
-    showTime_->setText(QTime(0, 0).addSecs(elapsed).toString("hh:mm:ss"));
+    QTime showTime(0, 0);
+    showTime = showTime.addSecs(elapsed);
+    showTime_->setText(showTime.toString("hh:mm:ss"));
 }
 
 void gameplayWindow::pauseTimer() {
@@ -390,9 +391,9 @@ void gameplayWindow::pauseTimer() {
 
 void gameplayWindow::resumeTimer() {
     QTime currentTime = QTime::currentTime();
-    int elapsed = pausedTime_.secsTo(currentTime);
+    int pauseDuration = pausedTime_.secsTo(currentTime);
 
-    int remainingTime = 1000 - elapsed * 1000;
-    gameTime_->setInterval(remainingTime);
-    gameTime_->start();
+    startTime_ = startTime_.addSecs(pauseDuration);
+
+    gameTime_->start(1000);
 }
