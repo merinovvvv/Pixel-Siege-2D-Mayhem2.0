@@ -321,6 +321,7 @@ void gameplayWindow::keyPressEvent(QKeyEvent* event) {
         }
         break;
     case 1:
+        gameTime_->stop();
         game_->showPauseMenu();
         break;
     // case 57: {
