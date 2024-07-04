@@ -26,6 +26,9 @@ void Game::showPauseMenu() {
     gameplay_window->hide();
     // main_menu->close();
     // map_choose_window->close();
+    // main_menu->close();
+    // map_choose_window->close();
+    // gameplay_window->hide();
 }
 
 void Game::backToMainMenu() {
@@ -43,9 +46,3 @@ void Game::startGameplay() {
     map_choose_window->close();
 }
 
-Game::~Game() {
-    delete main_menu;
-    delete map_choose_window;
-    delete gameplay_window;
-    delete pause_menu;
-}

@@ -23,8 +23,7 @@ HEADERS += \
     mapchoosewindow.h \
     pause.h
 
-FORMS += \
-    main_menu.ui
+FORMS +=
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

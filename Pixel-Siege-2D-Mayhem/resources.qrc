@@ -13,12 +13,21 @@
         <file>background_gameplay/sand2.jpg</file>
         <file>background_gameplay/grass2.png</file>
         <file>background_gameplay/grass2ForChoose.png</file>
+        <file>background_gameplay/another_grass.png</file>
+        <file>background_gameplay/another_grass_forChoose.png</file>
     </qresource>
     <qresource prefix="/icon">
         <file>helmetIcon.jpg</file>
     </qresource>
     <qresource prefix="/character">
         <file>mobs/knight1.png</file>
+        <file>mobs/knight1_smaller.png</file>
+        <file>mobs/knight1_sword1.png</file>
+        <file>mobs/knight1_sword2.png</file>
+        <file>mobs/knight1_sword3.png</file>
+        <file>mobs/knight1_sword4.png</file>
+        <file>mobs/knight1_sword5.png</file>
+        <file>mobs/knight1_sword6.png</file>
     </qresource>
     <qresource prefix="/tools">
         <file>items/hit.png</file>

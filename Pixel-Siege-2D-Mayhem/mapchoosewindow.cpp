@@ -95,8 +95,8 @@ mapChooseWindow::mapChooseWindow(Game* game, QWidget *parent)
 
     mapChooseScene = new QGraphicsScene(this);
     mapChooseView = new QGraphicsView(mapChooseScene, this);
-
-    mapsForChoose.append(QPixmap(":/backgrounds/background_gameplay/grass2ForChoose.png"));
+    //mapsForChoose.append(QPixmap(":/backgrounds/background_gameplay/grassForChoose2.jpg"));
+    mapsForChoose.append(QPixmap(":/backgrounds/background_gameplay/another_grass_forChoose.png"));
     mapsForChoose.append(QPixmap(":/backgrounds/background_gameplay/sandForChoose.jpg"));
 
     mapBack = mapsForChoose[0];
@@ -157,12 +157,6 @@ void mapChooseWindow::paintEvent(QPaintEvent *event) {
 
     QMainWindow::paintEvent(event);
 }
-
-// void mapChooseWindow::showMapChooseWindow(mapChooseWindow* window) {
-//     if (window) {
-//         window->showFullScreen();
-//     }
-// }
 
 void mapChooseWindow::changeMap() {
 
@@ -274,16 +268,4 @@ void mapChooseWindow::showEvent(QShowEvent *event) {
     QMainWindow::showEvent(event);
 
     startButton->setFocus();
-}
-
-mapChooseWindow::~mapChooseWindow() {
-    // delete backButton;
-    // delete chooseMap;
-    // delete mapChooseBackground;
-    // delete mapChooseView;
-    // delete mapItem;
-    // delete startButton;
-    // delete leftButton;
-    // delete rightButton;
-    // delete game_;
 }

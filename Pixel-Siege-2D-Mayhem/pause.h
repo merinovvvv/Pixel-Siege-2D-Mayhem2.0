@@ -10,16 +10,15 @@
 
 class Game;
 
-class PauseMenu : public QMainWindow
-{
+class PauseMenu : public QMainWindow {
     Q_OBJECT
 public:
     PauseMenu(Game* game, QWidget *parent = nullptr);
-    ~PauseMenu();
+    ~PauseMenu() = default;
 
 private slots:
     void exit();
-    void back(); // this is continue but continue is a command
+    void back(); // this is continue but continue is a command so it's called back
 
 protected:
     void paintEvent(QPaintEvent *event) override;

@@ -10,19 +10,12 @@
 
 class Game;
 
-QT_BEGIN_NAMESPACE
-namespace Ui {
-class Game;
-}
-QT_END_NAMESPACE
-
-class MainMenu : public QMainWindow
-{
+class MainMenu : public QMainWindow {
     Q_OBJECT
 
 public:
     MainMenu(Game* game, QWidget *parent = nullptr);
-    ~MainMenu();
+    ~MainMenu() = default;
 
 protected:
     void paintEvent(QPaintEvent *event) override;
@@ -36,7 +29,6 @@ private slots:
     void showMapChooseWindow();
 
 private:
-    Ui::Game *ui;
     QMovie *background = new QMovie(":/backgrounds/background_menu/back6.gif");
     QWidget* centralWidget;
     QSpacerItem* leftSpacer;

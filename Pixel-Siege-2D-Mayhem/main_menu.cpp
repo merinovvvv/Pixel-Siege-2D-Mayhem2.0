@@ -1,3 +1,4 @@
+#include <QApplication>
 #include <QGraphicsDropShadowEffect>
 #include <QMovie>
 #include <QPainter>
@@ -5,14 +6,11 @@
 #include <QTimer>
 
 #include "main_menu.h"
-#include "ui_main_menu.h"
 #include "game.h"
 
-MainMenu::MainMenu(Game* game, QWidget *parent) : QMainWindow(parent), ui(new Ui::Game), game_(game) {
-    ui->setupUi(this);
 
+MainMenu::MainMenu(Game* game, QWidget *parent) : QMainWindow(parent), game_(game) {
     setMouseTracking( true );
-
     setWindowIcon(QIcon(":/icon/helmetIcon.jpg"));
     showFullScreen();
     connect(background, &QMovie::frameChanged, this, QOverload<>::of(&QMainWindow::update));
@@ -23,9 +21,7 @@ MainMenu::MainMenu(Game* game, QWidget *parent) : QMainWindow(parent), ui(new Ui
     setCentralWidget(centralWidget);
 
     leftSpacer = new QSpacerItem(20, 40, QSizePolicy::Preferred, QSizePolicy::Expanding);
-    //rightSpacer = new QSpacerItem(20, 40, QSizePolicy::Expanding, QSizePolicy::Expanding);
     gridLayout->addItem(leftSpacer, 1, 1, 1, 1, Qt::AlignLeft);
-    //gridLayout->addItem(rightSpacer, 1, 3, 1, 1, Qt::AlignRight);
 
     verticalLayout = new QVBoxLayout(centralWidget);
     verticalLayout->addSpacing(15);
@@ -38,7 +34,7 @@ MainMenu::MainMenu(Game* game, QWidget *parent) : QMainWindow(parent), ui(new Ui
     statsButton = new QPushButton("STATS");
     statsButton->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
 
-    achievementsButton = new QPushButton("ACHIEVEMNTS");
+    achievementsButton = new QPushButton("ACHIEVEMENTS");
     achievementsButton->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
 
     exitButton = new QPushButton("EXIT");
@@ -98,7 +94,7 @@ MainMenu::MainMenu(Game* game, QWidget *parent) : QMainWindow(parent), ui(new Ui
     verticalLayout->addWidget(exitButton, 0, Qt::AlignCenter);
 
     gridLayout->addItem(verticalLayout, 1, 2, 1, 1, Qt::AlignLeft | Qt::AlignCenter);
-    setLayout(gridLayout);
+    //setLayout(gridLayout);
 
     startButton->installEventFilter(this);
     statsButton->installEventFilter(this);
@@ -203,19 +199,3 @@ bool MainMenu::eventFilter(QObject *obj, QEvent *event) {
 //     QApplication::restoreOverrideCursor();
 //     QMainWindow::mouseMoveEvent(event);
 // }
-
-MainMenu::~MainMenu()
-{
-    delete ui;
-    // delete background;
-    // delete centralWidget;
-    // delete leftSpacer;
-    // delete rightSpacer;
-    // delete startButton;
-    // delete statsButton;
-    // delete achievementsButton;
-    // delete exitButton;
-    // delete verticalLayout;
-    // delete gridLayout;
-    // delete game_;
-}

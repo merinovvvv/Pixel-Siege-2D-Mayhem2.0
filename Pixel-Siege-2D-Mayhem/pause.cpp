@@ -5,18 +5,14 @@
 #include <QPainter>
 
 PauseMenu::PauseMenu(Game* game, QWidget *parent) : QMainWindow(parent), game_(game) {
+    setWindowIcon(QIcon(":/icon/helmetIcon.jpg"));
+
     connect(background, &QMovie::frameChanged, this, QOverload<>::of(&QMainWindow::update));
     background->start();
 
     // Создаем центральный виджет и устанавливаем макет для него
     centralWidget = new QWidget(this);
     setCentralWidget(centralWidget);
-
-    //layout = new QGridLayout(centralWidget);
-    //centralWidget->setLayout(layout);
-
-    //rightSpacer = new QSpacerItem(20, 40, QSizePolicy::Preferred, QSizePolicy::Expanding);
-    //layout->addItem(rightSpacer, 2, 1, 1, 1, Qt::AlignRight);
 
     buttonsLayout = new QVBoxLayout();
     centralWidget->setLayout(buttonsLayout);
@@ -35,7 +31,7 @@ PauseMenu::PauseMenu(Game* game, QWidget *parent) : QMainWindow(parent), game_(g
                          "}"
                          "QPushButton:hover {"
                          "background: transparent;"
-                         "color: rgb(255, 173, 30);"
+                         "color: #FF6439;"
                          "font-size: 110px;"
                          "text-align: center;"
                          "}";
@@ -66,23 +62,9 @@ PauseMenu::PauseMenu(Game* game, QWidget *parent) : QMainWindow(parent), game_(g
     buttonsLayout->addWidget(exit_button, 0, Qt::AlignCenter);
     buttonsLayout->addItem(bottomSpacer);
 
-//    layout->addLayout(buttonsLayout, 1, 1, 1, 1, Qt::AlignLeft);
-
     connect(exit_button, SIGNAL(clicked()), this, SLOT(exit()));
     connect(continue_button, SIGNAL(clicked()), this, SLOT(back()));
 }
-
-PauseMenu::~PauseMenu() {
-    // delete background;
-    // delete continue_button;
-    // delete exit_button;
-    // delete buttonsLayout;
-    // delete topSpacer;
-    // delete bottomSpacer;
-    // delete centralWidget;
-    // delete game_;
-}
-
 
 void PauseMenu::exit() {
     if(game_) {

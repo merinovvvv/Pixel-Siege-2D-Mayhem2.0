@@ -8,21 +8,23 @@
 #include <QGraphicsPixmapItem>
 #include <QProgressBar>
 #include <QLabel>
+#include <QSet>
+#include <QRectF>
 
 class Game;
 
-class gameplayWindow : public QMainWindow
-{
+class gameplayWindow : public QMainWindow {
     Q_OBJECT
 public:
     explicit gameplayWindow(Game* game, QWidget *parent = nullptr);
-    ~gameplayWindow();
+    ~gameplayWindow() = default;
 
     void setMap(QString& map);
     QVector <QString> getMaps();
 private:
     QString map_;
-    QVector <QString> maps_ = {":/backgrounds/background_gameplay/grass2.png", ":/backgrounds/background_gameplay/sand.jpg"};
+    QVector <QString> maps_ = {":/backgrounds/background_gameplay/another_grass.png", ":/backgrounds/background_gameplay/sand.jpg"};
+    QSet<int> pressedKeys_;
 
     Game* game_;
 
@@ -36,13 +38,16 @@ private:
 
     void Hit();
     void updateHealth(int health);
+    QGraphicsPixmapItem *background_;
+    QRectF mapBorder_;
 
     bool facingLeft = true;
+    void updateMovement();
+
 protected:
     void keyPressEvent(QKeyEvent* event) override;
     void mousePressEvent(QMouseEvent* event) override;
-
-signals:
+    void keyReleaseEvent(QKeyEvent *event) override;
 };
 
 #endif // GAMEPLAYWINDOW_H

@@ -12,13 +12,11 @@
 class Game;
 
 
-class mapChooseWindow : public QMainWindow
-{
+class mapChooseWindow : public QMainWindow {
     Q_OBJECT
 public:
     explicit mapChooseWindow(Game* game, QWidget *parent = nullptr);
-    ~mapChooseWindow();
-    //static void showMapChooseWindow(mapChooseWindow* window);
+    ~mapChooseWindow() = default;
 
     QPixmap getMapBack();
     QVector <QPixmap> getMapsForChoose();
