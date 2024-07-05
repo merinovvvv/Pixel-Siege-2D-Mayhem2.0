@@ -14,6 +14,7 @@ SOURCES += \
     main.cpp \
     main_menu.cpp \
     mapchoosewindow.cpp \
+    monster.cpp \
     pause.cpp
 
 HEADERS += \
@@ -21,6 +22,7 @@ HEADERS += \
     gameplaywindow.h \
     main_menu.h \
     mapchoosewindow.h \
+    monster.h \
     pause.h
 
 FORMS +=
