@@ -11,6 +11,7 @@ CONFIG += c++17
 SOURCES += \
     game.cpp \
     gameplaywindow.cpp \
+    hero.cpp \
     main.cpp \
     main_menu.cpp \
     mapchoosewindow.cpp \
@@ -19,6 +20,7 @@ SOURCES += \
 HEADERS += \
     game.h \
     gameplaywindow.h \
+    hero.h \
     main_menu.h \
     mapchoosewindow.h \
     pause.h
