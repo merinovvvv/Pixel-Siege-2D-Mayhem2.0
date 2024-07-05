@@ -4,6 +4,7 @@
 #include <QGraphicsProxyWidget>
 #include <QKeyEvent>
 #include <QtMath>
+#include <QRandomGenerator>
 
 #include "gameplaywindow.h"
 #include "mapchoosewindow.h"
@@ -48,19 +49,11 @@ gameplayWindow::gameplayWindow(Game* game, QWidget *parent)
 
     QSpacerItem* space = new QSpacerItem(1400, 0, QSizePolicy::Preferred, QSizePolicy::Fixed);
 
-<<<<<<< HEAD
     QHBoxLayout* menuLayout = new QHBoxLayout();
     menuLayout->addWidget(showTime_);
     menuLayout->addItem(space);
     menuLayout->addWidget(hpLabel_);
     menuLayout->addWidget(healthBar_);
-=======
-    QWidget* containerWidget = new QWidget(this);
-    QVBoxLayout* containerLayout = new QVBoxLayout(containerWidget);
-    containerLayout->addWidget(hpWidget);
-    containerLayout->addWidget(view_);
-    containerLayout->setContentsMargins(0, 10, 0, 0); // Задает отступы от краев контейнера
->>>>>>> tmp
 
     QWidget* containerWidget = new QWidget();
     containerWidget->setFixedWidth(1900);
@@ -78,6 +71,12 @@ gameplayWindow::gameplayWindow(Game* game, QWidget *parent)
     view_->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     view_->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     setCentralWidget(view_);
+
+    ghost_ = Monster(10, 2, models_.ghost_, hit_);
+    scaryGhost_ = Monster(20, 4, models_.scaryGhost_, hit_);
+    skeleton_ = Monster(5, 1, models_.skeleton_, hit_);
+    slime_ = Monster(10, 2, models_.slime_, hit_);
+    wolf_ = Monster(25, 5, models_.wolf_, hit_);
 }
 
 void gameplayWindow::setMap(QString& map) {
@@ -90,7 +89,7 @@ void gameplayWindow::setMap(QString& map) {
 <<<<<<< HEAD
     if (!character_) {
         character_ = new QGraphicsPixmapItem(QPixmap(":/character/mobs/knight1_sword1.png"));
-        character_->setZValue(1);
+        character_->setZValue(4);
         qreal x = character_->boundingRect().width() / 2;
         qreal y = character_->boundingRect().height() / 2;
         character_->setPos(scene_->sceneRect().center() + QPointF(-x, -y));
@@ -104,6 +103,15 @@ void gameplayWindow::setMap(QString& map) {
 
 QVector <QString> gameplayWindow::getMaps() {
     return maps_;
+}
+
+void gameplayWindow::spawnGhost() {
+    Monster* monster = new Monster(ghost_);
+    QGraphicsPixmapItem* model = new QGraphicsPixmapItem(monster->getModel()->pixmap());
+    model->setZValue(2);
+    model->setPos(QPointF(QRandomGenerator::global()->bounded(50, 1800), QRandomGenerator::global()->bounded(50, 900)));
+    scene_->addItem(model);
+    delete monster;
 }
 
 void gameplayWindow::keyPressEvent(QKeyEvent* event) {
@@ -354,11 +362,12 @@ void gameplayWindow::keyPressEvent(QKeyEvent* event) {
 void gameplayWindow::mousePressEvent(QMouseEvent* event) {
     if (event->button() == Qt::LeftButton) {
         Hit();
+        spawnGhost();
     }
 }
 
 void gameplayWindow::Hit() {
-    QGraphicsPixmapItem* hitImage = new QGraphicsPixmapItem(hit);
+    QGraphicsPixmapItem* hitImage = new QGraphicsPixmapItem(hit_);
     if (!facingLeft) {
         QTransform transform2;
         transform2.scale(0.06, 0.06);
