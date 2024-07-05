@@ -34,7 +34,7 @@ gameplayWindow::gameplayWindow(Game* game, QWidget *parent)
     QVBoxLayout* containerLayout = new QVBoxLayout(containerWidget);
     containerLayout->addWidget(hpWidget);
     containerLayout->addWidget(view_);
-    containerLayout->setContentsMargins(10, 10, 10, 10); // Задает отступы от краев контейнера
+    containerLayout->setContentsMargins(0, 10, 0, 0); // Задает отступы от краев контейнера
 
     setCentralWidget(containerWidget);
 
@@ -56,7 +56,7 @@ void gameplayWindow::setMap(QString& map) {
     scene_->addItem(background_);
 
     if (!character_) {
-        character_ = new QGraphicsPixmapItem(QPixmap(":/character/mobs/knight1_sword2.png"));
+        character_ = new QGraphicsPixmapItem(QPixmap(":/character/mobs/knight1_sword1.png"));
         character_->setZValue(1);
         qreal x = character_->boundingRect().width() / 2;
         qreal y = character_->boundingRect().height() / 2;
