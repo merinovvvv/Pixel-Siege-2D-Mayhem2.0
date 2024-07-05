@@ -47,11 +47,19 @@ gameplayWindow::gameplayWindow(Game* game, QWidget *parent)
 
     QSpacerItem* space = new QSpacerItem(1400, 0, QSizePolicy::Preferred, QSizePolicy::Fixed);
 
+<<<<<<< HEAD
     QHBoxLayout* menuLayout = new QHBoxLayout();
     menuLayout->addWidget(showTime_);
     menuLayout->addItem(space);
     menuLayout->addWidget(hpLabel_);
     menuLayout->addWidget(healthBar_);
+=======
+    QWidget* containerWidget = new QWidget(this);
+    QVBoxLayout* containerLayout = new QVBoxLayout(containerWidget);
+    containerLayout->addWidget(hpWidget);
+    containerLayout->addWidget(view_);
+    containerLayout->setContentsMargins(0, 10, 0, 0); // Задает отступы от краев контейнера
+>>>>>>> tmp
 
     QWidget* containerWidget = new QWidget();
     containerWidget->setFixedWidth(1900);
@@ -79,7 +87,7 @@ void gameplayWindow::setMap(QString& map) {
     scene_->addItem(background_);
 
     if (!character_) {
-        character_ = new QGraphicsPixmapItem(QPixmap(":/character/mobs/knight1_sword2.png"));
+        character_ = new QGraphicsPixmapItem(QPixmap(":/character/mobs/knight1_sword1.png"));
         character_->setZValue(1);
         qreal x = character_->boundingRect().width() / 2;
         qreal y = character_->boundingRect().height() / 2;
