@@ -12,6 +12,7 @@
 #include <QRectF>
 #include <QTime>
 
+class Hero;
 class Game;
 
 class gameplayWindow : public QMainWindow {
@@ -29,10 +30,11 @@ private:
     QSet<int> pressedKeys_;
 
     Game* game_;
+    //Hero* hero_;
 
     QGraphicsView *view_;
     QGraphicsScene *scene_;
-    QGraphicsPixmapItem *character_;
+    //QGraphicsPixmapItem *character_;
     QProgressBar* healthBar_;
     QLabel* hpLabel_;
 
@@ -56,6 +58,7 @@ private:
     void resumeTimer();
 
     friend class PauseMenu;
+    friend class Hero;
 
 private slots:
     void updateTimer();

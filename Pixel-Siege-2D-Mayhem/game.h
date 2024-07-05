@@ -7,6 +7,8 @@
 #include "mapchoosewindow.h"
 #include "gameplaywindow.h"
 
+class Hero;
+
 class Game {
 public:
     Game();
@@ -23,8 +25,11 @@ private:
     mapChooseWindow* map_choose_window;
     gameplayWindow* gameplay_window;
     PauseMenu* pause_menu;
+    Hero* hero_;
 
+    friend class Hero;
     friend class PauseMenu;
+    friend class gameplayWindow;
 
 };
 

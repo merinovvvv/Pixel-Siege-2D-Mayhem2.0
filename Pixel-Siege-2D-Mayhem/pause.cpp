@@ -75,6 +75,7 @@ void PauseMenu::exit() {
     if(game_) {
         delete game_->gameplay_window;
         game_->gameplay_window = nullptr;
+        game_->hero_ = nullptr;
         game_->showMainMenu();
     }
     this->close();

@@ -6,6 +6,7 @@ Game::Game() {
     //gameplay_window = new gameplayWindow(this);
     pause_menu = new PauseMenu(this);
     gameplay_window = nullptr;
+    hero_ = nullptr;
 }
 
 void Game::showMainMenu() {
