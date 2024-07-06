@@ -11,9 +11,20 @@
 #include <QSet>
 #include <QRectF>
 #include <QTime>
+#include "monster.h"
 
 class Hero;
 class Game;
+
+struct Models {
+    QGraphicsPixmapItem* ghost_;
+    QGraphicsPixmapItem* scaryGhost_;
+    QGraphicsPixmapItem* skeleton_;
+    QGraphicsPixmapItem* slime_;
+    QGraphicsPixmapItem* wolf_;
+    ~Models() = default;
+};
+
 
 class gameplayWindow : public QMainWindow {
     Q_OBJECT
@@ -23,6 +34,7 @@ public:
 
     void setMap(QString& map);
     QVector <QString> getMaps();
+    void spawnGhost();
 
 private:
     QString map_;
@@ -38,7 +50,20 @@ private:
     QProgressBar* healthBar_;
     QLabel* hpLabel_;
 
-    QPixmap hit = QPixmap(":/tools/items/hit.png");
+    QPixmap hit_ = QPixmap(":/tools/items/hit.png");
+    Models models_ = {
+        new QGraphicsPixmapItem(QPixmap(":/monsters/mobs/ghost.png")),
+        new QGraphicsPixmapItem(QPixmap(":/monsters/mobs/scary_ghost.png")),
+        new QGraphicsPixmapItem(QPixmap(":/monsters/mobs/skeleton.png")),
+        new QGraphicsPixmapItem(QPixmap(":/monsters/mobs/slime.png")),
+        new QGraphicsPixmapItem(QPixmap(":/monsters/mobs/wolf.png"))
+    };
+
+    Monster ghost_;
+    Monster scaryGhost_;
+    Monster skeleton_;
+    Monster slime_;
+    Monster wolf_;
 
     void Hit();
     void updateHealth(int health);

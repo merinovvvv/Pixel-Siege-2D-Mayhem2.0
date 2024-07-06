@@ -4,6 +4,7 @@
 #include <QGraphicsProxyWidget>
 #include <QKeyEvent>
 #include <QtMath>
+#include <QRandomGenerator>
 
 #include "gameplaywindow.h"
 #include "mapchoosewindow.h"
@@ -72,6 +73,12 @@ gameplayWindow::gameplayWindow(Game* game, QWidget *parent)
     view_->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     view_->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     setCentralWidget(view_);
+
+    ghost_ = Monster(10, 2, models_.ghost_, hit_);
+    scaryGhost_ = Monster(20, 4, models_.scaryGhost_, hit_);
+    skeleton_ = Monster(5, 1, models_.skeleton_, hit_);
+    slime_ = Monster(10, 2, models_.slime_, hit_);
+    wolf_ = Monster(25, 5, models_.wolf_, hit_);
 }
 
 void gameplayWindow::setMap(QString& map) {
@@ -81,8 +88,6 @@ void gameplayWindow::setMap(QString& map) {
     background_->setZValue(0);
     scene_->addItem(background_);
 
-    //scene_->setBackgroundBrush(QPixmap(map_));
-
     if (game_->hero_ == nullptr) {
         game_->hero_ = new Hero(game_, this);
     }
@@ -90,6 +95,15 @@ void gameplayWindow::setMap(QString& map) {
 
 QVector <QString> gameplayWindow::getMaps() {
     return maps_;
+}
+
+void gameplayWindow::spawnGhost() {
+    Monster* monster = new Monster(ghost_);
+    QGraphicsPixmapItem* model = new QGraphicsPixmapItem(monster->getModel()->pixmap());
+    model->setZValue(2);
+    model->setPos(QPointF(QRandomGenerator::global()->bounded(50, 1800), QRandomGenerator::global()->bounded(50, 900)));
+    scene_->addItem(model);
+    delete monster;
 }
 
 void gameplayWindow::keyPressEvent(QKeyEvent* event) {
@@ -340,11 +354,12 @@ void gameplayWindow::keyPressEvent(QKeyEvent* event) {
 void gameplayWindow::mousePressEvent(QMouseEvent* event) {
     if (event->button() == Qt::LeftButton) {
         Hit();
+        spawnGhost();
     }
 }
 
 void gameplayWindow::Hit() {
-    QGraphicsPixmapItem* hitImage = new QGraphicsPixmapItem(hit);
+    QGraphicsPixmapItem* hitImage = new QGraphicsPixmapItem(hit_);
     if (!facingLeft) {
         QTransform transform2;
         transform2.scale(0.06, 0.06);

@@ -32,4 +32,11 @@
     <qresource prefix="/tools">
         <file>items/hit.png</file>
     </qresource>
+    <qresource prefix="/monsters">
+        <file>mobs/ghost.png</file>
+        <file>mobs/slime.png</file>
+        <file>mobs/skeleton.png</file>
+        <file>mobs/scary_ghost.png</file>
+        <file>mobs/wolf.png</file>
+    </qresource>
 </RCC>
