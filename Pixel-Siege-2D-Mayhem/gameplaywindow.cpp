@@ -13,6 +13,8 @@
 gameplayWindow::gameplayWindow(Game* game, QWidget *parent)
     : QMainWindow{parent}, game_(game), view_(new QGraphicsView(this)), scene_(new QGraphicsScene(this))
 {
+    scene_->setSceneRect(0, 0, 1920, 1080);
+
     this->setWindowIcon(QIcon(":/icon/helmetIcon.jpg"));
     setCursor(Qt::BlankCursor);
 
@@ -79,6 +81,8 @@ void gameplayWindow::setMap(QString& map) {
     background_->setZValue(0);
     scene_->addItem(background_);
 
+    //scene_->setBackgroundBrush(QPixmap(map_));
+
     if (game_->hero_ == nullptr) {
         game_->hero_ = new Hero(game_, this);
     }
@@ -95,7 +99,7 @@ void gameplayWindow::keyPressEvent(QKeyEvent* event) {
     QRectF characterRect = game_->hero_->heroImage_->boundingRect();
     qreal characterLeft = characterRect.left() + game_->hero_->heroImage_->x();
     qreal characterRight = characterRect.right() + game_->hero_->heroImage_->x();
-    qreal characterTop = characterRect.top() + game_->hero_->heroImage_->y();
+    qreal characterTop = characterRect.top() + game_->hero_->heroImage_->y(); //TODO
     qreal characterBottom = characterRect.bottom() + game_->hero_->heroImage_->y();
 
     mapBorder_ = scene_->sceneRect();
