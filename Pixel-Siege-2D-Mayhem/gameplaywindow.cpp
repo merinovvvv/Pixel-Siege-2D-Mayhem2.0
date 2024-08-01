@@ -74,12 +74,6 @@ gameplayWindow::gameplayWindow(Game* game, QWidget *parent)
     view_->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     setCentralWidget(view_);
 
-    // initializing monster examples
-    ghost_ = Monster(10, 2, models_.ghost_, hit_);
-    scaryGhost_ = Monster(20, 4, models_.scaryGhost_, hit_);
-    skeleton_ = Monster(5, 1, models_.skeleton_, hit_);
-    slime_ = Monster(10, 2, models_.slime_, hit_);
-    wolf_ = Monster(25, 5, models_.wolf_, hit_);
 }
 
 void gameplayWindow::setMap(QString& map) {

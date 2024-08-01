@@ -58,12 +58,6 @@ private:
         new QGraphicsPixmapItem(QPixmap(":/monsters/mobs/wolf.png"))
     };
 
-    Monster ghost_;
-    Monster scaryGhost_;
-    Monster skeleton_;
-    Monster slime_;
-    Monster wolf_;
-
     void Hit();
     void updateHealth(int health);
     QGraphicsPixmapItem *background_;

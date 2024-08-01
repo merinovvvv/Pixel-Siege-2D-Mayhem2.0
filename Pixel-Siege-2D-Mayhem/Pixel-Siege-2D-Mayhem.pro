@@ -11,21 +11,31 @@ CONFIG += c++17
 SOURCES += \
     game.cpp \
     gameplaywindow.cpp \
+    ghost.cpp \
     hero.cpp \
     main.cpp \
     main_menu.cpp \
     mapchoosewindow.cpp \
     monster.cpp \
-    pause.cpp
+    pause.cpp \
+    scaryghost.cpp \
+    skeleton.cpp \
+    slime.cpp \
+    wolf.cpp
 
 HEADERS += \
     game.h \
     gameplaywindow.h \
+    ghost.h \
     hero.h \
     main_menu.h \
     mapchoosewindow.h \
     monster.h \
-    pause.h
+    pause.h \
+    scaryghost.h \
+    skeleton.h \
+    slime.h \
+    wolf.h
 
 FORMS +=
 
