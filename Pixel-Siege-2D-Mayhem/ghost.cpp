@@ -1,6 +1,5 @@
 #include "ghost.h"
-
-Ghost::Ghost(QObject *parent) : Monster{parent} {}
+#include "hero.cpp"
 
 Ghost::Ghost() {
     health_ = 10;
@@ -15,18 +14,7 @@ Ghost &Ghost::operator =(const Ghost &other) {
     return *this;
 }
 
-qreal Ghost::getX() const {
-    return x_;
-}
-
-qreal Ghost::getY() const {
-    return y_;
-}
-
-void Ghost::setX(qreal x) {
-    x_ = x;
-}
-
-void Ghost::setY(qreal y) {
-    y_ = y;
+void Ghost::move() {
+    model_->moveBy(5, 5);
+    position_ += QPointF(5, 5);
 }

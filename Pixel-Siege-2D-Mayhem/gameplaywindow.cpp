@@ -73,7 +73,6 @@ gameplayWindow::gameplayWindow(Game* game, QWidget *parent)
     view_->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     view_->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     setCentralWidget(view_);
-
 }
 
 void gameplayWindow::setMap(QString& map) {
@@ -364,6 +363,7 @@ void gameplayWindow::keyPressEvent(QKeyEvent* event) {
 void gameplayWindow::mousePressEvent(QMouseEvent* event) {
     if (event->button() == Qt::LeftButton) {
         Hit();
+        spawnGhost();
     }
 }
 
@@ -396,7 +396,6 @@ void gameplayWindow::updateHealth(int health) {
 
 void gameplayWindow::keyReleaseEvent(QKeyEvent *event) {
     if (game_->hero_ == nullptr) return;
-
     pressedKeys_.remove(event->nativeScanCode());
 }
 
@@ -406,6 +405,9 @@ void gameplayWindow::updateTimer() {
     QTime showTime(0, 0);
     showTime = showTime.addSecs(elapsed);
     showTime_->setText(showTime.toString("hh:mm:ss"));
+    for (auto& element : game_->monsters) {
+        element->move();
+    }
 }
 
 void gameplayWindow::pauseTimer() {
@@ -420,4 +422,12 @@ void gameplayWindow::resumeTimer() {
     startTime_ = startTime_.addSecs(pauseDuration);
 
     gameTime_->start(1000);
+}
+
+void gameplayWindow::spawnGhost() {
+    auto ghost = new Ghost();
+    ghost->setPosition(QPointF(100, 100));
+    scene_->addItem(ghost->getModel());
+
+    game_->monsters.push_back(ghost);
 }

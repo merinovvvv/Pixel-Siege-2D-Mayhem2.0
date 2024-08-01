@@ -5,8 +5,6 @@
 #include <QGraphicsPixmapItem>
 #include "game.h"
 
-class Game;
-
 class Hero : public QObject {
     Q_OBJECT
 public:
@@ -21,6 +19,7 @@ private:
 
     friend class gameplayWindow;
     friend class Game;
+    friend class Ghost;
 };
 
 #endif // HERO_H
