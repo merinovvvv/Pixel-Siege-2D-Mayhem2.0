@@ -1,6 +1,8 @@
 #include "game.h"
 
 Game::Game() {
+    login_window = new loginWindow(this);
+    autho = new AuthoWindow(this);
     main_menu = new MainMenu(this);
     map_choose_window = new mapChooseWindow(this);
     pause_menu = new PauseMenu(this);
@@ -8,8 +10,17 @@ Game::Game() {
     hero_ = nullptr;
 }
 
+void Game::showLoginWindow() {
+    login_window->showFullScreen();
+}
+
+void Game::startApplication() {
+    autho->showFullScreen();
+}
+
 void Game::showMainMenu() {
-    main_menu->show();
+    autho->close();
+    main_menu->showFullScreen();
 }
 
 void Game::showMapChooseWindow() {

@@ -1,21 +1,23 @@
-#ifndef MAIN_MENU_H
-#define MAIN_MENU_H
+#ifndef LOGINWINDOW_H
+#define LOGINWINDOW_H
 
 #include <QMainWindow>
 #include <QMovie>
-#include <QPaintEvent>
-#include <QPushButton>
 #include <QSpacerItem>
-#include <QLayout>
+#include <QPainter>
+#include <QPushButton>
+#include <QVBoxLayout>
+#include <QLabel>
+#include <QLineEdit>
 
 class Game;
 
-class MainMenu : public QMainWindow {
+class loginWindow : public QMainWindow
+{
     Q_OBJECT
-
 public:
-    MainMenu(Game* game, QWidget *parent = nullptr);
-    ~MainMenu() = default;
+    explicit loginWindow(Game* game, QWidget *parent = nullptr);
+    ~loginWindow() = default;
 
 protected:
     void paintEvent(QPaintEvent *event) override;
@@ -24,18 +26,24 @@ protected:
 
 private slots:
     void exitSlot();
-    void showMapChooseWindow();
+    void authorizationSlot();
 
 private:
     QMovie *background = new QMovie(":/backgrounds/background_menu/back6.gif");
     QWidget* centralWidget;
     QSpacerItem* leftSpacer;
-    QPushButton* startButton;
-    QPushButton* statsButton;
+    QLabel* loginLabel;
+    QLineEdit* loginLineEdit;
+    QLabel* passwordLabel;
+    QLineEdit* passwordLineEdit;
+    QPushButton* authoButton;
     QPushButton* exitButton;
     QVBoxLayout* verticalLayout;
     QGridLayout* gridLayout;
 
     Game* game_;
+
+signals:
 };
-#endif // MAIN_MENU_H
+
+#endif // LOGINWINDOW_H

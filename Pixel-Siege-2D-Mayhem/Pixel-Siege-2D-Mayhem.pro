@@ -9,10 +9,12 @@ CONFIG += c++17
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+    authowindow.cpp \
     game.cpp \
     gameplaywindow.cpp \
     ghost.cpp \
     hero.cpp \
+    loginwindow.cpp \
     main.cpp \
     main_menu.cpp \
     mapchoosewindow.cpp \
@@ -24,10 +26,12 @@ SOURCES += \
     wolf.cpp
 
 HEADERS += \
+    authowindow.h \
     game.h \
     gameplaywindow.h \
     ghost.h \
     hero.h \
+    loginwindow.h \
     main_menu.h \
     mapchoosewindow.h \
     monster.h \
