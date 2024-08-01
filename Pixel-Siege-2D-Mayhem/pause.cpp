@@ -29,15 +29,18 @@ PauseMenu::PauseMenu(Game* game, QWidget *parent) : QMainWindow(parent), game_(g
                          "color: white;"
                          "font-size: 110px;"
                          "text-align: center;"
+                         "border: none;"
                          "}"
                          "QPushButton:hover {"
                          "background: transparent;"
                          "color: #FF6439;"
                          "font-size: 110px;"
                          "text-align: center;"
+                         "border: none;"
                          "}"
                          "QPushButton:focus{"
                          "color: #FF6439;"
+                         "border: none;"
                          "outline: none;"
                          "}";
 

@@ -6,6 +6,7 @@ Monster::Monster(qreal health, qreal damage, QGraphicsPixmapItem* model, const Q
     : health_(health), damage_(damage), model_(model), hit_(hit) {}
 
 Monster::Monster(const Monster &other) {
+    class QObject;
     health_ = other.health_;
     damage_ = other.damage_;
     model_ = other.model_;

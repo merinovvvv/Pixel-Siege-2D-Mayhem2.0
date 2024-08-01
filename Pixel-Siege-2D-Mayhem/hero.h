@@ -7,23 +7,20 @@
 
 class Game;
 
-
-class Hero : public QObject
-{
+class Hero : public QObject {
     Q_OBJECT
 public:
     explicit Hero(Game* game, QObject *parent = nullptr);
-private:
 
+private:
     Game* game_;
+    QPointF position_;
 
     QGraphicsPixmapItem *heroImage_;
     void updateHealth(int health);
 
     friend class gameplayWindow;
     friend class Game;
-
-signals:
 };
 
 #endif // HERO_H

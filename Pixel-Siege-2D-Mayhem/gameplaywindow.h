@@ -34,7 +34,6 @@ public:
 
     void setMap(QString& map);
     QVector <QString> getMaps();
-    void spawnGhost();
 
 private:
     QString map_;

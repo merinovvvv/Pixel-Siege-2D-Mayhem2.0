@@ -21,14 +21,17 @@ mapChooseWindow::mapChooseWindow(Game* game, QWidget *parent)
                           "background: transparent;"
                           "color: white;"
                           "font-size: 40pt;"
+                          "border: none;"
                           "}"
                           "QPushButton:hover {"
                           "background: transparent;"
                           "color: rgb(255, 173, 30);"
                           "font-size: 40pt;"
+                          "border: none;"
                           "}"
                           "QPushButton:focus{"
                           "color: rgb(255, 173, 30);"
+                          "border: none;"
                           "outline: none;"
                           "}");
 

@@ -48,15 +48,18 @@ MainMenu::MainMenu(Game* game, QWidget *parent) : QMainWindow(parent), game_(gam
                          "background: transparent;"
                          "color: white;"
                          "font-size: 110px;"
+                         "border: none;"
                          "}"
                          "QPushButton:hover {"
                          "background: transparent;"
                          "color: rgb(255, 173, 30);"
                          "font-size: 110px;"
+                         "border: none;"
                          "}"
                          "QPushButton:focus{"
                          "color: rgb(255, 173, 30);"
-                         "outline: none;"
+                         "border: none;"
+                          "outline: none;"
                           "}");
 
     startButton->setStyleSheet(styleSheet);
