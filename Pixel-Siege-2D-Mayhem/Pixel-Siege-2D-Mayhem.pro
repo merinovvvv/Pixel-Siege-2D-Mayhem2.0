@@ -31,6 +31,8 @@ HEADERS += \
     gameplaywindow.h \
     ghost.h \
     hero.h \
+    json.hpp \
+    json_fwd.hpp \
     loginwindow.h \
     main_menu.h \
     mapchoosewindow.h \

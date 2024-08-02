@@ -4,8 +4,11 @@
 #include <QPainter>
 #include <QApplication>
 
+int AuthoWindow::senderButton = -1;
+
 AuthoWindow::AuthoWindow(Game* game, QWidget *parent) : QMainWindow(parent), game_(game)
 {
+
     setMouseTracking(true);
     setWindowIcon(QIcon(":/icon/helmetIcon.jpg"));
     //showFullScreen();
@@ -136,6 +139,12 @@ bool AuthoWindow::eventFilter(QObject *obj, QEvent *event) {
 }
 
 void AuthoWindow::showLoginWindow() {
+    QPushButton *button = qobject_cast<QPushButton *>(sender());
+    if (button == signIn) {
+        senderButton = 0;
+    } else if (button == signUp) {
+        senderButton = 1;
+    }
     if(game_) {
         game_->showLoginWindow();
     }

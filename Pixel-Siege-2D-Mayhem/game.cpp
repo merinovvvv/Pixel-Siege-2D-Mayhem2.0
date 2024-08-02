@@ -12,6 +12,7 @@ Game::Game() {
 
 void Game::showLoginWindow() {
     login_window->showFullScreen();
+    autho->close();
 }
 
 void Game::startApplication() {
@@ -20,6 +21,7 @@ void Game::startApplication() {
 
 void Game::showMainMenu() {
     autho->close();
+    login_window->close();
     main_menu->showFullScreen();
 }
 

@@ -7,6 +7,7 @@
 #include "mapchoosewindow.h"
 #include "gameplaywindow.h"
 #include "loginwindow.h"
+#include "json.hpp"
 
 class Hero;
 
@@ -31,10 +32,14 @@ private:
     gameplayWindow* gameplay_window;
     PauseMenu* pause_menu;
     Hero* hero_;
+    nlohmann::json game_info;
+
+    QString currentPlayer;
 
     friend class Hero;
     friend class PauseMenu;
     friend class gameplayWindow;
+    friend class loginWindow;
 
 };
 

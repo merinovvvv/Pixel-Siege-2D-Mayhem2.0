@@ -17,6 +17,8 @@ public:
     explicit AuthoWindow(Game* game, QWidget *parent = nullptr);
     ~AuthoWindow() = default;
 
+    static int senderButton;
+
 protected:
     void paintEvent(QPaintEvent *event) override;
     void keyPressEvent(QKeyEvent *event) override;

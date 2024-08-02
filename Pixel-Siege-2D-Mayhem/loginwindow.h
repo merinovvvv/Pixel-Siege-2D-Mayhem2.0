@@ -10,6 +10,7 @@
 #include <QLabel>
 #include <QLineEdit>
 
+
 class Game;
 
 class loginWindow : public QMainWindow
@@ -27,6 +28,7 @@ protected:
 private slots:
     void exitSlot();
     void authorizationSlot();
+    void backSlot();
 
 private:
     QMovie *background = new QMovie(":/backgrounds/background_menu/back6.gif");
@@ -38,10 +40,15 @@ private:
     QLineEdit* passwordLineEdit;
     QPushButton* authoButton;
     QPushButton* exitButton;
+    QPushButton* backButton;
     QVBoxLayout* verticalLayout;
     QGridLayout* gridLayout;
 
     Game* game_;
+
+    void writeToFile();
+    bool playerExists();
+
 
 signals:
 };
