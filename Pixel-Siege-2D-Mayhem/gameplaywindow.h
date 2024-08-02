@@ -56,6 +56,13 @@ private:
     QLabel* showTime_;
     QTime pausedTime_;
 
+    QTimer* moveTimer_;
+    QTimer* ghostTimer_;
+    QTimer* scaryGhostTimer_;
+    QTimer* skeletonTimer_;
+    QTimer* slimeTimer_;
+    QTimer* wolfTimer_;
+
     void pauseTimer();
     void resumeTimer();
 

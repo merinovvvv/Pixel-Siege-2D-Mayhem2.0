@@ -81,30 +81,30 @@ gameplayWindow::gameplayWindow(Game* game, QWidget *parent)
     setCentralWidget(view_);
 
     // 60 fps monster movement
-    QTimer* moveTimer = new QTimer();
-    connect(moveTimer, SIGNAL(timeout()), this, SLOT(moveMonsters()));
-    moveTimer->start(1000 / 60);
+    moveTimer_ = new QTimer();
+    connect(moveTimer_, SIGNAL(timeout()), this, SLOT(moveMonsters()));
+    moveTimer_->start(1000 / 60);
 
     //spawn monsters with different interval
-    QTimer* ghostTimer = new QTimer();
-    connect(ghostTimer, SIGNAL(timeout()), this, SLOT(spawnGhost()));
-    ghostTimer->start(5 * 1000);
+    ghostTimer_ = new QTimer();
+    connect(ghostTimer_, SIGNAL(timeout()), this, SLOT(spawnGhost()));
+    ghostTimer_->start(5 * 1000);
 
-    QTimer* scaryGhostTimer = new QTimer();
-    connect(scaryGhostTimer, SIGNAL(timeout()), this, SLOT(spawnScaryGhost()));
-    scaryGhostTimer->start(10 * 1000);
+    scaryGhostTimer_ = new QTimer();
+    connect(scaryGhostTimer_, SIGNAL(timeout()), this, SLOT(spawnScaryGhost()));
+    scaryGhostTimer_->start(10 * 1000);
 
-    QTimer* skeletonTimer = new QTimer();
-    connect(skeletonTimer, SIGNAL(timeout()), this, SLOT(spawnSkeleton()));
-    skeletonTimer->start(3 * 1000);
+    skeletonTimer_ = new QTimer();
+    connect(skeletonTimer_, SIGNAL(timeout()), this, SLOT(spawnSkeleton()));
+    skeletonTimer_->start(3 * 1000);
 
-    QTimer* slimeTimer = new QTimer();
-    connect(slimeTimer, SIGNAL(timeout()), this, SLOT(spawnSlime()));
-    slimeTimer->start(5 * 1000);
+    slimeTimer_ = new QTimer();
+    connect(slimeTimer_, SIGNAL(timeout()), this, SLOT(spawnSlime()));
+    slimeTimer_->start(5 * 1000);
 
-    QTimer* wolfTimer = new QTimer();
-    connect(wolfTimer, SIGNAL(timeout()), this, SLOT(spawnWolf()));
-    wolfTimer->start(15 * 1000);
+    wolfTimer_ = new QTimer();
+    connect(wolfTimer_, SIGNAL(timeout()), this, SLOT(spawnWolf()));
+    wolfTimer_->start(15 * 1000);
 }
 
 void gameplayWindow::setMap(QString& map) {
@@ -439,7 +439,7 @@ void gameplayWindow::updateTimer() {
 }
 
 void gameplayWindow::moveMonsters() {
-    for (auto& monster : game_->monsters) {
+    for (auto& monster : game_->monsters_) {
         monster->move(*game_->hero_);
     }
 }
@@ -447,6 +447,12 @@ void gameplayWindow::moveMonsters() {
 void gameplayWindow::pauseTimer() {
     pausedTime_ = QTime::currentTime();
     gameTime_->stop();
+    moveTimer_->stop();
+    ghostTimer_->stop();
+    scaryGhostTimer_->stop();
+    skeletonTimer_->stop();
+    slimeTimer_->stop();
+    wolfTimer_->stop();
 }
 
 void gameplayWindow::resumeTimer() {
@@ -456,54 +462,65 @@ void gameplayWindow::resumeTimer() {
     startTime_ = startTime_.addSecs(pauseDuration);
 
     gameTime_->start(1000);
+    moveTimer_->start(1000 / 60);
+    ghostTimer_->start(5 * 1000);
+    scaryGhostTimer_->start(10 * 1000);
+    skeletonTimer_->start(3 * 1000);
+    slimeTimer_->start(5 * 1000);
+    wolfTimer_->start(15 * 1000);
 }
 
 void gameplayWindow::spawnGhost() {
     auto ghost = new Ghost();
     QPointF position = QPointF(QRandomGenerator::global()->bounded(0, 1500), QRandomGenerator::global()->bounded(0, 900));
     ghost->setPosition(position);
+    ghost->getModel()->setZValue(1);
     ghost->getModel()->setPos(position);
     scene_->addItem(ghost->getModel());
 
-    game_->monsters.push_back(ghost);
+    game_->monsters_.push_back(ghost);
 }
 
 void gameplayWindow::spawnScaryGhost() {
     auto scaryGhost = new ScaryGhost();
     QPointF position = QPointF(QRandomGenerator::global()->bounded(0, 1500), QRandomGenerator::global()->bounded(0, 900));
     scaryGhost->setPosition(position);
+    scaryGhost->getModel()->setZValue(1);
     scaryGhost->getModel()->setPos(position);
     scene_->addItem(scaryGhost->getModel());
 
-    game_->monsters.push_back(scaryGhost);
+    game_->monsters_.push_back(scaryGhost);
 }
 
 void gameplayWindow::spawnSkeleton() {
     auto skeleton = new Skeleton();
     QPointF position = QPointF(QRandomGenerator::global()->bounded(0, 1500), QRandomGenerator::global()->bounded(0, 900));
     skeleton->setPosition(position);
+    skeleton->getModel()->setZValue(1);
     skeleton->getModel()->setPos(position);
     scene_->addItem(skeleton->getModel());
 
-    game_->monsters.push_back(skeleton);
+    game_->monsters_.push_back(skeleton);
 }
 
 void gameplayWindow::spawnSlime() {
     auto slime = new Slime();
     QPointF position = QPointF(QRandomGenerator::global()->bounded(0, 1500), QRandomGenerator::global()->bounded(0, 900));
     slime->setPosition(position);
+    slime->getModel()->setZValue(1);
     slime->getModel()->setPos(position);
     scene_->addItem(slime->getModel());
 
-    game_->monsters.push_back(slime);
+    game_->monsters_.push_back(slime);
 }
 
 void gameplayWindow::spawnWolf() {
     auto wolf = new Wolf();
     QPointF position = QPointF(QRandomGenerator::global()->bounded(0, 1500), QRandomGenerator::global()->bounded(0, 900));
     wolf->setPosition(position);
+    wolf->getModel()->setZValue(1);
     wolf->getModel()->setPos(position);
     scene_->addItem(wolf->getModel());
 
-    game_->monsters.push_back(wolf);
+    game_->monsters_.push_back(wolf);
 }

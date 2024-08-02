@@ -28,7 +28,7 @@ private:
     PauseMenu* pause_menu;
 
     Hero* hero_;
-    QList<Monster*> monsters;
+    QList<Monster*> monsters_;
 
     friend class Hero;
     friend class PauseMenu;
