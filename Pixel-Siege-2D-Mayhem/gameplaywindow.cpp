@@ -88,23 +88,23 @@ gameplayWindow::gameplayWindow(Game* game, QWidget *parent)
     //spawn monsters with different interval
     ghostTimer_ = new QTimer();
     connect(ghostTimer_, SIGNAL(timeout()), this, SLOT(spawnGhost()));
-    ghostTimer_->start(5 * 1000);
+    ghostTimer_->start(10 * 1000);
 
     scaryGhostTimer_ = new QTimer();
     connect(scaryGhostTimer_, SIGNAL(timeout()), this, SLOT(spawnScaryGhost()));
-    scaryGhostTimer_->start(10 * 1000);
+    scaryGhostTimer_->start(25 * 1000);
 
     skeletonTimer_ = new QTimer();
     connect(skeletonTimer_, SIGNAL(timeout()), this, SLOT(spawnSkeleton()));
-    skeletonTimer_->start(3 * 1000);
+    skeletonTimer_->start(5 * 1000);
 
     slimeTimer_ = new QTimer();
     connect(slimeTimer_, SIGNAL(timeout()), this, SLOT(spawnSlime()));
-    slimeTimer_->start(5 * 1000);
+    slimeTimer_->start(15 * 1000);
 
     wolfTimer_ = new QTimer();
     connect(wolfTimer_, SIGNAL(timeout()), this, SLOT(spawnWolf()));
-    wolfTimer_->start(15 * 1000);
+    wolfTimer_->start(40 * 1000);
 }
 
 void gameplayWindow::setMap(QString& map) {
@@ -463,11 +463,11 @@ void gameplayWindow::resumeTimer() {
 
     gameTime_->start(1000);
     moveTimer_->start(1000 / 60);
-    ghostTimer_->start(5 * 1000);
-    scaryGhostTimer_->start(10 * 1000);
-    skeletonTimer_->start(3 * 1000);
-    slimeTimer_->start(5 * 1000);
-    wolfTimer_->start(15 * 1000);
+    ghostTimer_->start(10 * 1000);
+    scaryGhostTimer_->start(25 * 1000);
+    skeletonTimer_->start(5 * 1000);
+    slimeTimer_->start(15 * 1000);
+    wolfTimer_->start(40 * 1000);
 }
 
 void gameplayWindow::spawnGhost() {
