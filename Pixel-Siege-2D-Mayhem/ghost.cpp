@@ -3,7 +3,6 @@
 Ghost::Ghost() {
     health_ = 10;
     damage_ = 2;
-    facingLeft_ = false;
     speed_ = 0.6;
     model_ = new QGraphicsPixmapItem(QPixmap(":/monsters/mobs/ghost.png"));
 }

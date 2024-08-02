@@ -3,7 +3,6 @@
 Skeleton::Skeleton() {
     health_ = 5;
     damage_ = 1;
-    facingLeft_ = false;
     speed_ = 1;
     model_ = new QGraphicsPixmapItem(QPixmap(":/monsters/mobs/skeleton.png"));
 }

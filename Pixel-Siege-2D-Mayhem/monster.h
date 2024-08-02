@@ -29,7 +29,7 @@ protected:
     qreal health_{};
     qreal damage_{};
     QGraphicsPixmapItem* model_;
-    bool facingLeft_;
+    bool facingLeft_ = true;
     QPixmap hit_ = QPixmap(":/tools/items/hit.png");
 
     qreal speed_{};

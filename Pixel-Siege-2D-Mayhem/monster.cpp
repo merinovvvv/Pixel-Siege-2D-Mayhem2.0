@@ -50,6 +50,15 @@ void Monster::move(Hero &hero) {
     qreal dy = hero.position_.y() - position_.y();
     qreal length = qSqrt(dx * dx + dy * dy);
 
+    if (dx < 0 && !facingLeft_) {
+        facingLeft_ = true;
+        model_->setTransform(QTransform(1, 0, 0, 1, 0, 0));
+    }
+    if (dx > 0 && facingLeft_){
+        facingLeft_ = false;
+        model_->setTransform(QTransform(-1, 0, 0, 1, model_->boundingRect().width(), 0));
+    }
+
     model_->moveBy(dx / length, dy / length);
     position_ += QPointF(dx / length * speed_, dy / length * speed_);
 }
