@@ -10,7 +10,7 @@ public:
     Ghost(const Ghost& other);
     Ghost& operator =(const Ghost& other);
 
-    void move() override;
+    void move(Hero& hero) override;
 };
 
 #endif // GHOST_H

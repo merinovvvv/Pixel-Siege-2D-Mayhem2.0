@@ -73,6 +73,10 @@ gameplayWindow::gameplayWindow(Game* game, QWidget *parent)
     view_->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     view_->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     setCentralWidget(view_);
+
+    QTimer* monstersTimer = new QTimer();
+    connect(monstersTimer, SIGNAL(timeout()), this, SLOT(moveMonsters()));
+    monstersTimer->start(1000 / 60);
 }
 
 void gameplayWindow::setMap(QString& map) {
@@ -117,15 +121,15 @@ void gameplayWindow::keyPressEvent(QKeyEvent* event) {
                 // Когда мы упёрлись в левую границу и не упёрлись в нижнюю
             } else if (characterLeft <= mapLeft && characterBottom < mapBottom) {
                 game_->hero_->heroImage_->moveBy(0, 10);
-                game_->hero_->position_ + QPointF(0, 10);
+                game_->hero_->position_ += QPointF(0, 10);
                 // Когда не упёрлись в левую границу и упёрлись в нижнюю
             } else if (characterLeft > mapLeft && characterBottom >= mapBottom) {
                 game_->hero_->heroImage_->moveBy(-10, 0);
-                game_->hero_->position_ + QPointF(-10, 0);
+                game_->hero_->position_ += QPointF(-10, 0);
                 // Когда не упёрлись в обе границы
             } else if (characterLeft > mapLeft && characterBottom < mapBottom) {
                 game_->hero_->heroImage_->moveBy(-5 * qSqrt(2), 5 * qSqrt(2));
-                game_->hero_->position_ + QPointF(-5 * qSqrt(2), 5 * qSqrt(2));
+                game_->hero_->position_ += QPointF(-5 * qSqrt(2), 5 * qSqrt(2));
             }
 
             if (!facingLeft) {
@@ -141,15 +145,15 @@ void gameplayWindow::keyPressEvent(QKeyEvent* event) {
                 // Когда мы упёрлись в левую границу и не упёрлись в верхнюю
             } else if (characterLeft <= mapLeft && characterTop > mapTop) {
                 game_->hero_->heroImage_->moveBy(0, -10);
-                game_->hero_->position_ + QPointF(0, -10);
+                game_->hero_->position_ += QPointF(0, -10);
                 // Когда не упёрлись в левую границу и упёрлись в верхнюю
             } else if (characterLeft > mapLeft && characterTop <= mapTop) {
                 game_->hero_->heroImage_->moveBy(-10, 0);
-                game_->hero_->position_ + QPointF(-10, 0);
+                game_->hero_->position_ += QPointF(-10, 0);
                 // Когда не упёрлись в обе границы
             } else if (characterLeft > mapLeft && characterTop > mapTop) {
                 game_->hero_->heroImage_->moveBy(-5 * qSqrt(2), -5 * qSqrt(2));
-                game_->hero_->position_ + QPointF(-5 * qSqrt(2), 5 * qSqrt(2));
+                game_->hero_->position_ += QPointF(-5 * qSqrt(2), -5 * qSqrt(2));
             }
 
             if (!facingLeft) {
@@ -163,7 +167,7 @@ void gameplayWindow::keyPressEvent(QKeyEvent* event) {
                 game_->hero_->heroImage_->moveBy(0, 0);
             } else {
                 game_->hero_->heroImage_->moveBy(-10, 0);
-                game_->hero_->position_ + QPointF(-10, 0);
+                game_->hero_->position_ += QPointF(-10, 0);
             }
             if (!facingLeft) {
                 game_->hero_->heroImage_->setTransform(QTransform(1, 0, 0, 1, 0, 0));
@@ -181,15 +185,15 @@ void gameplayWindow::keyPressEvent(QKeyEvent* event) {
                 // Когда упёрлись в правую и не упрёлись в нижнюю границы
             } else if (characterRight >= mapRight && characterBottom < mapBottom) {
                 game_->hero_->heroImage_->moveBy(0, 10);
-                game_->hero_->position_ + QPointF(0, 10);
+                game_->hero_->position_ += QPointF(0, 10);
                 // Когда не упрёлись в правую и упёрлись в нижнюю границу
             } else if (characterRight < mapRight && characterBottom >= mapBottom) {
                 game_->hero_->heroImage_->moveBy(10, 0);
-                game_->hero_->position_ + QPointF(10, 0);
+                game_->hero_->position_ += QPointF(10, 0);
                 // Когда не упёрлись в обе границы
             } else if (characterRight < mapRight && characterBottom < mapBottom) {
                 game_->hero_->heroImage_->moveBy(5 * qSqrt(2), 5 * qSqrt(2));
-                game_->hero_->position_ + QPointF(-5 * qSqrt(2), 5 * qSqrt(2));
+                game_->hero_->position_ += QPointF(5 * qSqrt(2), 5 * qSqrt(2));
             }
 
             if (facingLeft) {
@@ -205,15 +209,15 @@ void gameplayWindow::keyPressEvent(QKeyEvent* event) {
                 // Когда упёрлись в правую и не упрёлись в верхнюю границы
             } else if (characterRight >= mapRight && characterTop > mapTop) {
                 game_->hero_->heroImage_->moveBy(0, -10);
-                game_->hero_->position_ + QPointF(0, -10);
+                game_->hero_->position_ += QPointF(0, -10);
                 // Когда не упрёлись в правую и упёрлись в верхнюю границу
             } else if (characterRight < mapRight && characterTop <= mapTop) {
                 game_->hero_->heroImage_->moveBy(10, 0);
-                game_->hero_->position_ + QPointF(10, 0);
+                game_->hero_->position_ += QPointF(10, 0);
                 // Когда не упёрлись в обе границы
             } else if (characterRight < mapRight && characterTop > mapTop) {
                 game_->hero_->heroImage_->moveBy(5 * qSqrt(2), -5 * qSqrt(2));
-                game_->hero_->position_ + QPointF(-5 * qSqrt(2), 5 * qSqrt(2));
+                game_->hero_->position_ += QPointF(5 * qSqrt(2), -5 * qSqrt(2));
             }
 
             if (facingLeft) {
@@ -227,7 +231,7 @@ void gameplayWindow::keyPressEvent(QKeyEvent* event) {
                 game_->hero_->heroImage_->moveBy(0, 0);
             } else {
                 game_->hero_->heroImage_->moveBy(10, 0);
-                game_->hero_->position_ + QPointF(10, 0);
+                game_->hero_->position_ += QPointF(10, 0);
             }
             if (facingLeft) {
                 game_->hero_->heroImage_->setTransform(QTransform(-1, 0, 0, 1, game_->hero_->heroImage_->boundingRect().width(), 0));
@@ -243,15 +247,15 @@ void gameplayWindow::keyPressEvent(QKeyEvent* event) {
                 // Когда мы упёрлись в левую границу и не упёрлись в верхнюю
             } else if (characterLeft <= mapLeft && characterTop > mapTop) {
                 game_->hero_->heroImage_->moveBy(0, -10);
-                game_->hero_->position_ + QPointF(0, -10);
+                game_->hero_->position_ += QPointF(0, -10);
                 // Когда не упёрлись в левую границу и упёрлись в верхнюю
             } else if (characterLeft > mapLeft && characterTop <= mapTop) {
                 game_->hero_->heroImage_->moveBy(-10, 0);
-                game_->hero_->position_ + QPointF(10, 0);
+                game_->hero_->position_ += QPointF(-10, 0);
                 // Когда не упёрлись в обе границы
             } else if (characterLeft > mapLeft && characterTop > mapTop) {
                 game_->hero_->heroImage_->moveBy(-5 * qSqrt(2), -5 * qSqrt(2));
-                game_->hero_->position_ + QPointF(-5 * qSqrt(2), 5 * qSqrt(2));
+                game_->hero_->position_ += QPointF(-5 * qSqrt(2), -5 * qSqrt(2));
             }
 
             if (!facingLeft) {
@@ -266,15 +270,15 @@ void gameplayWindow::keyPressEvent(QKeyEvent* event) {
                 // Когда упёрлись в правую и не упрёлись в верхнюю границы
             } else if (characterRight >= mapRight && characterTop > mapTop) {
                 game_->hero_->heroImage_->moveBy(0, -10);
-                game_->hero_->position_ + QPointF(0, -10);
+                game_->hero_->position_ += QPointF(0, -10);
                 // Когда не упрёлись в правую и упёрлись в верхнюю границу
             } else if (characterRight < mapRight && characterTop <= mapTop) {
                 game_->hero_->heroImage_->moveBy(10, 0);
-                game_->hero_->position_ + QPointF(10, 0);
+                game_->hero_->position_ += QPointF(10, 0);
                 // Когда не упёрлись в обе границы
             } else if (characterRight < mapRight && characterTop > mapTop) {
                 game_->hero_->heroImage_->moveBy(5 * qSqrt(2), -5 * qSqrt(2));
-                game_->hero_->position_ + QPointF(-5 * qSqrt(2), 5 * qSqrt(2));
+                game_->hero_->position_ += QPointF(5 * qSqrt(2), -5 * qSqrt(2));
             }
 
             if (facingLeft) {
@@ -287,7 +291,7 @@ void gameplayWindow::keyPressEvent(QKeyEvent* event) {
                 game_->hero_->heroImage_->moveBy(0, 0);
             } else {
                 game_->hero_->heroImage_->moveBy(0, -10);
-                game_->hero_->position_ + QPointF(0, -10);
+                game_->hero_->position_ += QPointF(0, -10);
             }
         }
         break;
@@ -300,15 +304,15 @@ void gameplayWindow::keyPressEvent(QKeyEvent* event) {
                 // Когда мы упёрлись в левую границу и не упёрлись в нижнюю
             } else if (characterLeft <= mapLeft && characterBottom < mapBottom) {
                 game_->hero_->heroImage_->moveBy(0, 10);
-                game_->hero_->position_ + QPointF(0, 10);
+                game_->hero_->position_ += QPointF(0, 10);
                 // Когда не упёрлись в левую границу и упёрлись в нижнюю
             } else if (characterLeft > mapLeft && characterBottom >= mapBottom) {
                 game_->hero_->heroImage_->moveBy(-10, 0);
-                game_->hero_->position_ + QPointF(-10, 0);
+                game_->hero_->position_ += QPointF(-10, 0);
                 // Когда не упёрлись в обе границы
             } else if (characterLeft > mapLeft && characterBottom < mapBottom) {
                 game_->hero_->heroImage_->moveBy(-5 * qSqrt(2), 5 * qSqrt(2));
-                game_->hero_->position_ + QPointF(-5 * qSqrt(2), 5 * qSqrt(2));
+                game_->hero_->position_ += QPointF(-5 * qSqrt(2), 5 * qSqrt(2));
             }
 
             if (!facingLeft) {
@@ -324,15 +328,15 @@ void gameplayWindow::keyPressEvent(QKeyEvent* event) {
                 // Когда упёрлись в правую и не упрёлись в нижнюю границы
             } else if (characterRight >= mapRight && characterBottom < mapBottom) {
                 game_->hero_->heroImage_->moveBy(0, 10);
-                game_->hero_->position_ + QPointF(0, 10);
+                game_->hero_->position_ += QPointF(0, 10);
                 // Когда не упрёлись в правую и упёрлись в нижнюю границу
             } else if (characterRight < mapRight && characterBottom >= mapBottom) {
                 game_->hero_->heroImage_->moveBy(10, 0);
-                game_->hero_->position_ + QPointF(10, 0);
+                game_->hero_->position_ += QPointF(10, 0);
                 // Когда не упёрлись в обе границы
             } else if (characterRight < mapRight && characterBottom < mapBottom) {
                 game_->hero_->heroImage_->moveBy(5 * qSqrt(2), 5 * qSqrt(2));
-                game_->hero_->position_ + QPointF(-5 * qSqrt(2), 5 * qSqrt(2));
+                game_->hero_->position_ += QPointF(5 * qSqrt(2), 5 * qSqrt(2));
             }
 
             if (facingLeft) {
@@ -345,7 +349,7 @@ void gameplayWindow::keyPressEvent(QKeyEvent* event) {
                 game_->hero_->heroImage_->moveBy(0, 0);
             } else {
                 game_->hero_->heroImage_->moveBy(0, 10);
-                game_->hero_->position_ + QPointF(0, 10);
+                game_->hero_->position_ += QPointF(0, 10);
             }
         }
         break;
@@ -405,8 +409,11 @@ void gameplayWindow::updateTimer() {
     QTime showTime(0, 0);
     showTime = showTime.addSecs(elapsed);
     showTime_->setText(showTime.toString("hh:mm:ss"));
-    for (auto& element : game_->monsters) {
-        element->move();
+}
+
+void gameplayWindow::moveMonsters() {
+    for (auto& monster : game_->monsters) {
+        monster->move(*game_->hero_);
     }
 }
 
@@ -426,7 +433,9 @@ void gameplayWindow::resumeTimer() {
 
 void gameplayWindow::spawnGhost() {
     auto ghost = new Ghost();
-    ghost->setPosition(QPointF(100, 100));
+    QPointF position = QPointF(QRandomGenerator::global()->bounded(0, 1500), QRandomGenerator::global()->bounded(0, 900));
+    ghost->setPosition(position);
+    ghost->getModel()->setPos(position);
     scene_->addItem(ghost->getModel());
 
     game_->monsters.push_back(ghost);

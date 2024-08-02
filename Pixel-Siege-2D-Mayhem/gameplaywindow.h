@@ -71,6 +71,7 @@ private:
 
 private slots:
     void updateTimer();
+    void moveMonsters();
 };
 
 #endif // GAMEPLAYWINDOW_H

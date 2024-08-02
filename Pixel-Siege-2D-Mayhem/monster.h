@@ -4,6 +4,8 @@
 #include <QGraphicsPixmapItem>
 #include <QtMath>
 
+class Hero;
+
 class Monster {
     Q_GADGET
 public:
@@ -21,7 +23,7 @@ public:
     void setPosition(QPointF position);
     QGraphicsPixmapItem* getModel();
 
-    void virtual move() = 0;
+    void virtual move(Hero& hero) = 0;
 protected:
     QPointF position_ = QPointF(0, 0);
     qreal health_{};
