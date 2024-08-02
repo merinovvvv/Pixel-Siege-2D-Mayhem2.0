@@ -9,6 +9,8 @@ public:
     Skeleton();
     Skeleton(const Skeleton& other);
     Skeleton& operator =(const Skeleton& other);
+
+    QGraphicsPixmapItem* getModel() override;
 };
 
 #endif // SKELETON_H

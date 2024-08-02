@@ -21,15 +21,18 @@ public:
     void setX(qreal x);
     void setY(qreal y);
     void setPosition(QPointF position);
-    QGraphicsPixmapItem* getModel();
+    virtual QGraphicsPixmapItem* getModel() = 0;
 
-    void virtual move(Hero& hero) = 0;
+    void move(Hero& hero);
 protected:
     QPointF position_ = QPointF(0, 0);
     qreal health_{};
     qreal damage_{};
     QGraphicsPixmapItem* model_;
+    bool facingLeft_;
     QPixmap hit_ = QPixmap(":/tools/items/hit.png");
+
+    qreal speed_{};
 };
 
 #endif // MONSTER_H

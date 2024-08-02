@@ -9,6 +9,8 @@ public:
     ScaryGhost();
     ScaryGhost(const ScaryGhost& other);
     ScaryGhost& operator =(const ScaryGhost& other);
+
+    QGraphicsPixmapItem* getModel() override;
 };
 
 #endif // SCARYGHOST_H

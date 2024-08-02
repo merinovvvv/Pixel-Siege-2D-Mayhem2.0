@@ -1,9 +1,11 @@
 #include "monster.h"
+#include "hero.cpp"
 
 Monster::Monster(const Monster &other) {
     health_ = other.health_;
     damage_ = other.damage_;
     model_ = other.model_;
+    facingLeft_ = other.facingLeft_;
     hit_ = other.hit_;
 }
 
@@ -14,6 +16,7 @@ Monster &Monster::operator =(const Monster &other) {
     health_ = other.health_;
     damage_ = other.damage_;
     model_ = other.model_;
+    facingLeft_ = other.facingLeft_;
     hit_ = other.hit_;
     return *this;
 }
@@ -42,6 +45,11 @@ void Monster::setPosition(QPointF position) {
     position_ = position;
 }
 
-QGraphicsPixmapItem *Monster::getModel() {
-    return model_;
+void Monster::move(Hero &hero) {
+    qreal dx = hero.position_.x() - position_.x();
+    qreal dy = hero.position_.y() - position_.y();
+    qreal length = qSqrt(dx * dx + dy * dy);
+
+    model_->moveBy(dx / length, dy / length);
+    position_ += QPointF(dx / length * speed_, dy / length * speed_);
 }

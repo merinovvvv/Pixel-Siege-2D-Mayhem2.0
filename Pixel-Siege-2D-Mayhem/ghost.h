@@ -10,7 +10,7 @@ public:
     Ghost(const Ghost& other);
     Ghost& operator =(const Ghost& other);
 
-    void move(Hero& hero) override;
+    QGraphicsPixmapItem* getModel() override;
 };
 
 #endif // GHOST_H

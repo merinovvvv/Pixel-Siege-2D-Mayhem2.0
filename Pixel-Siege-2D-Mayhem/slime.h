@@ -9,6 +9,8 @@ public:
     Slime();
     Slime(const Slime& other);
     Slime& operator =(const Slime& other);
+
+    QGraphicsPixmapItem* getModel() override;
 };
 
 #endif // SLIME_H

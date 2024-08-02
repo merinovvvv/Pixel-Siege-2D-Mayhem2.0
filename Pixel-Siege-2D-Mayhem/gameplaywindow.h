@@ -11,11 +11,6 @@
 #include <QSet>
 #include <QRectF>
 #include <QTime>
-#include "ghost.h"
-#include "scaryghost.h"
-#include "skeleton.h"
-#include "slime.h"
-#include "wolf.h"
 
 class Hero;
 class Game;
@@ -64,14 +59,17 @@ private:
     void pauseTimer();
     void resumeTimer();
 
-    void spawnGhost();
-
     friend class PauseMenu;
     friend class Hero;
 
 private slots:
     void updateTimer();
     void moveMonsters();
+    void spawnGhost();
+    void spawnScaryGhost();
+    void spawnSkeleton();
+    void spawnSlime();
+    void spawnWolf();
 };
 
 #endif // GAMEPLAYWINDOW_H

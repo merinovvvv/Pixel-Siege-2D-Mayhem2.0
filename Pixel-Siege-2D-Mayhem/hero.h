@@ -19,7 +19,7 @@ private:
 
     friend class gameplayWindow;
     friend class Game;
-    friend class Ghost;
+    friend class Monster;
 };
 
 #endif // HERO_H
