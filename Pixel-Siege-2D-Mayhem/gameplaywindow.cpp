@@ -105,6 +105,10 @@ gameplayWindow::gameplayWindow(Game* game, QWidget *parent)
     wolfTimer_ = new QTimer();
     connect(wolfTimer_, SIGNAL(timeout()), this, SLOT(spawnWolf()));
     wolfTimer_->start(40 * 1000);
+
+    monsterHitUpdateTimer_ = new QTimer();
+    connect(monsterHitUpdateTimer_, SIGNAL(timeout()), this, SLOT(monsterHit()));
+    monsterHitUpdateTimer_->start(1000 * 4);
 }
 
 void gameplayWindow::setMap(QString& map) {
@@ -116,6 +120,7 @@ void gameplayWindow::setMap(QString& map) {
 
     if (game_->hero_ == nullptr) {
         game_->hero_ = new Hero(game_, this);
+        game_->hero_->health_ = 100;
     }
 }
 
@@ -439,7 +444,25 @@ void gameplayWindow::Hit() {
 
 }
 
-void gameplayWindow::updateHealth(int health) {
+void gameplayWindow::monsterHit() {
+    auto hero = game_->hero_;
+    for (auto& monster : game_->monsters_) {
+        if (monster->getModel()->collidesWithItem(hero->heroImage_)) {
+            hero->health_ = hero->health_ - monster->getDamage();
+            updateHealth(hero->health_);
+            if (hero->health_ <= 0) {
+                delete game_->gameplay_window;
+                game_->gameplay_window = nullptr;
+                game_->hero_ = nullptr;
+                game_->monsters_.clear();
+                game_->showMainMenu();
+                return;
+            }
+        }
+    }
+}
+
+void gameplayWindow::updateHealth(qreal health) {
     healthBar_->setValue(health);
 }
 
@@ -471,6 +494,7 @@ void gameplayWindow::pauseTimer() {
     skeletonTimer_->stop();
     slimeTimer_->stop();
     wolfTimer_->stop();
+    monsterHitUpdateTimer_->stop();
 }
 
 void gameplayWindow::resumeTimer() {
@@ -486,6 +510,7 @@ void gameplayWindow::resumeTimer() {
     skeletonTimer_->start(5 * 1000);
     slimeTimer_->start(15 * 1000);
     wolfTimer_->start(40 * 1000);
+    monsterHitUpdateTimer_->start(1000 / 60);
 }
 
 void gameplayWindow::spawnGhost() {

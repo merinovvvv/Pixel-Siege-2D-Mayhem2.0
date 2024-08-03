@@ -19,6 +19,7 @@ public:
     qreal getY() const;
     QPointF getPosition() const;
     qreal getHealth();
+    qreal getDamage();
     virtual QGraphicsPixmapItem* getModel() = 0;
 
     void setX(qreal x);

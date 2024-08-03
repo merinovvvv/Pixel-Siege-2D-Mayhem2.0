@@ -43,7 +43,7 @@ private:
 
     QPixmap hit_ = QPixmap(":/tools/items/hit.png");
     void Hit();
-    void updateHealth(int health);
+    void updateHealth(qreal health);
 
     QGraphicsPixmapItem *background_;
     QRectF mapBorder_;
@@ -62,6 +62,7 @@ private:
     QTimer* skeletonTimer_;
     QTimer* slimeTimer_;
     QTimer* wolfTimer_;
+    QTimer* monsterHitUpdateTimer_;
 
     void pauseTimer();
     void resumeTimer();
@@ -70,6 +71,7 @@ private:
     friend class Hero;
 
 private slots:
+    void monsterHit();
     void updateTimer();
     void moveMonsters();
     void spawnGhost();

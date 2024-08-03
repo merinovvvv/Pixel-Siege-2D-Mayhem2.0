@@ -35,6 +35,10 @@ qreal Monster::getHealth() {
     return health_;
 }
 
+qreal Monster::getDamage() {
+    return damage_;
+}
+
 void Monster::setX(qreal x) {
     position_.setX(x);
 }

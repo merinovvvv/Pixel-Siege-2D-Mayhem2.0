@@ -13,9 +13,8 @@ public:
 private:
     Game* game_;
     QPointF position_;
-
+    qreal health_;
     QGraphicsPixmapItem *heroImage_;
-    void updateHealth(int health);
 
     friend class gameplayWindow;
     friend class Game;
