@@ -10,6 +10,8 @@ public:
     Slime(const Slime& other);
     Slime& operator =(const Slime& other);
 
+    ~Slime() = default;
+
     QGraphicsPixmapItem* getModel() override;
 };
 

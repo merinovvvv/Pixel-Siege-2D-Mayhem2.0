@@ -10,6 +10,8 @@ public:
     Wolf(const Wolf& other);
     Wolf& operator =(const Wolf& other);
 
+    ~Wolf() = default;
+
     QGraphicsPixmapItem* getModel() override;
 };
 

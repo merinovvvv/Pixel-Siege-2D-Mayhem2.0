@@ -10,6 +10,8 @@ public:
     Skeleton(const Skeleton& other);
     Skeleton& operator =(const Skeleton& other);
 
+    ~Skeleton() = default;
+
     QGraphicsPixmapItem* getModel() override;
 };
 

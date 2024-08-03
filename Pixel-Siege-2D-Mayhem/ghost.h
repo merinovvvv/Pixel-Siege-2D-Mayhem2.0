@@ -10,6 +10,8 @@ public:
     Ghost(const Ghost& other);
     Ghost& operator =(const Ghost& other);
 
+    ~Ghost() = default;
+
     QGraphicsPixmapItem* getModel() override;
 };
 

@@ -6,7 +6,6 @@ Monster::Monster(const Monster &other) {
     damage_ = other.damage_;
     model_ = other.model_;
     facingLeft_ = other.facingLeft_;
-    hit_ = other.hit_;
 }
 
 Monster &Monster::operator =(const Monster &other) {
@@ -17,7 +16,6 @@ Monster &Monster::operator =(const Monster &other) {
     damage_ = other.damage_;
     model_ = other.model_;
     facingLeft_ = other.facingLeft_;
-    hit_ = other.hit_;
     return *this;
 }
 
@@ -29,8 +27,12 @@ qreal Monster::getY() const {
     return position_.y();
 }
 
-QPointF Monster::getPosiotion() const{
+QPointF Monster::getPosition() const{
     return position_;
+}
+
+qreal Monster::getHealth() {
+    return health_;
 }
 
 void Monster::setX(qreal x) {
@@ -43,6 +45,10 @@ void Monster::setY(qreal y) {
 
 void Monster::setPosition(QPointF position) {
     position_ = position;
+}
+
+void Monster::setHealth(qreal health) {
+    health_ = health;
 }
 
 void Monster::move(Hero &hero) {

@@ -415,10 +415,28 @@ void gameplayWindow::Hit() {
     hitImage->setZValue(2);
     scene_->addItem(hitImage);
 
+    // Processing the hit damage
+    for (auto it = game_->monsters_.begin(); it != game_->monsters_.end(); ) {
+        auto monster = *it;
+        if (monster->getModel()->collidesWithItem(hitImage)) {
+            monster->setHealth(monster->getHealth() - 5);
+            if (monster->getHealth() <= 0) {
+                scene_->removeItem(monster->getModel());
+                it = game_->monsters_.erase(it);
+                delete monster;
+            } else {
+                ++it;
+            }
+        } else {
+            ++it;
+        }
+    }
+
     QTimer::singleShot(100, [hitImage, this]() {
         scene_->removeItem(hitImage);
         delete hitImage;
     });
+
 }
 
 void gameplayWindow::updateHealth(int health) {

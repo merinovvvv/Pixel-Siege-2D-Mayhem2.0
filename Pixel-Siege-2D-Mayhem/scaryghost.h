@@ -10,6 +10,8 @@ public:
     ScaryGhost(const ScaryGhost& other);
     ScaryGhost& operator =(const ScaryGhost& other);
 
+    ~ScaryGhost() = default;
+
     QGraphicsPixmapItem* getModel() override;
 };
 

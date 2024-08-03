@@ -14,7 +14,6 @@
 mapChooseWindow::mapChooseWindow(Game* game, QWidget *parent)
     : QMainWindow{parent}, game_(game)
 {
-
     //setMouseTracking(true);
 
     QString styleSheet = ("QPushButton {"
@@ -242,8 +241,7 @@ bool mapChooseWindow::eventFilter(QObject *obj, QEvent *event) {
 
 
 void mapChooseWindow::keyPressEvent(QKeyEvent *event) {
-
-    if (event->key() == Qt::Key_Enter || event->key() == Qt::Key_Return) {
+    if (event->nativeScanCode() == 28 || event->nativeScanCode() == 57372) {
         QWidget *focusedWidget = focusWidget();
         QPushButton *focusedButton = qobject_cast<QPushButton *>(focusedWidget);
         if (focusedButton) {
@@ -257,15 +255,17 @@ void mapChooseWindow::keyPressEvent(QKeyEvent *event) {
                 leftButton->click();
             }
         }
-    } else if (event->key() == Qt::Key_Escape) {
+    } else if (event->nativeScanCode() == 1) {
         backToMainMenu();
-    } else {
-        QMainWindow::keyPressEvent(event);
+    } else if (event->nativeScanCode() == 75) { // left arrow (numpad)
+        rightButton->click();
+    } else if (event->nativeScanCode() == 77) { // right arrow (numpad)
+        leftButton->click();
     }
 }
 
 void mapChooseWindow::showEvent(QShowEvent *event) {
-    QMainWindow::showEvent(event);
+     QMainWindow::showEvent(event);
 
     startButton->setFocus();
 }

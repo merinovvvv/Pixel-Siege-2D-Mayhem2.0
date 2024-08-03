@@ -13,15 +13,18 @@ public:
     Monster(const Monster& other);
     Monster& operator =(const Monster& other);
 
-    ~Monster() = default;
+    virtual ~Monster() = default;
 
     qreal getX() const;
     qreal getY() const;
-    QPointF getPosiotion() const;
+    QPointF getPosition() const;
+    qreal getHealth();
+    virtual QGraphicsPixmapItem* getModel() = 0;
+
     void setX(qreal x);
     void setY(qreal y);
     void setPosition(QPointF position);
-    virtual QGraphicsPixmapItem* getModel() = 0;
+    void setHealth(qreal health);
 
     void move(Hero& hero);
 protected:
@@ -30,7 +33,6 @@ protected:
     qreal damage_{};
     QGraphicsPixmapItem* model_;
     bool facingLeft_ = true;
-    QPixmap hit_ = QPixmap(":/tools/items/hit.png");
 
     qreal speed_{};
 };
