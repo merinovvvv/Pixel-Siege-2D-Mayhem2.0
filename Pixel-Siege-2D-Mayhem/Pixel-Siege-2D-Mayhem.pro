@@ -23,6 +23,7 @@ SOURCES += \
     scaryghost.cpp \
     skeleton.cpp \
     slime.cpp \
+    statswindow.cpp \
     wolf.cpp
 
 HEADERS += \
@@ -41,6 +42,7 @@ HEADERS += \
     scaryghost.h \
     skeleton.h \
     slime.h \
+    statswindow.h \
     wolf.h
 
 FORMS +=

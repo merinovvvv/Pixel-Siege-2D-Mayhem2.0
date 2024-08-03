@@ -32,6 +32,7 @@ MainMenu::MainMenu(Game* game, QWidget *parent) : QMainWindow(parent), game_(gam
 
     statsButton = new QPushButton("STATS");
     statsButton->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
+    connect(statsButton, &QPushButton::clicked, this, &MainMenu::showStatsWindow);
 
     logoutButton = new QPushButton("LOG OUT");
     logoutButton->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
@@ -117,6 +118,10 @@ void MainMenu::keyPressEvent(QKeyEvent *event) {
                 showMapChooseWindow();
             } else if (focusedButton == exitButton) {
                 exitSlot();
+            } else if (focusedButton == logoutButton) {
+                backToLog();
+            } else if (focusedButton == statsButton) {
+                showStatsWindow();
             }
         }
     } else if (event->key() == Qt::Key_Escape) {
@@ -156,4 +161,11 @@ bool MainMenu::eventFilter(QObject *obj, QEvent *event) {
         }
     }
     return QObject::eventFilter(obj, event);
+}
+
+void MainMenu::showStatsWindow() {
+    if (game_) {
+        game_->showStatsWindow();
+    }
+    this->close();
 }

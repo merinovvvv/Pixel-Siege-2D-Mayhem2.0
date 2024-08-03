@@ -368,3 +368,13 @@ void loginWindow::backSlot() {
     }
     this->close();
 }
+
+void loginWindow::clearFields() {
+    loginLineEdit->clear();
+    passwordLineEdit->clear();
+}
+
+void loginWindow::showEvent(QShowEvent* event) {
+    QMainWindow::showEvent(event);
+    clearFields();
+}

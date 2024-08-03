@@ -1,6 +1,7 @@
 #include "game.h"
 
 Game::Game() {
+    stats_window = new statsWindow(this);
     login_window = new loginWindow(this);
     autho = new AuthoWindow(this);
     main_menu = new MainMenu(this);
@@ -37,6 +38,10 @@ void Game::showPauseMenu() {
 void Game::backToMainMenu() {
     main_menu->show();
     map_choose_window->close();
+}
+
+void Game::showStatsWindow() {
+    stats_window->showFullScreen();
 }
 
 void Game::startGameplay() {

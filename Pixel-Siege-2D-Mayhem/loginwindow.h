@@ -23,12 +23,14 @@ public:
 protected:
     void paintEvent(QPaintEvent *event) override;
     void keyPressEvent(QKeyEvent *event) override;
+    void showEvent(QShowEvent *event) override;
     bool eventFilter(QObject *obj, QEvent *event) override;
 
 private slots:
     void exitSlot();
     void authorizationSlot();
     void backSlot();
+    void clearFields();
 
 private:
     QMovie *background = new QMovie(":/backgrounds/background_menu/back6.gif");

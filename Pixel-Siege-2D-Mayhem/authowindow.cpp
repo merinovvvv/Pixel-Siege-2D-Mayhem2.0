@@ -106,10 +106,8 @@ void AuthoWindow::keyPressEvent(QKeyEvent *event) {
         QWidget *focusedWidget = focusWidget();
         QPushButton *focusedButton = qobject_cast<QPushButton *>(focusedWidget);
         if (focusedButton) {
-            if (focusedButton == signIn || focusedButton == signUp) {
-                showLoginWindow();
-            } else if (focusedButton == exitButton) {
-                exitSlot();
+            if (focusedButton == signIn || focusedButton == signUp || focusedButton == exitButton) {
+                focusedButton->click();
             }
         }
     } else {

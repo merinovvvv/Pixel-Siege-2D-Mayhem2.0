@@ -7,6 +7,7 @@
 #include "mapchoosewindow.h"
 #include "gameplaywindow.h"
 #include "loginwindow.h"
+#include "statswindow.h"
 #include "json.hpp"
 
 class Hero;
@@ -23,8 +24,10 @@ public:
     void backToMainMenu();
     void startGameplay();
     void startApplication();
+    void showStatsWindow();
 
 private:
+    statsWindow* stats_window;
     loginWindow* login_window;
     AuthoWindow* autho;
     MainMenu* main_menu;

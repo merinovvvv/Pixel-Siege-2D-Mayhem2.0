@@ -26,6 +26,7 @@ private slots:
     void exitSlot();
     void showMapChooseWindow();
     void backToLog();
+    void showStatsWindow();
 
 private:
     QMovie *background = new QMovie(":/backgrounds/background_menu/back6.gif");
