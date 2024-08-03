@@ -34,12 +34,15 @@ private:
     Hero* hero_;
     nlohmann::json game_info;
 
+    int senderButton = -1;
+
     QString currentPlayer;
 
     friend class Hero;
     friend class PauseMenu;
     friend class gameplayWindow;
     friend class loginWindow;
+    friend class AuthoWindow;
 
 };
 

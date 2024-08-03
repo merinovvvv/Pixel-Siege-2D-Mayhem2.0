@@ -1,12 +1,32 @@
 {
     "players": [
         {
-            "login": "mercedes2a",
-            "password": "12345678"
+            "login": "yarik",
+            "password": "12345"
         },
         {
-            "login": "hfksfn",
-            "password": "83t3"
+            "login": "vasya",
+            "password": "1337"
+        },
+        {
+            "login": "petya",
+            "password": "228"
+        },
+        {
+            "login": "helkkcjvk",
+            "password": "85935"
+        },
+        {
+            "login": "fhdkofivcm",
+            "password": "32632572398593"
+        },
+        {
+            "login": "bebra",
+            "password": "123"
+        },
+        {
+            "login": "mama",
+            "password": "782"
         }
     ]
 }

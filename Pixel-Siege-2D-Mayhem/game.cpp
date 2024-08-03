@@ -12,7 +12,6 @@ Game::Game() {
 
 void Game::showLoginWindow() {
     login_window->showFullScreen();
-    autho->close();
 }
 
 void Game::startApplication() {

@@ -25,6 +25,7 @@ protected:
 private slots:
     void exitSlot();
     void showMapChooseWindow();
+    void backToLog();
 
 private:
     QMovie *background = new QMovie(":/backgrounds/background_menu/back6.gif");
@@ -33,6 +34,7 @@ private:
     QPushButton* startButton;
     QPushButton* statsButton;
     QPushButton* exitButton;
+    QPushButton* logoutButton;
     QVBoxLayout* verticalLayout;
     QGridLayout* gridLayout;
 

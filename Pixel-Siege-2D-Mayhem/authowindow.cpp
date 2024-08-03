@@ -4,11 +4,9 @@
 #include <QPainter>
 #include <QApplication>
 
-int AuthoWindow::senderButton = -1;
-
 AuthoWindow::AuthoWindow(Game* game, QWidget *parent) : QMainWindow(parent), game_(game)
 {
-
+    game_->currentPlayer = "";
     setMouseTracking(true);
     setWindowIcon(QIcon(":/icon/helmetIcon.jpg"));
     //showFullScreen();
@@ -30,11 +28,10 @@ AuthoWindow::AuthoWindow(Game* game, QWidget *parent) : QMainWindow(parent), gam
     signIn = new QPushButton("SIGN IN");
     signIn->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
 
-    connect(signIn, SIGNAL(clicked()), this, SLOT(showLoginWindow()));
-
     signUp = new QPushButton("SIGN UP");
     signUp->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
 
+    connect(signUp, SIGNAL(clicked()), this, SLOT(showLoginWindow()));
     connect(signIn, SIGNAL(clicked()), this, SLOT(showLoginWindow()));
 
     exitButton = new QPushButton("EXIT");
@@ -139,11 +136,15 @@ bool AuthoWindow::eventFilter(QObject *obj, QEvent *event) {
 }
 
 void AuthoWindow::showLoginWindow() {
+
     QPushButton *button = qobject_cast<QPushButton *>(sender());
+
+    qDebug() << "Sender is:" << sender();
+
     if (button == signIn) {
-        senderButton = 0;
+        game_->senderButton = 0;
     } else if (button == signUp) {
-        senderButton = 1;
+        game_->senderButton = 1;
     }
     if(game_) {
         game_->showLoginWindow();

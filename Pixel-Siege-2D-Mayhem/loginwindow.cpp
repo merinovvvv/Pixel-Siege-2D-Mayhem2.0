@@ -4,6 +4,9 @@
 #include <QMessageBox>
 #include <fstream>
 #include <QTimer>
+#include <QDir>
+#include <QJsonDocument>
+#include <QJsonArray>
 
 #include "loginwindow.h"
 #include "game.h"
@@ -161,6 +164,8 @@ void loginWindow::keyPressEvent(QKeyEvent *event) {
                 backSlot();
             }
         }
+    } else if (event->key() == Qt::Key_Escape) {
+        backSlot();
     } else {
         QMainWindow::keyPressEvent(event);
     }
@@ -185,28 +190,97 @@ bool loginWindow::eventFilter(QObject *obj, QEvent *event) {
 }
 
 void loginWindow::authorizationSlot() {
-    writeToFile();
-    if(game_) {
-        game_->showMainMenu();
-    }
-    this->close();
+    authorization();
 }
 
 bool loginWindow::playerExists() {
-    for (const auto& player : game_->game_info) {
+
+    QDir currentDir = QCoreApplication::applicationDirPath();
+    currentDir.cdUp();  // Переход на уровень вверх
+    currentDir.cdUp();
+    currentDir.cdUp();
+
+
+    QString fileName = "gameInfo.json";
+    QString filePath = currentDir.filePath(fileName);
+
+    QFile file(filePath);
+    if (!file.open(QIODevice::ReadOnly)) {
+        qDebug() << "Failed to open JSON file.";
+        return false;
+    }
+
+    QByteArray jsonData = file.readAll();
+    file.close();
+
+    QJsonDocument doc(QJsonDocument::fromJson(jsonData));
+    if (!doc.isObject()) {
+        qDebug() << "JSON data is not an object.";
+        return false;
+    }
+
+    QJsonObject jsonObject = doc.object();
+
+    if (!jsonObject.contains("players") || !jsonObject["players"].isArray()) {
+        qDebug() << "No 'players' array found in JSON data.";
+        return false;
+    }
+
+    QJsonArray playersArray = jsonObject["players"].toArray();
+
+    for (const QJsonValue& value : playersArray) {
+        if (!value.isObject()) {
+            qDebug() << "JSON value is not an object.";
+            continue;
+        }
+
+        QJsonObject player = value.toObject();
+
         if (player.contains("login") && player.contains("password")) {
-            if (player["login"] == loginLineEdit->text().toStdString() && player["password"] == passwordLineEdit->text().toStdString()) {
+            QString login = loginLineEdit->text();
+            QString password = passwordLineEdit->text();
+
+            if (player["login"].toString() == login && player["password"].toString() == password) {
+                qDebug() << "Player found!";
                 return true;
             }
         }
     }
+
+    qDebug() << "Player not found.";
     return false;
 }
 
-void loginWindow::writeToFile() {
+void loginWindow::authorization() {
+
+    QDir currentDir = QCoreApplication::applicationDirPath();
+    currentDir.cdUp();  // Переход на уровень вверх
+    currentDir.cdUp();
+    currentDir.cdUp();
+
+
+    QString fileName = "gameInfo.json";
+    QString filePath = currentDir.filePath(fileName);
+
+    qDebug() << filePath;
+
+    // QFile file(filePath);
+    // if (!file.exists()) {
+    //     qDebug() << "File does not exist. Creating a new file.";
+    //     if (!file.open(QIODevice::WriteOnly)) {
+    //         QMessageBox::critical(this, "Error", "Unable to create file: " + filePath);
+    //         return;
+    //     }
+    //     nlohmann::json initialJson = nlohmann::json::object();
+    //     file.write(initialJson.dump(4).c_str());
+    //     file.close();
+    // }
+
+    qDebug() << playerExists();
+
     if (!playerExists()) {
-        if (AuthoWindow::senderButton == 1) {
-            std::ifstream inFile("D:/Programming/dev/projects/C++/Pixel-Siege-2D-Mayhem2.0/Pixel-Siege-2D-Mayhem/gameInfo.json");
+        if (game_->senderButton == 1) {
+            std::ifstream inFile(filePath.toStdString());
             if (inFile.is_open()) {
                 try {
                     inFile >> game_->game_info;
@@ -236,6 +310,10 @@ void loginWindow::writeToFile() {
 
             if (playerFound) {
                 QMessageBox::warning(this, "Warning", "A player with the given nickname has already been registered. Choose another one.");
+                loginLineEdit->setText("");
+                passwordLineEdit->setText("");
+                game_->login_window->close();
+                game_->showLoginWindow();
             } else {
                 nlohmann::json player;
                 player["login"] = loginLineEdit->text().toStdString();
@@ -243,26 +321,43 @@ void loginWindow::writeToFile() {
 
                 game_->game_info["players"].push_back(player);
 
-                std::ofstream outFile("D:/Programming/dev/projects/C++/Pixel-Siege-2D-Mayhem2.0/Pixel-Siege-2D-Mayhem/gameInfo.json", std::ios::out | std::ios::trunc);
+                std::ofstream outFile(filePath.toStdString(), std::ios::out | std::ios::trunc);
                 if (outFile.is_open()) {
                     outFile << game_->game_info.dump(4);
                     outFile.close();
                     game_->currentPlayer = loginLineEdit->text();
+                    qDebug() << "Current player: " << game_->currentPlayer;
+                    if(game_) {
+                        game_->showMainMenu();
+                    }
+                    this->close();
                 } else {
                     QMessageBox::critical(this, "Error", "Unable to open file for writing.");
                     exit(0);
                 }
             }
-        } else if (AuthoWindow::senderButton == 0) {
+        } else if (game_->senderButton == 0) {
             QMessageBox::warning(this, "Warning", "There is no player with given login. Try again.");
-            //writeToFile();
+            loginLineEdit->setText("");
+            passwordLineEdit->setText("");
+            game_->login_window->close();
+            game_->showLoginWindow();
         }
     } else if (playerExists()) {
-        if (AuthoWindow::senderButton == 1) {
+        if (game_->senderButton == 1) {
             QMessageBox::information(this, "Info", "Such a player already exists.");
-            //writeToFile();
-        } else if (AuthoWindow::senderButton == 0) {
+            loginLineEdit->setText("");
+            passwordLineEdit->setText("");
+            game_->login_window->close();
+            game_->showLoginWindow();
+
+        } else if (game_->senderButton == 0) {
             game_->currentPlayer = loginLineEdit->text();
+            qDebug() << "Current player: " << game_->currentPlayer;
+            if(game_) {
+                game_->showMainMenu();
+            }
+            this->close();
         }
     }
 }

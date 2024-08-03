@@ -33,6 +33,10 @@ MainMenu::MainMenu(Game* game, QWidget *parent) : QMainWindow(parent), game_(gam
     statsButton = new QPushButton("STATS");
     statsButton->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
 
+    logoutButton = new QPushButton("LOG OUT");
+    logoutButton->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
+    connect(logoutButton, &QPushButton::clicked, this, &MainMenu::backToLog);
+
     exitButton = new QPushButton("EXIT");
     exitButton->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
     connect(exitButton, &QPushButton::clicked, this, &MainMenu::exitSlot);
@@ -76,14 +80,23 @@ MainMenu::MainMenu(Game* game, QWidget *parent) : QMainWindow(parent), game_(gam
     effect3->setOffset(4, 4);
     exitButton->setGraphicsEffect(effect3);
 
+    logoutButton->setStyleSheet(styleSheet);
+    QGraphicsDropShadowEffect *effect4 = new QGraphicsDropShadowEffect;
+    effect4->setBlurRadius(10);
+    effect4->setColor(Qt::black);
+    effect4->setOffset(4, 4);
+    logoutButton->setGraphicsEffect(effect4);
+
     verticalLayout->addWidget(startButton, 0, Qt::AlignCenter);
     verticalLayout->addWidget(statsButton, 0, Qt::AlignCenter);
+    verticalLayout->addWidget(logoutButton, 0, Qt::AlignCenter);
     verticalLayout->addWidget(exitButton, 0, Qt::AlignCenter);
 
     gridLayout->addLayout(verticalLayout, 1, 1, 1, 1, Qt::AlignLeft | Qt::AlignCenter);
 
     startButton->installEventFilter(this);
     statsButton->installEventFilter(this);
+    logoutButton->installEventFilter(this);
     exitButton->installEventFilter(this);
 }
 
@@ -106,6 +119,8 @@ void MainMenu::keyPressEvent(QKeyEvent *event) {
                 exitSlot();
             }
         }
+    } else if (event->key() == Qt::Key_Escape) {
+        backToLog();
     } else {
         QMainWindow::keyPressEvent(event);
     }
@@ -118,6 +133,13 @@ void MainMenu::exitSlot() {
 void MainMenu::showMapChooseWindow() {
     if(game_) {
         game_->showMapChooseWindow();
+    }
+    this->close();
+}
+
+void MainMenu::backToLog() {
+    if (game_) {
+        game_->startApplication();
     }
     this->close();
 }

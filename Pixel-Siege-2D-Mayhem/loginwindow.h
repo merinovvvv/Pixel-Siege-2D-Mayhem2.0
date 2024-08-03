@@ -46,7 +46,7 @@ private:
 
     Game* game_;
 
-    void writeToFile();
+    void authorization();
     bool playerExists();
 
 
