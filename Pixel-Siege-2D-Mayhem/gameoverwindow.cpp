@@ -17,6 +17,10 @@ gameOverWindow::gameOverWindow(Game* game, QWidget *parent) : QMainWindow(parent
     buttonsLayout = new QVBoxLayout();
     centralWidget->setLayout(buttonsLayout);
 
+    gameOverLabel = new QLabel();
+    gameOverLabel->setText("GAME OVER");
+    gameOverLabel->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
+
     try_again_button = new QPushButton("TRY AGAIN");
     try_again_button->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
 
@@ -41,8 +45,13 @@ gameOverWindow::gameOverWindow(Game* game, QWidget *parent) : QMainWindow(parent
                          "color: #FF6439;"
                          "border: none;"
                          "outline: none;"
+                         "}"
+                         "QLabel {"
+                         "color: white;"
+                         "font-size: 150px;"
                          "}";
 
+    gameOverLabel->setStyleSheet(styleSheet);
     try_again_button->setStyleSheet(styleSheet);
     exit_button->setStyleSheet(styleSheet);
 
@@ -61,12 +70,23 @@ gameOverWindow::gameOverWindow(Game* game, QWidget *parent) : QMainWindow(parent
 
     exit_button->setGraphicsEffect(effect2);
 
+    QGraphicsDropShadowEffect *effect3 = new QGraphicsDropShadowEffect;
+    effect3->setBlurRadius(10);  // Увеличение радиуса размытия для большей толщины
+    effect3->setColor(Qt::black);
+    effect3->setOffset(4, 4);  // Увеличение смещения для большей толщины
+
+    gameOverLabel->setGraphicsEffect(effect3);
+
+
     topSpacer = new QSpacerItem(20, 40, QSizePolicy::Preferred, QSizePolicy::Expanding);
     bottomSpacer = new QSpacerItem(20, 40, QSizePolicy::Preferred, QSizePolicy::Expanding);
 
     buttonsLayout->addItem(topSpacer);
+    buttonsLayout->addWidget(gameOverLabel, 0, Qt::AlignCenter);
+    buttonsLayout->addItem(topSpacer);
     buttonsLayout->addWidget(try_again_button, 0, Qt::AlignCenter);
     buttonsLayout->addWidget(exit_button, 0, Qt::AlignCenter);
+    buttonsLayout->addItem(bottomSpacer);
     buttonsLayout->addItem(bottomSpacer);
 
     connect(exit_button, SIGNAL(clicked()), this, SLOT(exit()));

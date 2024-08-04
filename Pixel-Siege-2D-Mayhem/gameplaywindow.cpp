@@ -455,6 +455,7 @@ void gameplayWindow::monsterHit() {
                 game_->gameplay_window = nullptr;
                 game_->hero_ = nullptr;
                 game_->monsters_.clear();
+                saveTimeToStats();
                 game_->showGameOverWindow();
                 return;
             }
@@ -566,4 +567,8 @@ void gameplayWindow::spawnWolf() {
     scene_->addItem(wolf->getModel());
 
     game_->monsters_.push_back(wolf);
+}
+
+void gameplayWindow::saveTimeToStats() { //TODO
+
 }

@@ -66,6 +66,7 @@ private:
 
     void pauseTimer();
     void resumeTimer();
+    void saveTimeToStats();
 
     friend class PauseMenu;
     friend class Hero;

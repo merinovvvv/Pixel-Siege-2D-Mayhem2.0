@@ -7,6 +7,7 @@
 #include <QVBoxLayout>
 #include <QGridLayout>
 #include <QSpacerItem>
+#include <QLabel>
 
 class Game;
 
@@ -34,6 +35,7 @@ private:
     QSpacerItem* topSpacer;
     QSpacerItem* bottomSpacer;
     QWidget* centralWidget;
+    QLabel* gameOverLabel;
 
     Game* game_;
 
