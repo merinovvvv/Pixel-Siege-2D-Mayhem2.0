@@ -56,6 +56,7 @@ void Game::startGameplay() {
         gameplay_window->setMap(gameplay_window->getMaps()[1]);
     }
     gameplay_window->showFullScreen();
+
     map_choose_window->close();
 }
 

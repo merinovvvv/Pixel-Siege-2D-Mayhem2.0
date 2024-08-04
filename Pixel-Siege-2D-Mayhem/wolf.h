@@ -6,15 +6,13 @@
 class Wolf final : public Monster
 {
 public:
-    explicit Wolf(QObject *parent = nullptr);
     Wolf();
     Wolf(const Wolf& other);
     Wolf& operator =(const Wolf& other);
 
-    qreal getX() const override;
-    qreal getY() const override;
-    void setX(qreal x) override;
-    void setY(qreal y) override;
+    ~Wolf() = default;
+
+    QGraphicsPixmapItem* getModel() override;
 };
 
 #endif // WOLF_H

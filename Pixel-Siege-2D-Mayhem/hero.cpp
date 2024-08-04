@@ -1,9 +1,6 @@
 #include "hero.h"
-#include "gameplaywindow.h"
 
-Hero::Hero(Game* game, QObject *parent)
-    : QObject{parent}, game_(game)
-{
+Hero::Hero(Game* game, QObject *parent) : QObject{parent}, game_(game) {
     heroImage_ = new QGraphicsPixmapItem(QPixmap(":/character/mobs/knight1_sword2.png"));
     heroImage_->setZValue(1);
     qreal x = heroImage_->boundingRect().width() / 2;

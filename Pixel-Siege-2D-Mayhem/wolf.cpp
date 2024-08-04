@@ -1,10 +1,9 @@
 #include "wolf.h"
 
-Wolf::Wolf(QObject *parent) : Monster{parent} {}
-
 Wolf::Wolf(){
     health_ = 25;
     damage_ = 5;
+    speed_ = 0.8;
     model_ = new QGraphicsPixmapItem(QPixmap(":/monsters/mobs/wolf.png"));
 }
 
@@ -15,18 +14,6 @@ Wolf &Wolf::operator =(const Wolf &other) {
     return *this;
 }
 
-qreal Wolf::getX() const {
-    return x_;
-}
-
-qreal Wolf::getY() const {
-    return y_;
-}
-
-void Wolf::setX(qreal x) {
-    x_ = x;
-}
-
-void Wolf::setY(qreal y) {
-    y_ = y;
+QGraphicsPixmapItem *Wolf::getModel() {
+    return model_;
 }

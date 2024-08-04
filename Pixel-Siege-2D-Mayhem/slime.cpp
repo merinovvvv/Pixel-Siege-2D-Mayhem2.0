@@ -1,10 +1,9 @@
 #include "slime.h"
 
-Slime::Slime(QObject *parent) : Monster{parent} {}
-
 Slime::Slime() {
     health_ = 10;
     damage_ = 2;
+    speed_ = 0.5;
     model_ = new QGraphicsPixmapItem(QPixmap(":/monsters/mobs/slime.png"));
 }
 
@@ -15,18 +14,6 @@ Slime &Slime::operator =(const Slime &other) {
     return *this;
 }
 
-qreal Slime::getX() const {
-    return x_;
-}
-
-qreal Slime::getY() const {
-    return y_;
-}
-
-void Slime::setX(qreal x) {
-    x_ = x;
-}
-
-void Slime::setY(qreal y) {
-    y_ = y;
+QGraphicsPixmapItem *Slime::getModel() {
+    return model_;
 }

@@ -1,10 +1,9 @@
 #include "ghost.h"
 
-Ghost::Ghost(QObject *parent) : Monster{parent} {}
-
 Ghost::Ghost() {
     health_ = 10;
     damage_ = 2;
+    speed_ = 0.6;
     model_ = new QGraphicsPixmapItem(QPixmap(":/monsters/mobs/ghost.png"));
 }
 
@@ -15,18 +14,6 @@ Ghost &Ghost::operator =(const Ghost &other) {
     return *this;
 }
 
-qreal Ghost::getX() const {
-    return x_;
-}
-
-qreal Ghost::getY() const {
-    return y_;
-}
-
-void Ghost::setX(qreal x) {
-    x_ = x;
-}
-
-void Ghost::setY(qreal y) {
-    y_ = y;
+QGraphicsPixmapItem *Ghost::getModel() {
+    return model_;
 }

@@ -9,6 +9,7 @@
 #include "loginwindow.h"
 #include "statswindow.h"
 #include "json.hpp"
+#include "monster.h"
 
 class Hero;
 
@@ -34,12 +35,14 @@ private:
     mapChooseWindow* map_choose_window;
     gameplayWindow* gameplay_window;
     PauseMenu* pause_menu;
+
     Hero* hero_;
     nlohmann::json game_info;
 
     int senderButton = -1;
 
     QString currentPlayer;
+    QList<Monster*> monsters_;
 
     friend class Hero;
     friend class PauseMenu;

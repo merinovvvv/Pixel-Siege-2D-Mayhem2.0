@@ -2,29 +2,40 @@
 #define MONSTER_H
 
 #include <QGraphicsPixmapItem>
-#include <QObject>
+#include <QtMath>
 
-class Monster : public QObject
-{
-    Q_OBJECT
+class Hero;
+
+class Monster {
+    Q_GADGET
 public:
-    explicit Monster(QObject *parent = nullptr);
+    Monster() = default;
     Monster(const Monster& other);
     Monster& operator =(const Monster& other);
 
-    ~Monster() = default;
+    virtual ~Monster() = default;
 
-    qreal virtual getX() const = 0;
-    qreal virtual getY() const = 0;
-    void virtual setX(qreal x) = 0;
-    void virtual setY(qreal y) = 0;
+    qreal getX() const;
+    qreal getY() const;
+    QPointF getPosition() const;
+    qreal getHealth();
+    qreal getDamage();
+    virtual QGraphicsPixmapItem* getModel() = 0;
+
+    void setX(qreal x);
+    void setY(qreal y);
+    void setPosition(QPointF position);
+    void setHealth(qreal health);
+
+    void move(Hero& hero);
 protected:
-    qreal x_ = 0;
-    qreal y_ = 0;
+    QPointF position_ = QPointF(0, 0);
     qreal health_{};
     qreal damage_{};
     QGraphicsPixmapItem* model_;
-    QPixmap hit_ = QPixmap(":/tools/items/hit.png");
+    bool facingLeft_ = true;
+
+    qreal speed_{};
 };
 
 #endif // MONSTER_H

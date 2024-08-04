@@ -5,8 +5,6 @@
 #include <QGraphicsPixmapItem>
 #include "game.h"
 
-class Game;
-
 class Hero : public QObject {
     Q_OBJECT
 public:
@@ -15,12 +13,12 @@ public:
 private:
     Game* game_;
     QPointF position_;
-
+    qreal health_;
     QGraphicsPixmapItem *heroImage_;
-    void updateHealth(int health);
 
     friend class gameplayWindow;
     friend class Game;
+    friend class Monster;
 };
 
 #endif // HERO_H
