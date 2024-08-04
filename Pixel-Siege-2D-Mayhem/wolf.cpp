@@ -3,7 +3,6 @@
 Wolf::Wolf(){
     health_ = 25;
     damage_ = 5;
-    speed_ = 0.8;
     model_ = new QGraphicsPixmapItem(QPixmap(":/monsters/mobs/wolf.png"));
 }
 

@@ -35,7 +35,7 @@ protected:
     QGraphicsPixmapItem* model_;
     bool facingLeft_ = true;
 
-    qreal speed_{};
+    const qreal speed_ = 1;
 };
 
 #endif // MONSTER_H
