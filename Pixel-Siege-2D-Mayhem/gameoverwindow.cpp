@@ -1,11 +1,10 @@
-#include "pause.h"
+#include <QGraphicsDropShadowEffect>
+
+#include "gameoverwindow.h"
 #include "game.h"
 
-#include <QGraphicsDropShadowEffect>
-#include <QPainter>
-#include <QTimer>
-
-PauseMenu::PauseMenu(Game* game, QWidget *parent) : QMainWindow(parent), game_(game) {
+gameOverWindow::gameOverWindow(Game* game, QWidget *parent) : QMainWindow(parent), game_(game)
+{
     setWindowIcon(QIcon(":/icon/helmetIcon.jpg"));
 
     connect(background, &QMovie::frameChanged, this, QOverload<>::of(&QMainWindow::update));
@@ -18,8 +17,8 @@ PauseMenu::PauseMenu(Game* game, QWidget *parent) : QMainWindow(parent), game_(g
     buttonsLayout = new QVBoxLayout();
     centralWidget->setLayout(buttonsLayout);
 
-    continue_button = new QPushButton("CONTINUE");
-    continue_button->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
+    try_again_button = new QPushButton("TRY AGAIN");
+    try_again_button->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
 
     exit_button = new QPushButton("EXIT");
     exit_button->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
@@ -44,7 +43,7 @@ PauseMenu::PauseMenu(Game* game, QWidget *parent) : QMainWindow(parent), game_(g
                          "outline: none;"
                          "}";
 
-    continue_button->setStyleSheet(styleSheet);
+    try_again_button->setStyleSheet(styleSheet);
     exit_button->setStyleSheet(styleSheet);
 
     // Добавление эффекта тени для имитации обводки
@@ -53,7 +52,7 @@ PauseMenu::PauseMenu(Game* game, QWidget *parent) : QMainWindow(parent), game_(g
     effect->setColor(Qt::black);
     effect->setOffset(4, 4);  // Увеличение смещения для большей толщины
 
-    continue_button->setGraphicsEffect(effect);
+    try_again_button->setGraphicsEffect(effect);
 
     QGraphicsDropShadowEffect *effect2 = new QGraphicsDropShadowEffect;
     effect2->setBlurRadius(10);  // Увеличение радиуса размытия для большей толщины
@@ -66,35 +65,34 @@ PauseMenu::PauseMenu(Game* game, QWidget *parent) : QMainWindow(parent), game_(g
     bottomSpacer = new QSpacerItem(20, 40, QSizePolicy::Preferred, QSizePolicy::Expanding);
 
     buttonsLayout->addItem(topSpacer);
-    buttonsLayout->addWidget(continue_button, 0, Qt::AlignCenter);
+    buttonsLayout->addWidget(try_again_button, 0, Qt::AlignCenter);
     buttonsLayout->addWidget(exit_button, 0, Qt::AlignCenter);
     buttonsLayout->addItem(bottomSpacer);
 
     connect(exit_button, SIGNAL(clicked()), this, SLOT(exit()));
-    connect(continue_button, SIGNAL(clicked()), this, SLOT(back()));
+    connect(try_again_button, SIGNAL(clicked()), this, SLOT(tryAgain()));
 }
 
-void PauseMenu::exit() {
+void gameOverWindow::exit() {
     if(game_) {
         delete game_->gameplay_window;
         game_->gameplay_window = nullptr;
         game_->hero_ = nullptr;
         game_->monsters_.clear();
-        game_->showMainMenu();
+        game_->startApplication();
     }
     this->close();
 }
 
-void PauseMenu::back() {
+void gameOverWindow::tryAgain() {
     if (game_) {
         //game_->gameplay_window->gameTime_->start();
-        game_->gameplay_window->resumeTimer();
-        game_->startGameplay();
+        game_->showMapChooseWindow();
     }
     this->close();
 }
 
-void PauseMenu::paintEvent(QPaintEvent *event) {
+void gameOverWindow::paintEvent(QPaintEvent *event) {
     Q_UNUSED(event);
     QPainter painter(this);
     // Draw the current frame of the gif
@@ -103,10 +101,10 @@ void PauseMenu::paintEvent(QPaintEvent *event) {
     }
 }
 
-bool PauseMenu::eventFilter(QObject *obj, QEvent *event) {
+bool gameOverWindow::eventFilter(QObject *obj, QEvent *event) {
     if (event->type() == QEvent::Enter) {
 
-        continue_button->clearFocus();
+        try_again_button->clearFocus();
         exit_button->clearFocus();
 
 
@@ -118,19 +116,19 @@ bool PauseMenu::eventFilter(QObject *obj, QEvent *event) {
     return QObject::eventFilter(obj, event);
 }
 
-void PauseMenu::keyPressEvent(QKeyEvent *event) {
+void gameOverWindow::keyPressEvent(QKeyEvent *event) {
     if (event->key() == Qt::Key_Enter || event->key() == Qt::Key_Return) {
         QWidget *focusedWidget = focusWidget();
         QPushButton *focusedButton = qobject_cast<QPushButton *>(focusedWidget);
         if (focusedButton) {
-            if (focusedButton == continue_button) {
-                back();
+            if (focusedButton == try_again_button) {
+                tryAgain();
             } else if (focusedButton == exit_button) {
                 exit();
             }
         }
     } else if (event->key() == Qt::Key_Escape) {
-        back();
+        tryAgain();
     } else {
         QMainWindow::keyPressEvent(event);
     }

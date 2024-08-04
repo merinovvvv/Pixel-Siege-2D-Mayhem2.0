@@ -10,6 +10,7 @@
 #include "statswindow.h"
 #include "json.hpp"
 #include "monster.h"
+#include "gameoverwindow.h"
 
 class Hero;
 
@@ -26,6 +27,7 @@ public:
     void startGameplay();
     void startApplication();
     void showStatsWindow();
+    void showGameOverWindow();
 
 private:
     statsWindow* stats_window;
@@ -35,6 +37,8 @@ private:
     mapChooseWindow* map_choose_window;
     gameplayWindow* gameplay_window;
     PauseMenu* pause_menu;
+    gameOverWindow* game_over;
+
 
     Hero* hero_;
     nlohmann::json game_info;
@@ -49,6 +53,7 @@ private:
     friend class gameplayWindow;
     friend class loginWindow;
     friend class AuthoWindow;
+    friend class gameOverWindow;
 
 };
 

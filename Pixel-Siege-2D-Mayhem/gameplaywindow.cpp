@@ -455,7 +455,7 @@ void gameplayWindow::monsterHit() {
                 game_->gameplay_window = nullptr;
                 game_->hero_ = nullptr;
                 game_->monsters_.clear();
-                game_->showMainMenu();
+                game_->showGameOverWindow();
                 return;
             }
         }

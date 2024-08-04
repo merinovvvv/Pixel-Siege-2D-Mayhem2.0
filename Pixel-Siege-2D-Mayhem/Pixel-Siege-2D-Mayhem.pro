@@ -11,6 +11,7 @@ CONFIG += c++17
 SOURCES += \
     authowindow.cpp \
     game.cpp \
+    gameoverwindow.cpp \
     gameplaywindow.cpp \
     ghost.cpp \
     hero.cpp \
@@ -29,6 +30,7 @@ SOURCES += \
 HEADERS += \
     authowindow.h \
     game.h \
+    gameoverwindow.h \
     gameplaywindow.h \
     ghost.h \
     hero.h \

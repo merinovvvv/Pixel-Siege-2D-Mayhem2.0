@@ -1,6 +1,7 @@
 #include "game.h"
 
 Game::Game() {
+    game_over = new gameOverWindow(this);
     stats_window = new statsWindow(this);
     login_window = new loginWindow(this);
     autho = new AuthoWindow(this);
@@ -9,6 +10,10 @@ Game::Game() {
     pause_menu = new PauseMenu(this);
     gameplay_window = nullptr;
     hero_ = nullptr;
+}
+
+void Game::showGameOverWindow() {
+    game_over->showFullScreen();
 }
 
 void Game::showLoginWindow() {
