@@ -112,7 +112,7 @@ gameplayWindow::gameplayWindow(Game* game, QWidget *parent)
 
     monsterHitUpdateTimer_ = new QTimer();
     connect(monsterHitUpdateTimer_, SIGNAL(timeout()), this, SLOT(monsterHit()));
-    monsterHitUpdateTimer_->start(1000 * 4);
+    monsterHitUpdateTimer_->start(1000);
 }
 
 void gameplayWindow::setMap(QString& map) {
@@ -515,7 +515,7 @@ void gameplayWindow::resumeTimer() {
     skeletonTimer_->start(5 * 1000);
     slimeTimer_->start(15 * 1000);
     wolfTimer_->start(40 * 1000);
-    monsterHitUpdateTimer_->start(1000 / 60);
+    monsterHitUpdateTimer_->start(1000);
 }
 
 void gameplayWindow::spawnGhost() {
