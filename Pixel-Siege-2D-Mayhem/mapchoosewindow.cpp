@@ -197,7 +197,7 @@ QVector <QPixmap> mapChooseWindow::getMapsForChoose() {
 }
 
 bool mapChooseWindow::eventFilter(QObject *obj, QEvent *event) {
-    if (event->type() == QEvent::Enter) {
+    /*if (event->type() == QEvent::Enter) {
         startButton->clearFocus();
         leftButton->clearFocus();
         rightButton->clearFocus();
@@ -207,7 +207,8 @@ bool mapChooseWindow::eventFilter(QObject *obj, QEvent *event) {
         if (currentButton) {
             currentButton->setFocus();
         }
-    } else if (event->type() == QEvent::KeyPress) {
+    } else*/
+    if (event->type() == QEvent::KeyPress) {
         QKeyEvent *keyEvent = static_cast<QKeyEvent *>(event);
         if (keyEvent->key() == Qt::Key_Left || keyEvent->key() == Qt::Key_Right ||
             keyEvent->key() == Qt::Key_Up || keyEvent->key() == Qt::Key_Down) {

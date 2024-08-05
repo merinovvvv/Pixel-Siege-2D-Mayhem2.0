@@ -20,6 +20,7 @@ protected:
     void paintEvent(QPaintEvent *event) override;
     void keyPressEvent(QKeyEvent *event) override;
     bool eventFilter(QObject *obj, QEvent *event) override;
+    void showEvent(QShowEvent* event) override;
 
 private slots:
     void backSlot();
@@ -35,6 +36,7 @@ private:
 
     void loadJsonData();
     void populateTable();
+    void initializeTable();
 
     Game* game_;
 

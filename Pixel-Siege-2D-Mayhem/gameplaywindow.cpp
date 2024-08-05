@@ -622,6 +622,4 @@ void gameplayWindow::saveTimeToStats() {
 
     file.write(jsonDoc.toJson(QJsonDocument::Indented));
     file.close();
-
-    game_->stats_window->populateTable();
 }

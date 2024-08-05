@@ -85,10 +85,20 @@ statsWindow::statsWindow(Game* game, QWidget *parent) : QMainWindow(parent), gam
         "background: rgba(0, 0, 0, 0);"
         "border: none;"
         "}"
+        "QTableWidget::item:selected {"
+        "border: 1px solid rgb(255, 173, 30);"
+        "}"
+        "QTableWidget::item:selected:!active {"
+        "color: white;"
+        "}"
+        "QTableCornerButton::section {"
+        "background-color: rgba(0,0,0,0);"
+        "}"
         );
 
+    tableWidget->installEventFilter(this);
+    backButton->installEventFilter(this);
 
-    //tableWidget->setStyleSheet("QTableWidget { background: transparent; color: white; font-size: 50px; }");
 
     layout->addWidget(tableWidget);
 
@@ -133,15 +143,24 @@ void statsWindow::backSlot() {
 }
 
 bool statsWindow::eventFilter(QObject *obj, QEvent *event) {
-    if (event->type() == QEvent::Enter) {
-        backButton->clearFocus();
+    if (event->type() == QEvent::KeyPress) {
+        QKeyEvent *keyEvent = static_cast<QKeyEvent *>(event);
+        int key = keyEvent->key();
 
-        QPushButton *currentButton = qobject_cast<QPushButton*>(obj);
-        if (currentButton) {
-            currentButton->setFocus();
+        if (obj == tableWidget && key == Qt::Key_Up) {
+            QModelIndex currentIndex = tableWidget->currentIndex();
+            if (currentIndex.isValid() && currentIndex.row() == 0) {
+                backButton->setFocus();
+                tableWidget->clearSelection();
+                return true;
+            }
+        } else if (obj == backButton && (key == Qt::Key_Down || key == Qt::Key_Up)) {
+            tableWidget->setFocus();
+            tableWidget->setCurrentCell(0, 0);
+            return true;
         }
     }
-    return QObject::eventFilter(obj, event);
+    return QMainWindow::eventFilter(obj, event);
 }
 
 void statsWindow::loadJsonData() {
@@ -187,11 +206,18 @@ void statsWindow::populateTable() {
         tableWidget->setItem(i, 0, loginItem);
         tableWidget->setItem(i, 1, bestTimeItem);
 
-        tableWidget->setSelectionMode(QAbstractItemView::NoSelection);
-        tableWidget->setEditTriggers(QAbstractItemView::NoEditTriggers);
+        // tableWidget->setSelectionMode(QAbstractItemView::NoSelection);
+        // tableWidget->setEditTriggers(QAbstractItemView::NoEditTriggers);
 
         tableWidget->setRowHeight(i, 100);
     }
 
+
     //tableWidget->resizeColumnsToContents();
+}
+
+void statsWindow::showEvent(QShowEvent *event) {
+    QMainWindow::showEvent(event);
+    loadJsonData();
+    populateTable();
 }

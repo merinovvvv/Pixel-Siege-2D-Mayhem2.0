@@ -141,6 +141,8 @@ loginWindow::loginWindow(Game* game, QWidget *parent) : QMainWindow(parent), gam
     authoButton->installEventFilter(this);
     exitButton->installEventFilter(this);
     backButton->installEventFilter(this);
+    loginLineEdit->installEventFilter(this);
+    passwordLineEdit->installEventFilter(this);
 }
 
 void loginWindow::paintEvent(QPaintEvent *event) {
@@ -177,7 +179,7 @@ void loginWindow::exitSlot() {
 }
 
 bool loginWindow::eventFilter(QObject *obj, QEvent *event) {
-    if (event->type() == QEvent::Enter) {
+    /*if (event->type() == QEvent::Enter) {
         authoButton->clearFocus();
         exitButton->clearFocus();
         backButton->clearFocus();
@@ -185,6 +187,41 @@ bool loginWindow::eventFilter(QObject *obj, QEvent *event) {
         QPushButton *currentButton = qobject_cast<QPushButton*>(obj);
         if (currentButton) {
             currentButton->setFocus();
+        }
+    } else*/
+    if (event->type() == QEvent::KeyPress) {
+        QKeyEvent *keyEvent = static_cast<QKeyEvent *>(event);
+        if (keyEvent->key() == Qt::Key_Left || keyEvent->key() == Qt::Key_Right ||
+            keyEvent->key() == Qt::Key_Up || keyEvent->key() == Qt::Key_Down) {
+
+            QPushButton *currentButton = qobject_cast<QPushButton *>(obj);
+
+            if (currentButton == authoButton && (keyEvent->key() == Qt::Key_Up)) {
+                passwordLineEdit->setFocus();
+            } else if (currentButton == authoButton && (keyEvent->key() == Qt::Key_Down)) {
+                backButton->setFocus();
+            } else if (currentButton == backButton && (keyEvent->key() == Qt::Key_Up)) {
+                authoButton->setFocus();
+            } else if (currentButton == backButton && (keyEvent->key() == Qt::Key_Down)) {
+                exitButton->setFocus();
+            } else if (currentButton == exitButton && (keyEvent->key() == Qt::Key_Up)) {
+                backButton->setFocus();
+            } else if (currentButton == exitButton && (keyEvent->key() == Qt::Key_Down)) {
+                loginLineEdit->setFocus();
+            }
+
+            QLineEdit *currentLineEdit = qobject_cast<QLineEdit *>(obj);
+
+            if (currentLineEdit == loginLineEdit && (keyEvent->key() == Qt::Key_Up)) {
+                exitButton->setFocus();
+            } else if (currentLineEdit == loginLineEdit && (keyEvent->key() == Qt::Key_Down)) {
+                passwordLineEdit->setFocus();
+            } else if (currentLineEdit == passwordLineEdit && (keyEvent->key() == Qt::Key_Up)) {
+                loginLineEdit->setFocus();
+            } else if (currentLineEdit == passwordLineEdit && (keyEvent->key() == Qt::Key_Down)) {
+                authoButton->setFocus();
+            }
+            return true;
         }
     }
     return QObject::eventFilter(obj, event);
