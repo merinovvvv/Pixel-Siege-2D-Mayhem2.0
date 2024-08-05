@@ -38,6 +38,8 @@ private:
 
     Game* game_;
 
+    friend class gameplayWindow;
+
 signals:
 };
 

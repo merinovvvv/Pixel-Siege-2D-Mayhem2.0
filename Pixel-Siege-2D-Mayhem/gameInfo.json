@@ -1,7 +1,7 @@
 {
     "players": [
         {
-            "best time": "00:01:24",
+            "best time": "00:01:03",
             "login": "yarik",
             "password": "12345"
         },
@@ -44,6 +44,10 @@
         {
             "login": "voodz",
             "password": "1488"
+        },
+        {
+            "login": "kiray",
+            "password": "321"
         }
     ]
 }
