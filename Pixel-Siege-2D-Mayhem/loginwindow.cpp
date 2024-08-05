@@ -88,6 +88,7 @@ loginWindow::loginWindow(Game* game, QWidget *parent) : QMainWindow(parent), gam
     passwordLineEdit = new QLineEdit();
     passwordLineEdit->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
     passwordLineEdit->setStyleSheet(styleSheet);
+    passwordLineEdit->setEchoMode(QLineEdit::Password);
 
     passwordLayout->addWidget(passwordLabel);
     passwordLayout->addWidget(passwordLineEdit);
