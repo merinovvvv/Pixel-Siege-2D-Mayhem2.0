@@ -241,13 +241,11 @@ bool loginWindow::playerExists() {
             QString password = passwordLineEdit->text();
 
             if (player["login"].toString() == login && player["password"].toString() == password) {
-                qDebug() << "Player found!";
                 return true;
             }
         }
     }
 
-    qDebug() << "Player not found.";
     return false;
 }
 
@@ -261,8 +259,7 @@ void loginWindow::authorization() {
 
     QString fileName = "gameInfo.json";
     QString filePath = currentDir.filePath(fileName);
-
-    qDebug() << filePath;
+;
 
     // QFile file(filePath);
     // if (!file.exists()) {
@@ -275,8 +272,6 @@ void loginWindow::authorization() {
     //     file.write(initialJson.dump(4).c_str());
     //     file.close();
     // }
-
-    qDebug() << playerExists();
 
     if (!playerExists()) {
         if (game_->senderButton == 1) {
@@ -326,7 +321,6 @@ void loginWindow::authorization() {
                     outFile << game_->game_info.dump(4);
                     outFile.close();
                     game_->currentPlayer = loginLineEdit->text();
-                    qDebug() << "Current player: " << game_->currentPlayer;
                     if(game_) {
                         game_->showMainMenu();
                     }
@@ -353,7 +347,6 @@ void loginWindow::authorization() {
 
         } else if (game_->senderButton == 0) {
             game_->currentPlayer = loginLineEdit->text();
-            qDebug() << "Current player: " << game_->currentPlayer;
             if(game_) {
                 game_->showMainMenu();
             }

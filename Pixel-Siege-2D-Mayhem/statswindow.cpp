@@ -1,6 +1,10 @@
 #include <QPainter>
 #include <QPaintEvent>
+#include <QDir>
 #include <QGraphicsDropShadowEffect>
+#include <QJsonDocument>
+#include <QJsonArray>
+#include <QHeaderView>
 
 #include "statswindow.h"
 #include "game.h"
@@ -15,6 +19,7 @@ statsWindow::statsWindow(Game* game, QWidget *parent) : QMainWindow(parent), gam
 
     backButton = new QPushButton();
     backButton->setText("BACK");
+    connect(backButton, SIGNAL(clicked()), this, SLOT(backSlot()));
 
     QString styleSheet = ("QPushButton {"
                           "background: transparent;"
@@ -44,13 +49,55 @@ statsWindow::statsWindow(Game* game, QWidget *parent) : QMainWindow(parent), gam
 
     QVBoxLayout *layout = new QVBoxLayout;
     layout->addWidget(backButton);
-    layout->addStretch();
+    //layout->addStretch();
 
     QWidget *centralWidget = new QWidget(this);
+
+    backButton->installEventFilter(this);
+
+
+    tableWidget = new QTableWidget(tableContainer);
+
+    tableWidget->setStyleSheet(
+        "QTableWidget {"
+        "background-color: rgba(0, 0, 0, 150); "
+        "color: white;"
+        "font-size: 50px;"
+        "}"
+        "QHeaderView::section {"
+        "background-color: rgb(255, 173, 30); "
+        "color: black;"
+        "border: 1px solid black;"
+        "font-size: 70px;"
+        "}"
+        "QTableWidget::item {"
+        "border: 1px solid black;"
+        "}"
+        "QScrollBar:vertical {"
+        "background: rgba(0, 0, 0, 0);"
+        "width: 15px;"
+        "}"
+        "QScrollBar::handle:vertical {"
+        "background: rgb(255, 173, 30);"
+        "border: 1px solid black;"
+        "}"
+        "QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {"
+        "background: rgba(0, 0, 0, 0);"
+        "border: none;"
+        "}"
+        );
+
+
+    //tableWidget->setStyleSheet("QTableWidget { background: transparent; color: white; font-size: 50px; }");
+
+    layout->addWidget(tableWidget);
+
     centralWidget->setLayout(layout);
     setCentralWidget(centralWidget);
 
-    backButton->installEventFilter(this);
+    loadJsonData();
+    populateTable();
+
 }
 
 void statsWindow::paintEvent(QPaintEvent *event) {
@@ -95,4 +142,56 @@ bool statsWindow::eventFilter(QObject *obj, QEvent *event) {
         }
     }
     return QObject::eventFilter(obj, event);
+}
+
+void statsWindow::loadJsonData() {
+    QDir currentDir = QCoreApplication::applicationDirPath();
+    currentDir.cdUp();
+    currentDir.cdUp();
+    currentDir.cdUp();
+
+
+    QString fileName = "gameInfo.json";
+    QString filePath = currentDir.filePath(fileName);
+
+    QFile file(filePath);
+    if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
+        qWarning("Couldn't open the file.");
+        return;
+    }
+
+    QByteArray fileData = file.readAll();
+    file.close();
+
+    QJsonDocument jsonDoc(QJsonDocument::fromJson(fileData));
+    QJsonObject jsonObj = jsonDoc.object();
+    playersArray = jsonObj["players"].toArray();
+}
+
+void statsWindow::populateTable() {
+
+    tableWidget->setRowCount(playersArray.size());
+    tableWidget->setColumnCount(2);
+    tableWidget->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
+    tableWidget->setHorizontalHeaderLabels({"LOGIN", "BEST TIME"});
+
+    for (int i = 0; i < playersArray.size(); ++i) {
+        QJsonObject playerObj = playersArray[i].toObject();
+
+        QString login = playerObj["login"].toString();
+        QString bestTime = playerObj.contains("best time") ? playerObj["best time"].toString() : "";
+
+        QTableWidgetItem* loginItem = new QTableWidgetItem(login);
+        QTableWidgetItem* bestTimeItem = new QTableWidgetItem(bestTime);
+
+        tableWidget->setItem(i, 0, loginItem);
+        tableWidget->setItem(i, 1, bestTimeItem);
+
+        tableWidget->setSelectionMode(QAbstractItemView::NoSelection);
+        tableWidget->setEditTriggers(QAbstractItemView::NoEditTriggers);
+
+        tableWidget->setRowHeight(i, 100);
+    }
+
+    //tableWidget->resizeColumnsToContents();
 }

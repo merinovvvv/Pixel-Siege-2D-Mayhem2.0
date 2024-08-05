@@ -4,6 +4,9 @@
 #include <QMainWindow>
 #include <QMovie>
 #include <QPushButton>
+#include <QTableWidget>
+#include <QVBoxLayout>
+#include <QJsonArray>
 
 class Game;
 
@@ -25,6 +28,13 @@ private:
     QMovie *background = new QMovie(":/backgrounds/background_menu/back1.gif");
     QWidget* centralWidget;
     QPushButton* backButton;
+    QTableWidget* tableWidget;
+    QWidget* tableContainer;
+    QVBoxLayout* tableLayout;
+    QJsonArray playersArray;
+
+    void loadJsonData();
+    void populateTable();
 
     Game* game_;
 

@@ -5,6 +5,10 @@
 #include <QKeyEvent>
 #include <QtMath>
 #include <QRandomGenerator>
+#include <QDir>
+#include <QJsonDocument>
+#include <QJsonArray>
+#include <QJsonValue>
 
 #include "gameplaywindow.h"
 #include "mapchoosewindow.h"
@@ -451,11 +455,11 @@ void gameplayWindow::monsterHit() {
             hero->health_ = hero->health_ - monster->getDamage();
             updateHealth(hero->health_);
             if (hero->health_ <= 0) {
+                saveTimeToStats();
                 delete game_->gameplay_window;
                 game_->gameplay_window = nullptr;
                 game_->hero_ = nullptr;
                 game_->monsters_.clear();
-                saveTimeToStats();
                 game_->showGameOverWindow();
                 return;
             }
@@ -570,5 +574,50 @@ void gameplayWindow::spawnWolf() {
 }
 
 void gameplayWindow::saveTimeToStats() { //TODO
+    QDir currentDir = QCoreApplication::applicationDirPath();
+    currentDir.cdUp();
+    currentDir.cdUp();
+    currentDir.cdUp();
 
+
+    QString fileName = "gameInfo.json";
+    QString filePath = currentDir.filePath(fileName);
+
+    QFile file(filePath);
+    if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
+        qWarning("Couldn't open the file.");
+        return;
+    }
+    QByteArray fileData = file.readAll();
+    file.close();
+
+    QJsonDocument jsonDoc(QJsonDocument::fromJson(fileData));
+    QJsonObject jsonObj = jsonDoc.object();
+
+    QJsonArray playersArray = jsonObj["players"].toArray();
+
+    for (int i = 0; i < playersArray.size(); ++i) {
+        QJsonObject playerObj = playersArray[i].toObject();
+        if (playerObj["login"].toString() == game_->currentPlayer) {
+            if (playerObj.contains("best time")) {
+                if (QTime::fromString(playerObj["best time"].toString()) < QTime::fromString(showTime_->text())) {
+                    playerObj["best time"] = QJsonValue(showTime_->text());
+                }
+            }
+            playerObj["best time"] = QJsonValue(showTime_->text());
+            playersArray[i] = playerObj;
+            break;
+        }
+    }
+
+    jsonObj["players"] = playersArray;
+    jsonDoc.setObject(jsonObj);
+
+    if (!file.open(QIODevice::WriteOnly | QIODevice::Text)) {
+        qWarning("Couldn't open the file.");
+        return;
+    }
+
+    file.write(jsonDoc.toJson(QJsonDocument::Indented));
+    file.close();
 }

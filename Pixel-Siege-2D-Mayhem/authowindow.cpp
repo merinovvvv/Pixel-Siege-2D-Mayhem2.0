@@ -137,8 +137,6 @@ void AuthoWindow::showLoginWindow() {
 
     QPushButton *button = qobject_cast<QPushButton *>(sender());
 
-    qDebug() << "Sender is:" << sender();
-
     if (button == signIn) {
         game_->senderButton = 0;
     } else if (button == signUp) {
