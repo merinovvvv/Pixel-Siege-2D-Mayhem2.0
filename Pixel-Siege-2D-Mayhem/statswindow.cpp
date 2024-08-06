@@ -55,8 +55,9 @@ statsWindow::statsWindow(Game* game, QWidget *parent) : QMainWindow(parent), gam
 
     backButton->installEventFilter(this);
 
+    //tableWidget = new QTableWidget(tableContainer);
 
-    tableWidget = new QTableWidget(tableContainer);
+    tableWidget = new QTableWidget(this);
 
     tableWidget->setStyleSheet(
         "QTableWidget {"
@@ -108,6 +109,7 @@ statsWindow::statsWindow(Game* game, QWidget *parent) : QMainWindow(parent), gam
     loadJsonData();
     populateTable();
 
+    backButton->setFocus();
 }
 
 void statsWindow::paintEvent(QPaintEvent *event) {
@@ -202,6 +204,9 @@ void statsWindow::populateTable() {
 
         QTableWidgetItem* loginItem = new QTableWidgetItem(login);
         QTableWidgetItem* bestTimeItem = new QTableWidgetItem(bestTime);
+
+        loginItem->setFlags(loginItem->flags() & ~Qt::ItemIsEditable);
+        bestTimeItem->setFlags(bestTimeItem->flags() & ~Qt::ItemIsEditable);
 
         tableWidget->setItem(i, 0, loginItem);
         tableWidget->setItem(i, 1, bestTimeItem);

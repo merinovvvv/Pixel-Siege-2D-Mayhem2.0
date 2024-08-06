@@ -2,12 +2,12 @@
 
 Game::Game() {
     game_over = new gameOverWindow(this);
-    stats_window = new statsWindow(this);
     login_window = new loginWindow(this);
     autho = new AuthoWindow(this);
     main_menu = new MainMenu(this);
     map_choose_window = new mapChooseWindow(this);
     pause_menu = new PauseMenu(this);
+    stats_window = new statsWindow(this);
     gameplay_window = nullptr;
     hero_ = nullptr;
 }
