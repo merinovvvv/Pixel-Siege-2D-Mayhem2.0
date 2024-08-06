@@ -56,7 +56,7 @@ statsWindow::statsWindow(Game* game, QWidget *parent) : QMainWindow(parent), gam
     backButton->installEventFilter(this);
 
 
-    tableWidget = new QTableWidget(tableContainer);
+    tableWidget = new QTableWidget(this);
 
     tableWidget->setStyleSheet(
         "QTableWidget {"
@@ -107,6 +107,8 @@ statsWindow::statsWindow(Game* game, QWidget *parent) : QMainWindow(parent), gam
 
     loadJsonData();
     populateTable();
+
+    backButton->setFocus();
 
 }
 

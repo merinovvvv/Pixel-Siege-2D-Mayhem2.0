@@ -30,7 +30,7 @@ private:
     QWidget* centralWidget;
     QPushButton* backButton;
     QTableWidget* tableWidget;
-    QWidget* tableContainer;
+    //QWidget* tableContainer;
     QVBoxLayout* tableLayout;
     QJsonArray playersArray;
 
