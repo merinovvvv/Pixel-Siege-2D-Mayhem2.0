@@ -369,7 +369,7 @@ void loginWindow::authorization() {
                 }
             }
         } else if (game_->senderButton == 0) {
-            QMessageBox::warning(this, "Warning", "There is no player with given login. Try again.");
+            QMessageBox::warning(this, "Warning", "Login or password is incorrect. Try again.");
             loginLineEdit->setText("");
             passwordLineEdit->setText("");
             game_->login_window->close();

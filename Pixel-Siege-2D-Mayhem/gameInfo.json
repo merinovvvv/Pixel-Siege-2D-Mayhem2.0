@@ -1,55 +1,9 @@
 {
     "players": [
         {
-            "best time": "00:01:31",
+            "best time": "00:01:28",
             "login": "yarik",
-            "password": "12345"
-        },
-        {
-            "best time": "00:00:35",
-            "login": "vasya",
-            "password": "1337"
-        },
-        {
-            "best time": "00:00:33",
-            "login": "petya",
-            "password": "228"
-        },
-        {
-            "login": "helkkcjvk",
-            "password": "85935"
-        },
-        {
-            "login": "fhdkofivcm",
-            "password": "32632572398593"
-        },
-        {
-            "login": "bebra",
             "password": "123"
-        },
-        {
-            "login": "mama",
-            "password": "782"
-        },
-        {
-            "login": "fdwvsv",
-            "password": "12412412"
-        },
-        {
-            "login": "papa",
-            "password": "65432"
-        },
-        {
-            "login": "rus",
-            "password": "45675853"
-        },
-        {
-            "login": "voodz",
-            "password": "1488"
-        },
-        {
-            "login": "kiray",
-            "password": "321"
         }
     ]
 }
