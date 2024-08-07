@@ -195,6 +195,8 @@ void statsWindow::populateTable() {
     tableWidget->setColumnCount(2);
     tableWidget->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
     tableWidget->setHorizontalHeaderLabels({"LOGIN", "BEST TIME"});
+    tableWidget->setSortingEnabled(true);
+    tableWidget->verticalHeader()->setVisible(false);
 
     for (int i = 0; i < playersArray.size(); ++i) {
         QJsonObject playerObj = playersArray[i].toObject();
@@ -206,7 +208,9 @@ void statsWindow::populateTable() {
         QTableWidgetItem* bestTimeItem = new QTableWidgetItem(bestTime);
 
         loginItem->setFlags(loginItem->flags() & ~Qt::ItemIsEditable);
+        loginItem->setTextAlignment(Qt::AlignCenter);
         bestTimeItem->setFlags(bestTimeItem->flags() & ~Qt::ItemIsEditable);
+        bestTimeItem->setTextAlignment(Qt::AlignCenter);
 
         tableWidget->setItem(i, 0, loginItem);
         tableWidget->setItem(i, 1, bestTimeItem);
