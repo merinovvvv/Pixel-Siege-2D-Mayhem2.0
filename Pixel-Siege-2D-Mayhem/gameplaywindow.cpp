@@ -33,7 +33,8 @@ gameplayWindow::gameplayWindow(Game* game, QWidget *parent)
     // timer in the upper left corner of the screen
     showTime_ = new QLabel();
     showTime_->setStyleSheet("font-size: 35px;"
-                             "color: black;");
+                             "color: black;"
+                             "font-family: 'ArcadeClassic';");
     showTime_->setText("00:00:00");
     startTime_ = QTime::currentTime();
     gameTime_ = new QTimer();
@@ -44,7 +45,8 @@ gameplayWindow::gameplayWindow(Game* game, QWidget *parent)
     hpLabel_ = new QLabel();
     hpLabel_->setText("HP");
     hpLabel_->setStyleSheet("font-size: 35px;"
-                            "color: black;");
+                            "color: black;"
+                            "font-family: 'ArcadeClassic';");
     healthBar_ = new QProgressBar();
     healthBar_->setRange(0, 100);
     healthBar_->setValue(100);
@@ -55,9 +57,11 @@ gameplayWindow::gameplayWindow(Game* game, QWidget *parent)
         "    border-radius: 5px;"
         "    text-align: center;"
         "    color: white;"
+        "    font-family: 'ArcadeClassic';"
         "}"
         "QProgressBar::chunk {"
         "    background-color: red;"
+        "    font-family: 'ArcadeClassic';"
         "}");
 
     // spacer to separate the hp bar and the timer

@@ -47,17 +47,20 @@ MainMenu::MainMenu(Game* game, QWidget *parent) : QMainWindow(parent), game_(gam
                           "color: white;"
                           "font-size: 110px;"
                           "border: none;"
+                          "font-family: 'ArcadeClassic';"
                           "}"
                           "QPushButton:hover {"
                           "background: transparent;"
                           "color: rgb(255, 173, 30);"
                           "font-size: 110px;"
                           "border: none;"
+                          "font-family: 'ArcadeClassic';"
                           "}"
                           "QPushButton:focus {"
                           "color: rgb(255, 173, 30);"
                           "border: none;"
                           "outline: none;"
+                          "font-family: 'ArcadeClassic';"
                           "}");
 
     startButton->setStyleSheet(styleSheet);

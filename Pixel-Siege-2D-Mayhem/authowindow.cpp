@@ -43,17 +43,20 @@ AuthoWindow::AuthoWindow(Game* game, QWidget *parent) : QMainWindow(parent), gam
                           "color: white;"
                           "font-size: 110px;"
                           "border: none;"
+                          "font-family: 'ArcadeClassic';"
                           "}"
                           "QPushButton:hover {"
                           "background: transparent;"
                           "color: rgb(255, 173, 30);"
                           "font-size: 110px;"
                           "border: none;"
+                          "font-family: 'ArcadeClassic';"
                           "}"
                           "QPushButton:focus{"
                           "color: rgb(255, 173, 30);"
                           "border: none;"
                           "outline: none;"
+                          "font-family: 'ArcadeClassic';"
                           "}");
 
     signIn->setStyleSheet(styleSheet);

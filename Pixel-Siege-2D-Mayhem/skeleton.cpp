@@ -2,7 +2,7 @@
 
 Skeleton::Skeleton() {
     health_ = 5;
-    damage_ = 1;
+    damage_ = 10;
     model_ = new QGraphicsPixmapItem(QPixmap(":/monsters/mobs/skeleton.png"));
 }
 

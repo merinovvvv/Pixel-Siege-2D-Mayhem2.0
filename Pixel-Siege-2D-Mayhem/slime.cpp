@@ -2,7 +2,7 @@
 
 Slime::Slime() {
     health_ = 10;
-    damage_ = 2;
+    damage_ = 20;
     model_ = new QGraphicsPixmapItem(QPixmap(":/monsters/mobs/slime.png"));
 }
 

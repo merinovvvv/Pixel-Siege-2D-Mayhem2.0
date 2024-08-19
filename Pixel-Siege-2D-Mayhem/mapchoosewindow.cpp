@@ -21,17 +21,20 @@ mapChooseWindow::mapChooseWindow(Game* game, QWidget *parent)
                           "color: white;"
                           "font-size: 40pt;"
                           "border: none;"
+                          "font-family: 'ArcadeClassic';"
                           "}"
                           "QPushButton:hover {"
                           "background: transparent;"
                           "color: rgb(255, 173, 30);"
                           "font-size: 40pt;"
                           "border: none;"
+                          "font-family: 'ArcadeClassic';"
                           "}"
                           "QPushButton:focus{"
                           "color: rgb(255, 173, 30);"
                           "border: none;"
                           "outline: none;"
+                          "font-family: 'ArcadeClassic';"
                           "}");
 
     mapChooseBackground = new QMovie(":/backgrounds/background_menu/back5.gif");
@@ -64,7 +67,7 @@ mapChooseWindow::mapChooseWindow(Game* game, QWidget *parent)
 
     chooseMap = new QLabel();
     chooseMap->setText("CHOOSE A MAP");
-    chooseMap->setStyleSheet("background-color: transparent; border: none; color: white; font-size: 40pt;");
+    chooseMap->setStyleSheet("background-color: transparent; border: none; color: white; font-size: 40pt; font-family: 'ArcadeClassic';");
 
     chooseMap->setAlignment(Qt::AlignCenter);
     chooseMapLayout->addWidget(chooseMap, 0, Qt::AlignCenter);

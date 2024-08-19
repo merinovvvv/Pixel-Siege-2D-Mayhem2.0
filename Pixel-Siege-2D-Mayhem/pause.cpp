@@ -30,6 +30,7 @@ PauseMenu::PauseMenu(Game* game, QWidget *parent) : QMainWindow(parent), game_(g
                          "font-size: 110px;"
                          "text-align: center;"
                          "border: none;"
+                         "font-family: 'ArcadeClassic';"
                          "}"
                          "QPushButton:hover {"
                          "background: transparent;"
@@ -37,11 +38,13 @@ PauseMenu::PauseMenu(Game* game, QWidget *parent) : QMainWindow(parent), game_(g
                          "font-size: 110px;"
                          "text-align: center;"
                          "border: none;"
+                         "font-family: 'ArcadeClassic';"
                          "}"
                          "QPushButton:focus{"
                          "color: #FF6439;"
                          "border: none;"
                          "outline: none;"
+                         "font-family: 'ArcadeClassic';"
                          "}";
 
     continue_button->setStyleSheet(styleSheet);

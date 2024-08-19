@@ -2,7 +2,7 @@
 
 ScaryGhost::ScaryGhost() {
     health_ = 20;
-    damage_ = 4;
+    damage_ = 40;
     model_ = new QGraphicsPixmapItem(QPixmap(":/monsters/mobs/scary_ghost.png"));
 }
 

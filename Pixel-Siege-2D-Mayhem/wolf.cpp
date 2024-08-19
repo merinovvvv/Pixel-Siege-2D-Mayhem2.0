@@ -2,7 +2,7 @@
 
 Wolf::Wolf(){
     health_ = 25;
-    damage_ = 5;
+    damage_ = 50;
     model_ = new QGraphicsPixmapItem(QPixmap(":/monsters/mobs/wolf.png"));
 }
 

@@ -7,6 +7,7 @@
 #include <QDir>
 #include <QJsonDocument>
 #include <QJsonArray>
+#include <QFontDatabase>
 
 #include "loginwindow.h"
 #include "game.h"
@@ -37,31 +38,37 @@ loginWindow::loginWindow(Game* game, QWidget *parent) : QMainWindow(parent), gam
                           "color: white;"
                           "font-size: 110px;"
                           "border: none;"
+                          "font-family: 'ArcadeClassic';"
                           "}"
                           "QPushButton:hover {"
                           "background: transparent;"
                           "color: rgb(255, 173, 30);"
                           "font-size: 110px;"
                           "border: none;"
+                          "font-family: 'ArcadeClassic';"
                           "}"
                           "QPushButton:focus {"
                           "color: rgb(255, 173, 30);"
                           "border: none;"
                           "outline: none;"
+                          "font-family: 'ArcadeClassic';"
                           "}"
                           "QLabel {"
                           "color: white;"
                           "font-size: 50px;"
+                          "font-family: 'ArcadeClassic';"
                           "}"
                           "QLineEdit {"
                           "background: white;"
                           "color: black;"
                           "font-size: 50px;"
                           "border: 1px solid gray;"
+                          "font-family: 'ArcadeClassic';"
                           "}"
                           "QLineEdit:focus {"
                           "background: rgb(255, 173, 30);"
                           "color: black;"
+                          "font-family: 'ArcadeClassic';"
                           "}"
                           );
 

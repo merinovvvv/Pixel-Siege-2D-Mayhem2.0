@@ -33,6 +33,7 @@ gameOverWindow::gameOverWindow(Game* game, QWidget *parent) : QMainWindow(parent
                          "font-size: 110px;"
                          "text-align: center;"
                          "border: none;"
+                         "font-family: 'ArcadeClassic';"
                          "}"
                          "QPushButton:hover {"
                          "background: transparent;"
@@ -40,15 +41,18 @@ gameOverWindow::gameOverWindow(Game* game, QWidget *parent) : QMainWindow(parent
                          "font-size: 110px;"
                          "text-align: center;"
                          "border: none;"
+                         "font-family: 'ArcadeClassic';"
                          "}"
                          "QPushButton:focus{"
                          "color: #FF6439;"
                          "border: none;"
                          "outline: none;"
+                         "font-family: 'ArcadeClassic';"
                          "}"
                          "QLabel {"
                          "color: white;"
                          "font-size: 150px;"
+                         "font-family: 'ArcadeClassic';"
                          "}";
 
     gameOverLabel->setStyleSheet(styleSheet);

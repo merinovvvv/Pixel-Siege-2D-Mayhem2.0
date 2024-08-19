@@ -39,4 +39,7 @@
         <file>mobs/scary_ghost.png</file>
         <file>mobs/wolf.png</file>
     </qresource>
+    <qresource prefix="/fonts">
+        <file>ARCADECLASSIC.TTF</file>
+    </qresource>
 </RCC>
